@@ -1,8 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import 'babel-polyfill';
+import './css/index.less';
+import React from 'react';  // react核心，用到jsx的地方，都需要这个
+import ReactDOM from 'react-dom';   // 渲染组件时需要
+import Root from './container/Root';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+let rootElement = document.getElementById('root');
+
+ReactDOM.render(
+    <Root />,
+    rootElement
+);
 registerServiceWorker();

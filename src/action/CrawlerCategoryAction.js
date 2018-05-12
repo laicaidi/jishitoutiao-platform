@@ -1,8 +1,5 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
-import 'moment/locale/zh-cn';
-
-moment.locale('zh-cn');
 
 /**
  *  action 类型
@@ -22,20 +19,14 @@ function getAllCrawlerCategoryRequest() {
 function getAllCrawlerCategorySuccess(json) {
     return {
         type: GET_ALL_CRAWLER_CATEGORY_SUCCESS,
-        payload: json.data,
         status: json.status,
-        receiveAt: moment().format('YYYY-MM-DD HH:mm:ss'),
-        keyword: json.keyword
+        payload: json.data,
+        receiveAt: moment().format('YYYY-MM-DD HH:mm:ss')
     }
 }
 function getAllCrawlerCategoryFailure(error) {
     return {
         type: GET_ALL_CRAWLER_CATEGORY_FAILURE,
-        status: {
-            "success": false,
-            "message": "获取数据失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
-        },
         error
     }
 }
@@ -49,7 +40,7 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
         dispatch(getAllCrawlerCategoryRequest());
 
         // 拼接url请求
-        var url = `/jishitoutiao-server/crawlercategory/`
+        var url = "/jishitoutiao-server/crawlercategory/"
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;
         console.log("CrawlerCategoryAction.fetchGetAllCrawlerCategory() ----请求url: " + url + params);
 
@@ -71,12 +62,14 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
                             } else {
                                 console.error('请求失败; Code: ' + response.status);
                             }
-                        },
-                        error => dispatch(getAllCrawlerCategoryFailure(error))
+                        }
                     )
                     .then(
                         json => dispatch(getAllCrawlerCategorySuccess(json))
                     )
+                    .catch((error) => {
+                        dispatch(getAllCrawlerCategoryFailure(error));
+                    })
     }
 }
 
@@ -99,7 +92,7 @@ function addCrawlerCategoryFailure(error) {
         type: ADD_CRAWLER_CATEGORY_FAILURE,
         status: {
             "success": false,
-            "message": "新增失败，请核实类别key或类别名称是否重复",
+            "message": "新增失败,请检查类别key或类别名称是否重复",
             "time": moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
@@ -166,7 +159,7 @@ function deleteCrawlerCategoryFailure(error) {
         type: DELETE_CRAWLER_CATEGORY_FAILURE,
         status: {
             "success": false,
-            "message": "删除失败，请重试",
+            "message": "删除失败，无此记录",
             "time": moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
@@ -233,7 +226,7 @@ function updateCrawlerCategoryFailure(error) {
         type: UPDATE_CRAWLER_CATEGORY_FAILURE,
         status: {
             "success": false,
-            "message": "更新失败，请核实类别key或类别名称是否重复",
+            "message": "更新失败,请检查类别key或类别名称是否重复",
             "time": moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
@@ -280,5 +273,17 @@ export function fetchUpdateCrawlerCategory(cid, formData) {
                     .catch((error) => {
                         dispatch(updateCrawlerCategoryFailure(error));
                     })
+    }
+}
+
+export const CHANGE_CRAWLER_CATEGORY_FILTRATE = 'CHANGE_CRAWLER_CATEGORY_FILTRATE';
+/**
+ * 
+ * @param {*} keyword 搜索关键字
+ */
+export function changeCrawlerCategoryFiltrate(keyword) {      // 更改筛选条件
+    return {
+        type: CHANGE_CRAWLER_CATEGORY_FILTRATE,
+        keyword: keyword
     }
 }

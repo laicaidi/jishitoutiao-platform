@@ -10,7 +10,8 @@ import {
     DELETE_CRAWLER_SOURCE_FAILURE,
     UPDATE_CRAWLER_SOURCE_REQUEST,
     UPDATE_CRAWLER_SOURCE_SUCCESS,
-    UPDATE_CRAWLER_SOURCE_FAILURE
+    UPDATE_CRAWLER_SOURCE_FAILURE,
+    CHANGE_CRAWLER_SOURCE_FILTRATE
   } from '../action/CrawlerSourceAction';
 
 // 获取所有爬虫源reducer
@@ -22,14 +23,12 @@ export function getAllCrawlerSourceReducer(state = [], action) {
         case GET_ALL_CRAWLER_SOURCE_SUCCESS:
             return Object.assign({}, state,
                                 {isFetching: false},
-                                {payload: action.payload},
                                 {status: action.status},
-                                {receiveAt: action.receiveAt},
-                                {keyword: action.keyword});
+                                {payload: action.payload},
+                                {receiveAt: action.receiveAt});
         case GET_ALL_CRAWLER_SOURCE_FAILURE:
             return Object.assign({}, state,
                                 {isFetching: false},
-                                {status: action.status},
                                 {error: action.error}, );
         // 切换页码reducer，暂不需要本功能，代码仅供参考
         // case CHANGE_PAGE:
@@ -102,6 +101,17 @@ export function updateCrawlerSourceReducer(state = [], action) {
                                 {isUpdating: false},
                                 {status: action.status},
                                 {error: action.error});
+        default:
+            return state;
+    }
+}
+
+// 更改筛选条件reducer
+export function changeCrawlerSourceFiltrateReducer(state = [], action) {
+    switch (action.type) {
+        case CHANGE_CRAWLER_SOURCE_FILTRATE:
+            return Object.assign({}, state,
+                                {keyword: action.keyword});
         default:
             return state;
     }

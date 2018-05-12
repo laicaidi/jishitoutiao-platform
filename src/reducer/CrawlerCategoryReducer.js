@@ -10,7 +10,8 @@ import {
     DELETE_CRAWLER_CATEGORY_FAILURE,
     UPDATE_CRAWLER_CATEGORY_REQUEST,
     UPDATE_CRAWLER_CATEGORY_SUCCESS,
-    UPDATE_CRAWLER_CATEGORY_FAILURE
+    UPDATE_CRAWLER_CATEGORY_FAILURE,
+    CHANGE_CRAWLER_CATEGORY_FILTRATE
 } from '../action/CrawlerCategoryAction';
 
 // 获取所有分类reducer
@@ -21,14 +22,12 @@ export function getAllCrawlerCategoryReducer(state=[], action) {
         case GET_ALL_CRAWLER_CATEGORY_SUCCESS:
             return Object.assign({}, state,
                                 {isFetching: false},
-                                {payload: action.payload},
                                 {status: action.status},
-                                {receiveAt: action.receiveAt},
-                                {keyword: action.keyword});
+                                {payload: action.payload},
+                                {receiveAt: action.receiveAt});
         case GET_ALL_CRAWLER_CATEGORY_FAILURE:
             return Object.assign({}, state,
                                 {isFetching: false},
-                                {status:action.status},
                                 {error: action.error});
         default:
             return state;
@@ -90,6 +89,17 @@ export function updateCrawlerCategoryReducer(state = [], action) {
                                 {isUpdating: false},
                                 {status: action.status},
                                 {error: action.error});
+        default:
+            return state;
+    }
+}
+
+// 更改筛选条件reducer
+export function changeCrawlerCategoryFiltrateReducer(state = [], action) {
+    switch (action.type) {
+        case CHANGE_CRAWLER_CATEGORY_FILTRATE:
+            return Object.assign({}, state,
+                                {keyword: action.keyword});
         default:
             return state;
     }

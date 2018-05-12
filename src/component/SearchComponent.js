@@ -7,24 +7,29 @@ export default class SearchComponent extends Component {
     constructor(props) {
         super(props);
         // onSearch与本组件的this绑定
-        this.onSearch = this.onSearch.bind(this);
+        this.onhandleSearch = this.onhandleSearch.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    onSearch(value) {
+    onhandleSearch(keyword) {
         // 调用props中的回调方法
-        (this.props.onGet)(value);
+        (this.props.onGet)(keyword);
+    }
+
+    handleChange(event) {
+        // 调用props中的回调，将store中的keyword更新
+        (this.props.onChange)(event.target.value);
     }
   
     render() {
-        let text = this.props.text;
-
         return (
             <Search size="default"
                 placeholder="请输入关键字搜索"
-                onSearch={ this.onSearch }
+                onSearch={ this.onhandleSearch }
                 enterButton
                 style={ {width:"400px"} }
-                defaultValue={ text } />
+                value={ this.props.text }
+                onChange={ this.handleChange } />
         )
     }
 }

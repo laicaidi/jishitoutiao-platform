@@ -1,0 +1,285 @@
+import fetch from 'cross-fetch';
+import moment from 'moment';
+
+/**
+ *  action 类型
+ */
+
+ export const GET_ALL_CRAWLER_USER_AGENT_REQUEST = 'GET_ALL_CRAWLER_USER_AGENT_REQUEST';        // 获取所有UserAgent
+ export const GET_ALL_CRAWLER_USER_AGENT_SUCCESS = 'GET_ALL_CRAWLER_USER_AGENT_SUCCESS';        // 获取成功
+ export const GET_ALL_CRAWLER_USER_AGENT_FAILURE = 'GET_ALL_CRAWLER_USER_AGENT_FAILURE';        // 获取失败
+/**
+ *  action 创建函数
+ */
+function getAllCrawlerUserAgentRequest() {
+    return {
+        type: GET_ALL_CRAWLER_USER_AGENT_REQUEST
+    }
+}
+function getAllCrawlerUserAgentSuccess(json) {
+    return {
+        type: GET_ALL_CRAWLER_USER_AGENT_SUCCESS,
+        status: json.status,
+        payload: json.data,
+        receiveAt: moment().format('YYYY-MM-DD HH:mm:ss')
+    }
+}
+function getAllCrawlerUserAgentFailure(error) {
+    return {
+        type: GET_ALL_CRAWLER_USER_AGENT_FAILURE,
+        error
+    }
+}
+/**
+ * 
+ * @param {*} keyword 搜索关键字
+ * @param {*} pageNum 页码
+ */
+export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
+    return function(dispatch, getState) {
+        dispatch(getAllCrawlerUserAgentRequest());
+
+        // 拼接url请求
+        var url = "/jishitoutiao-server/crawleruseragent/"
+        var params = "?keyword=" + keyword + "&page_num=" + pageNum;
+        console.log("CrawlerUserAgentAction.fetchGetAllCrawlerUserAgent() ----请求url: " + url + params);
+
+        var myInit = {
+            method: "GET",
+            mode: 'cors',       // 允许跨域发送请求
+            headers: {
+                'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        }
+        return fetch(url + params, myInit)
+                    .then(
+                        response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                console.error('请求失败; Code: ' + response.status);
+                            }
+                        }
+                    )
+                    .then(
+                        json => dispatch(getAllCrawlerUserAgentSuccess(json))
+                    )
+                    .catch((error) => {
+                        dispatch(getAllCrawlerUserAgentFailure(error));
+                    })
+    }
+}
+
+export const ADD_CRAWLER_USER_AGENT_REQUEST = 'ADD_CRAWLER_USER_AGENT_REQUEST';     // 新增分类
+export const ADD_CRAWLER_USER_AGENT_SUCCESS = 'ADD_CRAWLER_USER_AGENT_SUCCESS';     // 新增成功
+export const ADD_CRAWLER_USER_AGENT_FAILURE = 'ADD_CRAWLER_USER_AGENT_FAILURE';     // 新增失败
+function addCrawlerUserAgentRequest() {
+    return {
+        type: ADD_CRAWLER_USER_AGENT_REQUEST
+    }
+}
+function addCrawlerUserAgentSuccess(json) {
+    return {
+        type: ADD_CRAWLER_USER_AGENT_SUCCESS,
+        status: json.status
+    }
+}
+function addCrawlerUserAgentFailure(error) {
+    return {
+        type: ADD_CRAWLER_USER_AGENT_FAILURE,
+        status: {
+            "success": false,
+            "message": "新增失败,请检查User-Agent是否重复",
+            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+        },
+        error
+    }
+}
+/**
+ * 
+ * @param {*} formData 要增加的分类数据
+ */
+export function fetchAddCrawlerUserAgent(formData) {
+    return function(dispatch, getState) {
+        dispatch(addCrawlerUserAgentRequest());
+
+        var url = "/jishitoutiao-server/crawleruseragent/";
+        var myInit = {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify(formData)      // 新增数据
+        }
+
+        return fetch(url, myInit)
+                    .then(
+                        response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                console.error('请求失败；Code:' + response.status);
+                            }
+                        }
+                    )
+                    .then(
+                        json => {
+                            dispatch(addCrawlerUserAgentSuccess(json));
+                        }
+                    )
+                    .catch((error) => {
+                        dispatch(addCrawlerUserAgentFailure(error));
+                    })
+    }
+}
+
+export const DELETE_CRAWLER_USER_AGENT_REQUEST = 'DELETE_CRAWLER_USER_AGENT_REQUEST';       // 删除分类
+export const DELETE_CRAWLER_USER_AGENT_SUCCESS = 'DELETE_CRAWLER_USER_AGENT_SUCCESS';       // 删除成功
+export const DELETE_CRAWLER_USER_AGENT_FAILURE = 'DELETE_CRAWLER_CATEGROY_FAILURE';       // 删除失败
+function deleteCrawlerUserAgentRequest() {
+    return {
+        type: DELETE_CRAWLER_USER_AGENT_REQUEST
+    }
+}
+function deleteCrawlerUserAgentSuccess(json) {
+    return {
+        type: DELETE_CRAWLER_USER_AGENT_SUCCESS,
+        status: json.status
+    }
+}
+function deleteCrawlerUserAgentFailure(error) {
+    return {
+        type: DELETE_CRAWLER_USER_AGENT_FAILURE,
+        status: {
+            "success": false,
+            "message": "删除失败，无此记录",
+            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+        },
+        error
+    }
+}
+/**
+ * 
+ * @param {*} cid 要删除的分类id
+ */
+export function fetchDeleteCrawlerUserAgent(id) {
+    return function(dispatch, getState) {
+        dispatch(deleteCrawlerUserAgentRequest());
+
+        var url =`/jishitoutiao-server/crawleruseragent/${id}`
+        var myInit = {
+            method: "DELETE",
+            mode: 'cors',       // 允许跨域发送请求
+            headers: {
+                'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        }
+
+        return fetch(url, myInit)
+                    .then(
+                        response => {
+                            if (response.ok) {
+                                return response.json()
+                            } else {
+                                console.error('请求失败；Code:' + response.status);
+                            }
+                        }
+                    )
+                    .then(
+                        // 删除成功,将消息体赋值给json
+                        json => {
+                            dispatch(deleteCrawlerUserAgentSuccess(json))
+                        }
+                    )
+                    .catch((error) => {
+                        dispatch(deleteCrawlerUserAgentFailure(error));
+                    })
+    }
+}
+
+export const UPDATE_CRAWLER_USER_AGENT_REQUEST = 'UPDATE_CRAWLER_USER_AGENT_REQUEST';
+export const UPDATE_CRAWLER_USER_AGENT_SUCCESS = 'UPDATE_CRAWLER_USER_AGENT_SUCCESS';
+export const UPDATE_CRAWLER_USER_AGENT_FAILURE = 'UPDATE_CRAWLER_USER_AGENT_FAILURE';
+function updateCrawlerUserAgentRequest() {
+    return {
+        type: UPDATE_CRAWLER_USER_AGENT_REQUEST
+    }
+}
+function updateCrawlerUserAgentSuccess(json) {
+    return {
+        type: UPDATE_CRAWLER_USER_AGENT_SUCCESS,
+        status: json.status
+    }
+}
+function updateCrawlerUserAgentFailure(error) {
+    return {
+        type: UPDATE_CRAWLER_USER_AGENT_FAILURE,
+        status: {
+            "success": false,
+            "message": "更新失败,请检查User-Agent是否重复",
+            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+        },
+        error
+    }
+}
+/**
+ * 
+ * @param {*} cid 要更新的分类id
+ * @param {*} formData 要更新的分类数据
+ */
+export function fetchUpdateCrawlerUserAgent(id, formData) {
+    return function(dispatch, getState) {
+        dispatch(updateCrawlerUserAgentRequest());
+
+        var url = `/jishitoutiao-server/crawleruseragent/${id}`;
+        var myInit = {
+            method: "PUT",
+            mode: 'cors',       // 允许跨域发送请求
+            headers: {
+                'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify(formData)      // 更新数据
+        }
+
+        return fetch(url, myInit)
+                    .then(
+                        response => {
+                            if (response.ok) {
+                                return response.json()
+                            } else {
+                                console.error('请求失败；Code:' + response.status);
+                            }
+                        }
+                    )
+                    .then(
+                        // 更新成功,将消息体赋值给json
+                        json => {
+                            dispatch(updateCrawlerUserAgentSuccess(json))
+                        }
+                    )
+                    .catch((error) => {
+                        dispatch(updateCrawlerUserAgentFailure(error));
+                    })
+    }
+}
+
+export const CHANGE_CRAWLER_USER_AGENT_FILTRATE = 'CHANGE_CRAWLER_USER_AGENT_FILTRATE';
+export function changeCrawlerUserAgentFiltrate(keyword) {      // 更改筛选条件
+    return {
+        type: CHANGE_CRAWLER_USER_AGENT_FILTRATE,
+        keyword: keyword
+    }
+}

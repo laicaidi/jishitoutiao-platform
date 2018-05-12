@@ -9,11 +9,9 @@ export default class PaginationComponent extends Component {
         this.onChange = this.onChange.bind(this);
     }
 
-    onChange(page, pageSize) {
-        // 1.调用action改变state中payload节点的page_num
-
-        // 2.调用props中的回调方法,第一个参数是搜索关键字，本次属于从页码标签激活，可不传
-        (this.props.onGet)(null, page);
+    onChange(pageNum, pageSize) {
+        // 调用props中的回调方法,第一个参数是搜索关键字，本次属于从页码标签激活，可不传
+        (this.props.onGet)(null, pageNum);
     }
 
     render() {

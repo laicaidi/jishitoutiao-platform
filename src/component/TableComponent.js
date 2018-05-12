@@ -11,7 +11,7 @@ export default class TableComponent extends Component {
         let pageObj = {};       // 分页对象
         
         // 从container传递来的props渲染所需数据，value是关键字，用payloadObj对象获取
-        let tableObj = this.props.tabledata;
+        let tableObj = this.props.tableData;
 
         if (tableObj !== undefined && tableObj !== null) {
             for (let key in tableObj) {
@@ -41,6 +41,8 @@ export default class TableComponent extends Component {
                     rowKey="index" 
                     pagination={ false }
                     loading = { this.props.loading }
+                    // 如果是得分数据/得分筛选/列表输出页，字段太多需要横向滚动，其他页面不需要
+                    scroll={ this.props.tag === 'InformationWeightSort' || this.props.tag === 'InformationWeightFiltrate' || this.props.tag === 'InformationOutputList' ? {x: 2700}  : {}}
                     />
                 <PaginationComponent pagedata={ pageObj } onGet={ this.props.onGet } />
             </div>

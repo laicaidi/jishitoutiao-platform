@@ -1,14 +1,12 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
-import 'moment/locale/zh-cn';
 
-moment.locale('zh-cn');
 /*
  * action 类型
  */
-export const GET_ALL_CRAWLER_SOURCE_REQUEST = 'GET_ALL_CRAWLER_SOURCE_REQUEST';     //获取所有爬虫源数据请求
-export const GET_ALL_CRAWLER_SOURCE_SUCCESS = 'GET_ALL_CRAWLER_SOURCE_SUCCESS';     //获取成功
-export const GET_ALL_CRAWLER_SOURCE_FAILURE = 'GET_ALL_CRAWLER_SOURCE_FAILURE';     //获取失败
+export const GET_ALL_CRAWLER_SOURCE_REQUEST = 'GET_ALL_CRAWLER_SOURCE_REQUEST';     // 获取所有爬虫源数据请求
+export const GET_ALL_CRAWLER_SOURCE_SUCCESS = 'GET_ALL_CRAWLER_SOURCE_SUCCESS';     // 获取成功
+export const GET_ALL_CRAWLER_SOURCE_FAILURE = 'GET_ALL_CRAWLER_SOURCE_FAILURE';     // 获取失败
 /*
  * action 创建函数
  */
@@ -20,20 +18,14 @@ function getAllCrawlerSourceRequest() {
 function getAllCrawlerSourceSuccess(json) {
     return {
         type: GET_ALL_CRAWLER_SOURCE_SUCCESS,
-        payload: json.data,
         status: json.status, 
-        receiveAt: moment().format('YYYY-MM-DD HH:mm:ss'),       // 接收数据时间
-        keyword: json.keyword,
+        payload: json.data,
+        receiveAt: moment().format('YYYY-MM-DD HH:mm:ss')      // 接收数据时间
     }
 }
 function getAllCrawlerSourceFailure(error) {
     return {
         type: GET_ALL_CRAWLER_SOURCE_FAILURE,
-        status: {
-            "success": false,
-            "message": "获取数据失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss'),
-        },
         error
     }
 }
@@ -57,9 +49,9 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
         // 这并不是 redux middleware 所必须的，但这对于我们而言很方便。
 
         // 拼接请求url
-        var url = `/jishitoutiao-server/crawlersource/`;        // 请求url
+        var url = "/jishitoutiao-server/crawlersource/";        // 请求url
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
-        console.log("CrawlerSourceAction.fetchGetAllCrawlerSource()--------请求url: "+url+params);
+        console.log("CrawlerSourceAction.fetchGetAllCrawlerSource()--------请求url: " + url + params);
 
         var myInit = {
             method: "GET",
@@ -79,24 +71,25 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
                             } else {
                                 console.error('请求失败；Code:' + response.status);
                             } 
-                        },
-
-                        // 不要使用 catch，因为会捕获在 dispatch 和渲染中出现的任何错误，
-                        // 会导致 'Unexpected batch number' 错误。
-                        // https://github.com/facebook/react/issues/6895
-                        error => dispatch(getAllCrawlerSourceFailure(error))
+                        }
                     )
                     .then(
                         // 发起获取数据成功的dispatch，使用 API 请求结果来更新应用的 state。
                         // 注：可以多次 dispatch
                         json => dispatch(getAllCrawlerSourceSuccess(json))
                     )
+                    // 不要使用 catch，因为会捕获在 dispatch 和渲染中出现的任何错误，
+                    // 会导致 'Unexpected batch number' 错误。
+                    // https://github.com/facebook/react/issues/6895
+                    .catch((error) => {
+                        dispatch(getAllCrawlerSourceFailure(error));
+                    })
     }
 }
 
-export const ADD_CRAWLER_SOURCE_REQUEST = 'ADD_CRAWLER_SOURCE_REQUEST';     //新增爬虫源
-export const ADD_CRAWLER_SOURCE_SUCCESS = 'ADD_CRAWLER_SOURCE_SUCCESS';     //新增成功
-export const ADD_CRAWLER_SOURCE_FAILURE = 'ADD_CRAWLER_SOURCE_FAILURE';     //新增失败
+export const ADD_CRAWLER_SOURCE_REQUEST = 'ADD_CRAWLER_SOURCE_REQUEST';     // 新增爬虫源
+export const ADD_CRAWLER_SOURCE_SUCCESS = 'ADD_CRAWLER_SOURCE_SUCCESS';     // 新增成功
+export const ADD_CRAWLER_SOURCE_FAILURE = 'ADD_CRAWLER_SOURCE_FAILURE';     // 新增失败
 function addCrawlerSourceRequest() {
     return {
         type: ADD_CRAWLER_SOURCE_REQUEST
@@ -113,7 +106,7 @@ function addCrawlerSourceFailure(error) {
         type: ADD_CRAWLER_SOURCE_FAILURE,
         status: {
             "success": false,
-            "message": "新增失败，请核实源key或源name是否重复",
+            "message": "新增失败,请检查源key或源名称是否重复",
             "time": moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
@@ -162,9 +155,9 @@ export function fetchAddCrawlerSource(formData) {
     }
 }
 
-export const DELETE_CRAWLER_SOURCE_REQUEST = 'DELETE_CRAWLER_SOURCE_REQUEST';       //删除爬虫源
-export const DELETE_CRAWLER_SOURCE_SUCCESS = 'DELETE_CRAWLER_SOURCE_SUCCESS';       //删除成功
-export const DELETE_CRAWLER_SOURCE_FAILURE = 'DELETE_CRAWLER_SOURCE_FAILURE';       //删除失败
+export const DELETE_CRAWLER_SOURCE_REQUEST = 'DELETE_CRAWLER_SOURCE_REQUEST';       // 删除爬虫源
+export const DELETE_CRAWLER_SOURCE_SUCCESS = 'DELETE_CRAWLER_SOURCE_SUCCESS';       // 删除成功
+export const DELETE_CRAWLER_SOURCE_FAILURE = 'DELETE_CRAWLER_SOURCE_FAILURE';       // 删除失败
 function deleteCrawlerSourceRequest() {
     return {
         type: DELETE_CRAWLER_SOURCE_REQUEST
@@ -181,7 +174,7 @@ function deleteCrawlerSourceFailure(error) {
         type: DELETE_CRAWLER_SOURCE_FAILURE,
         status: {
             "success": false,
-            "message": "删除失败，请重试",
+            "message": "删除失败，无此记录",
             "time": moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
@@ -229,9 +222,9 @@ export function fetchDeleteCrawlerSource(bid) {
     }
 }
 
-export const UPDATE_CRAWLER_SOURCE_REQUEST = 'UPDATE_CRAWLER_SOURCE_REQUEST';       //更新爬虫源
-export const UPDATE_CRAWLER_SOURCE_SUCCESS = 'UPDATE_CRAWLER_SOURCE_SUCCESS';       //更新成功
-export const UPDATE_CRAWLER_SOURCE_FAILURE = 'UPDATE_CRAWLER_SOURCE_FAILURE';       //更新失败
+export const UPDATE_CRAWLER_SOURCE_REQUEST = 'UPDATE_CRAWLER_SOURCE_REQUEST';       // 更新爬虫源
+export const UPDATE_CRAWLER_SOURCE_SUCCESS = 'UPDATE_CRAWLER_SOURCE_SUCCESS';       // 更新成功
+export const UPDATE_CRAWLER_SOURCE_FAILURE = 'UPDATE_CRAWLER_SOURCE_FAILURE';       // 更新失败
 function updateCrawlerSourceRequest() {
     return {
         type: UPDATE_CRAWLER_SOURCE_REQUEST
@@ -248,7 +241,7 @@ function updateCrawlerSourceFailure(error) {
         type: UPDATE_CRAWLER_SOURCE_FAILURE,
         status: {
             "success": false,
-            "message": "更新失败，请核实源key或源name是否重复",
+            "message": "更新失败,请检查源key或源name是否重复",
             "time": moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
@@ -295,6 +288,18 @@ export function fetchUpdateCrawlerSource(bid, formData) {
                     .catch((error) => {
                         dispatch(updateCrawlerSourceFailure(error));
                     })
+    }
+}
+
+export const CHANGE_CRAWLER_SOURCE_FILTRATE = 'CHANGE_CRAWLER_SOURCE_FILTRATE';
+/**
+ * 
+ * @param {*} keyword 搜索关键字
+ */
+export function changeCrawlerSourceFiltrate(keyword) {      // 更改筛选条件
+    return {
+        type: CHANGE_CRAWLER_SOURCE_FILTRATE,
+        keyword: keyword
     }
 }
 

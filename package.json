@@ -111,5 +111,5 @@
     "less": "^2.7.3",
     "less-loader": "^4.0.5"
   },
-  "proxy":  "http://localhost:8080"
+  "proxy": "http://localhost:8080"
 }

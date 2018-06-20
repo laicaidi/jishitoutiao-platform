@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /**
  *  action 类型
@@ -41,7 +55,7 @@ export function fetchGetAllCrawlerDynamicIp(keyword, pageNum, protocol) {
         dispatch(getAllCrawlerDynamicIpRequest());
 
         // 拼接url请求
-        var url = "/jishitoutiao-server/crawlerdynamicip/"
+        var url = "/crawlerdynamicip/"
         var params = "?keyword=" + keyword + "&protocol=" + protocol + "&page_num=" + pageNum;
         console.log("CrawlerDynamicIpAction.fetchGetAllCrawlerDynamicIp() ----请求url: " + url + params);
 
@@ -52,7 +66,9 @@ export function fetchGetAllCrawlerDynamicIp(keyword, pageNum, protocol) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -61,7 +77,7 @@ export function fetchGetAllCrawlerDynamicIp(keyword, pageNum, protocol) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败; Code: ' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
@@ -70,6 +86,7 @@ export function fetchGetAllCrawlerDynamicIp(keyword, pageNum, protocol) {
                     )
                     .catch((error) => {
                         dispatch(getAllCrawlerDynamicIpFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -107,7 +124,7 @@ export function fetchAddCrawlerDynamicIp(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerDynamicIpRequest());
 
-        var url = "/jishitoutiao-server/crawlerdynamicip/";
+        var url = "/crawlerdynamicip/";
         var myInit = {
             method: "POST",
             mode: "cors",
@@ -115,7 +132,9 @@ export function fetchAddCrawlerDynamicIp(formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 新增数据
         }
@@ -126,17 +145,19 @@ export function fetchAddCrawlerDynamicIp(formData) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         json => {
                             dispatch(addCrawlerDynamicIpSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(addCrawlerDynamicIpFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -174,7 +195,7 @@ export function fetchDeleteCrawlerDynamicIp(id) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerDynamicIpRequest());
 
-        var url =`/jishitoutiao-server/crawlerdynamicip/${id}`
+        var url =`/crawlerdynamicip/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -182,7 +203,9 @@ export function fetchDeleteCrawlerDynamicIp(id) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -192,18 +215,20 @@ export function fetchDeleteCrawlerDynamicIp(id) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(deleteCrawlerDynamicIpSuccess(json))
+                            dispatch(deleteCrawlerDynamicIpSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(deleteCrawlerDynamicIpFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -242,7 +267,7 @@ export function fetchUpdateCrawlerDynamicIp(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerDynamicIpRequest());
 
-        var url = `/jishitoutiao-server/crawlerdynamicip/${id}`;
+        var url = `/crawlerdynamicip/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
@@ -250,7 +275,9 @@ export function fetchUpdateCrawlerDynamicIp(id, formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 更新数据
         }
@@ -261,18 +288,20 @@ export function fetchUpdateCrawlerDynamicIp(id, formData) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 更新成功,将消息体赋值给json
                         json => {
-                            dispatch(updateCrawlerDynamicIpSuccess(json))
+                            dispatch(updateCrawlerDynamicIpSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(updateCrawlerDynamicIpFailure(error));
+                        message.error(error);
                     })
     }
 }

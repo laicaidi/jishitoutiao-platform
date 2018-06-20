@@ -6,7 +6,7 @@ import {
     fetchCleanInformationRepetitionPond,
     changeInformationRepetitionPondFiltrate
 } from '../action/InformationRepetitionPondAction';
-import { Layout, message, Select, Tabs, Button, Modal } from 'antd';
+import { Layout, Select, Tabs, Button, Modal } from 'antd';
 import SearchComponent from '../component/SearchComponent';
 import TableComponent from '../component/TableComponent';
 
@@ -26,11 +26,12 @@ class InformationRepetitionPondContainer extends Component {
         this.handleShowCleanModal = this.handleShowCleanModal.bind(this);
         this.handleCleanModalCancel = this.handleCleanModalCancel.bind(this);
         this.handleClean = this.handleClean.bind(this);
-        this.cleanResult = this.cleanResult.bind(this);
         this.handleSourceChange = this.handleSourceChange.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
+    }
 
+    componentWillMount() {
         // 初始化数据
         this.handleGet();
     }
@@ -59,16 +60,13 @@ class InformationRepetitionPondContainer extends Component {
                         payloadObj[field].unshift({
                             title: '序号',
                             dataIndex: 'index',
-                            key: 'index'
+                            key: 'index',
+                            render: (text, record, index) => {
+                                return (
+                                    <span>{index + 1}</span>
+                                )
+                            }
                         });
-                    }
-                }
-
-                // 判断list节点,挂载的是表格所需数据
-                if (field === "list") {
-                    // 增加序号序列
-                    for (let i = 0; i < payloadObj[field].length; i++) {
-                        payloadObj[field][i]['index'] = i + 1;
                     }
                 }
             }
@@ -145,34 +143,7 @@ class InformationRepetitionPondContainer extends Component {
         // 提交清空请求
         dispatch(fetchCleanInformationRepetitionPond());
 
-        // 100毫秒后(清空成功/失败)，弹出message
-        setTimeout(this.cleanResult, 500);
-    }
-
-    // 根据清空请求返回status的状态，弹出对应的成功/失败message
-    cleanResult() {
-        const { cleanStatus } = this.props;
-        let cleanResultSuccess = false;
-        let cleanResultMessage = '';
-
-        for (let key in cleanStatus) {
-            if (key === 'success') {    // 是否成功标识
-                if (cleanStatus[key]) {    // 成功
-                    cleanResultSuccess = true;
-                }
-            }
-            if (key === 'message') {
-                cleanResultMessage = cleanStatus[key];
-            }
-        }
-
-        if (cleanResultSuccess) {    // 清空成功
-            message.success(cleanResultMessage);
-            this.setState({ cleanModalVisible: false });
-        } else {
-            message.error(cleanResultMessage);
-        }
-        this.handleGet();
+        setTimeout(this.handleGet, 200);
     }
 
     // 源下拉列表更改时的回调
@@ -270,7 +241,7 @@ class InformationRepetitionPondContainer extends Component {
                             <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
                             <Button type="primary" style={ {float: 'right'} } onClick={ this.handleShowCleanModal }>清空滤重池表</Button>
                         </div>
-                        <TableComponent tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } /> 
+                        <TableComponent rowKey='repetition_pond_id' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } /> 
                     </TabPane>) }
                 </Tabs>
                 <Modal title="清空滤重池"

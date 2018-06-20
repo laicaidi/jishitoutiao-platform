@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /**
  *  action 类型
@@ -43,7 +57,7 @@ export function fetchGetAllInformationSource(keyword, pageNum, bkey, ckey) {
         dispatch(getAllInformationSourceRequest());
 
         // 拼接url请求
-        var url = "/jishitoutiao-server/informationsource/"
+        var url = "/informationsource/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
         console.log("InformationSourceAction.fetchGetAllInformationSource() ----请求url: " + url + params);
 
@@ -54,7 +68,9 @@ export function fetchGetAllInformationSource(keyword, pageNum, bkey, ckey) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -63,7 +79,7 @@ export function fetchGetAllInformationSource(keyword, pageNum, bkey, ckey) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败; Code: ' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
@@ -72,6 +88,7 @@ export function fetchGetAllInformationSource(keyword, pageNum, bkey, ckey) {
                     )
                     .catch((error) => {
                         dispatch(getAllInformationSourceFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -109,7 +126,7 @@ export function fetchAddInformationSource(formData) {
     return function(dispatch, getState) {
         dispatch(addInformationSourceRequest());
 
-        var url = "/jishitoutiao-server/informationsource/";
+        var url = "/informationsource/";
         var myInit = {
             method: "POST",
             mode: "cors",
@@ -117,7 +134,9 @@ export function fetchAddInformationSource(formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 新增数据
         }
@@ -128,17 +147,19 @@ export function fetchAddInformationSource(formData) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         json => {
                             dispatch(addInformationSourceSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(addInformationSourceFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -176,7 +197,7 @@ export function fetchDeleteInformationSource(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationSourceRequest());
 
-        var url =`/jishitoutiao-server/informationsource/${id}`
+        var url =`/informationsource/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -184,7 +205,9 @@ export function fetchDeleteInformationSource(id) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -194,18 +217,20 @@ export function fetchDeleteInformationSource(id) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(deleteInformationSourceSuccess(json))
+                            dispatch(deleteInformationSourceSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(deleteInformationSourceFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -244,7 +269,7 @@ export function fetchUpdateInformationSource(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationSourceRequest());
 
-        var url = `/jishitoutiao-server/informationsource/${id}`;
+        var url = `/informationsource/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
@@ -252,7 +277,9 @@ export function fetchUpdateInformationSource(id, formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 更新数据
         }
@@ -263,18 +290,20 @@ export function fetchUpdateInformationSource(id, formData) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 更新成功,将消息体赋值给json
                         json => {
-                            dispatch(updateInformationSourceSuccess(json))
+                            dispatch(updateInformationSourceSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(updateInformationSourceFailure(error));
+                        message.error(error);
                     })
     }
 }

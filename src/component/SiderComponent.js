@@ -51,7 +51,7 @@ export default class SiderComponent extends Component {
     render() {
         return (     
             <Sider trigger={ null } collapsible collapsed={ this.state.collapsed } className="sider" style={{overflow:"auto", minHeight: 663}}>
-                <Menu theme={ this.state.theme } mode="inline" defaultOpenKeys={ ['crawler-system'] } defaultSelectedKeys={ ['crawler-source'] } style={ {height: this.state.height-65} }>
+                <Menu theme={ this.state.theme } mode="inline" defaultOpenKeys={ ['crawler-system'] } style={ {height: this.state.height-65} }>
                     
                     <SubMenu key="crawler-system" title={ <span><Icon type="mail" /><span>爬虫系统</span></span> }>
                         <Menu.Item key="crawler-source"><Link to='/crawlersource'>源管理</Link></Menu.Item>

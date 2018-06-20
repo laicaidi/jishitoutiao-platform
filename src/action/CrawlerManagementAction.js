@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /**
  *  action 类型
@@ -44,7 +58,7 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
         dispatch(getAllCrawlerManagementRequest());
 
         // 拼接url请求
-        var url = "/jishitoutiao-server/crawlermanagement/"
+        var url = "/crawlermanagement/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&crawler_status=" + crawlerStatus + "&crawler_switch=" + crawlerSwitch + "&page_num=" + pageNum;
         console.log("CrawlerManagementAction.fetchGetAllCrawlerManagement() ----请求url: " + url + params);
 
@@ -55,7 +69,9 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -64,7 +80,7 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败; Code: ' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
@@ -73,6 +89,7 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
                     )
                     .catch((error) => {
                         dispatch(getAllCrawlerManagementFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -110,7 +127,7 @@ export function fetchAddCrawlerManagement(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerManagementRequest());
 
-        var url = "/jishitoutiao-server/crawlermanagement/";
+        var url = "/crawlermanagement/";
         var myInit = {
             method: "POST",
             mode: "cors",
@@ -118,7 +135,9 @@ export function fetchAddCrawlerManagement(formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 新增数据
         }
@@ -129,17 +148,19 @@ export function fetchAddCrawlerManagement(formData) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         json => {
                             dispatch(addCrawlerManagementSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(addCrawlerManagementFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -177,7 +198,7 @@ export function fetchDeleteCrawlerManagement(id) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerManagementRequest());
 
-        var url =`/jishitoutiao-server/crawlermanagement/${id}`
+        var url =`/crawlermanagement/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -185,7 +206,9 @@ export function fetchDeleteCrawlerManagement(id) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -195,18 +218,20 @@ export function fetchDeleteCrawlerManagement(id) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(deleteCrawlerManagementSuccess(json))
+                            dispatch(deleteCrawlerManagementSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(deleteCrawlerManagementFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -245,7 +270,7 @@ export function fetchUpdateCrawlerManagement(crawlerId, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerManagementRequest());
 
-        var url = `/jishitoutiao-server/crawlermanagement/${crawlerId}`;
+        var url = `/crawlermanagement/${crawlerId}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
@@ -253,7 +278,9 @@ export function fetchUpdateCrawlerManagement(crawlerId, formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 更新数据
         }
@@ -264,18 +291,20 @@ export function fetchUpdateCrawlerManagement(crawlerId, formData) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 更新成功,将消息体赋值给json
                         json => {
-                            dispatch(updateCrawlerManagementSuccess(json))
+                            dispatch(updateCrawlerManagementSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(updateCrawlerManagementFailure(error));
+                        message.error(error);
                     })
     }
 }

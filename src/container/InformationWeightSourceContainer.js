@@ -7,7 +7,7 @@ import {
     fetchUpdateInformationWeightSource,
     changeInformationWeightSourceFiltrate
 } from '../action/InformationWeightSourceAction';
-import { Layout, message, Divider, Popconfirm, Select, Tabs } from 'antd';
+import { Layout, Divider, Popconfirm, Select, Tabs } from 'antd';
 import moment from 'moment';
 import SearchComponent from '../component/SearchComponent';
 import TableComponent from '../component/TableComponent';
@@ -26,18 +26,19 @@ class InformationWeightSourceContainer extends Component {
         // 绑定回调方法
         this.handleGet = this.handleGet.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        this.deleteResult = this.deleteResult.bind(this);
         this.handleShowUpdateModal = this.handleShowUpdateModal.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
-        this.updateResult = this.updateResult.bind(this);
         this.handleUpdateModalCancel = this.handleUpdateModalCancel.bind(this);
+        this.updateResult = this.updateResult.bind(this);
         this.handleSourceChange = this.handleSourceChange.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
         this.handleDisabledDate = this.handleDisabledDate.bind(this);
         this.getMyDate = this.getMyDate.bind(this);
         this.getzf = this.getzf.bind(this);
+    }
 
+    componentWillMount() {
         // 初始化数据
         this.handleGet();
     }
@@ -70,7 +71,12 @@ class InformationWeightSourceContainer extends Component {
                         payloadObj[field].unshift({
                             title: '序号',
                             dataIndex: 'index',
-                            key: 'index'
+                            key: 'index',
+                            render: (text, record, index) => {
+                                return (
+                                    <span>{index + 1}</span>
+                                )
+                            }
                         });
 
                         // 在数组末尾添加操作标题
@@ -126,14 +132,6 @@ class InformationWeightSourceContainer extends Component {
                                 )
                             }
                         });
-                    }
-                }
-
-                // 判断list节点,挂载的是表格所需数据
-                if (field === "list") {
-                    // 增加序号序列
-                    for (let i = 0; i < payloadObj[field].length; i++) {
-                        payloadObj[field][i]['index'] = i + 1;
                     }
                 }
             }
@@ -216,33 +214,7 @@ class InformationWeightSourceContainer extends Component {
         // 提交删除请求
         dispatch(fetchDeleteInformationWeightSource(informationWeightSourceId));
 
-        // 100毫秒后(删除成功/失败)，弹出message
-        setTimeout(this.deleteResult, 100);
-    }
-
-    // 根据删除请求返回status的状态，弹出对应的成功/失败message
-    deleteResult() {
-        const { deleteStatus } = this.props;
-        let deleteResultSuccess = false;
-        let deleteResultMessage = '';
-
-        for (let key in deleteStatus) {
-            if (key === 'success') {    // 是否成功标识
-                if (deleteStatus[key]) {    // 成功
-                    deleteResultSuccess = true;
-                }
-            }
-            if (key === 'message') {
-                deleteResultMessage = deleteStatus[key];
-            }
-        }
-
-        if (deleteResultSuccess) {    // 删除成功
-            message.success(deleteResultMessage);
-        } else {
-            message.error(deleteResultMessage);
-        }
-        this.handleGet();
+        setTimeout(this.handleGet, 200);
     }
 
     // 更新权重源
@@ -269,8 +241,7 @@ class InformationWeightSourceContainer extends Component {
             // 提交更新请求
             dispatch(fetchUpdateInformationWeightSource(weightSourceId, formData));
 
-            // 100毫秒后(删除成功)，弹出message
-            setTimeout(this.updateResult, 100);
+            setTimeout(this.updateResult, 200);
         });
     }
 
@@ -279,32 +250,19 @@ class InformationWeightSourceContainer extends Component {
         this.updateFormRef = formRef;
     }
 
-    // 根据更新请求返回status的状态，弹出对应的成功/失败message
     updateResult() {
         const { updateStatus } = this.props;
         const form = this.updateFormRef.props.form;
-        let updateResultSuccess = false;
-        let updateResultMessage = '';
-
         for (let key in updateStatus) {
-            if (key === 'success') {    // 是否成功标识
-                if (updateStatus[key]) {    // 成功
-                    updateResultSuccess = true;
-                }
+          if (key === 'success') {
+            const updateResultSuccess = updateStatus[key];
+            if (updateResultSuccess) {    // 更新成功     
+              this.setState({ updateModalVisible: false});   // 关闭对话框
+              form.resetFields();   // 重置表单组件的值
+              this.handleGet();
             }
-            if (key === 'message') {
-                updateResultMessage = updateStatus[key];
-            }
+          }
         }
-
-        if (updateResultSuccess) {    // 更新成功
-            message.success(updateResultMessage); 
-            this.setState({ updateModalVisible: false});   // 关闭对话框
-            form.resetFields();   // 重置表单组件的值
-        } else {
-            message.error(updateResultMessage);
-        }
-        this.handleGet();
     }
 
     // 源下拉列表更改时的回调
@@ -432,7 +390,7 @@ class InformationWeightSourceContainer extends Component {
                             <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
                             <span style={ {float: 'right'} }>状态: { status === 'leisure' ? '空闲': '处理中..' }</span>
                         </div>
-                        <TableComponent tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } /> 
+                        <TableComponent rowKey='weight_source_id' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } /> 
                     </TabPane>) }
                 </Tabs>
                 <UpdateInformationWeightSourceComponent 

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  withRouter
 } from 'react-router-dom';
 import {
   fetchGetMeta,
@@ -34,7 +35,7 @@ import InformationOutputArticleContainer from '../container/InformationOutputArt
 import InformationCommentContainer from '../container/InformationCommentContainer';
 import UserContainer from '../container/UserContainer';
 
-class App extends Component {
+class HomeContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +47,21 @@ class App extends Component {
     this.handleGetMeta = this.handleGetMeta.bind(this);
   }
 
-  // -------自动适应屏幕宽高+获取元数据-------
+  // -------登录鉴权 + 自动适应屏幕宽高 + 获取元数据-------
+  componentWillMount() {
+    const { auth } = this.props;
+    console.log("HomeContainer auth: " + auth);
+    for (let key in auth) {
+      if (key === "passport") {
+        var passport = auth[key];   // 用户登录状态
+      }
+    }
+
+    // if (!passport) {   // 未登录
+    //   this.props.history.push("/login");    // 跳转至登录页
+    // }
+  }
+
   componentDidMount() {
     this.updateSize();
     window.addEventListener('resize', () => this.updateSize());
@@ -86,6 +101,7 @@ class App extends Component {
   }
  
   render() {
+
     return (
       <Router>
         <Layout style={ {width: this.state.width, height: this.state.height} }>
@@ -123,7 +139,7 @@ class App extends Component {
 }
 
 // 对属性进行限定
-App.propTypes = {
+HomeContainer.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
 
@@ -133,7 +149,8 @@ function mapStateToProps(state) {
     isFetching: state.getMeta.isFetching,   // 获取元数据加载态
     status: state.getMeta.status,   // 获取元数据结果
     menu: state.getMeta.menu,   // 菜单元数据
+    auth: state.userState.auth    // 用户(登录)状态
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(HomeContainer));   // withRouter高阶组件，提供了history供组件使用

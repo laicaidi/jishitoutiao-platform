@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /**
  *  action 类型
@@ -43,7 +57,7 @@ export function fetchGetAllInformationIllegalityPond(keyword, pageNum, bkey, cke
         dispatch(getAllInformationIllegalityPondRequest());
 
         // 拼接url请求
-        var url = "/jishitoutiao-server/informationillegalitypond/"
+        var url = "/informationillegalitypond/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
         console.log("InformationIllegalityPondAction.fetchGetAllInformationIllegalityPond() ----请求url: " + url + params);
 
@@ -54,7 +68,9 @@ export function fetchGetAllInformationIllegalityPond(keyword, pageNum, bkey, cke
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -63,7 +79,7 @@ export function fetchGetAllInformationIllegalityPond(keyword, pageNum, bkey, cke
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败; Code: ' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
@@ -72,6 +88,7 @@ export function fetchGetAllInformationIllegalityPond(keyword, pageNum, bkey, cke
                     )
                     .catch((error) => {
                         dispatch(getAllInformationIllegalityPondFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -105,7 +122,7 @@ export function fetchCleanInformationIllegalityPond() {
     return function(dispatch, getState) {
         dispatch(cleanInformationIllegalityPondRequest());
 
-        var url =`/jishitoutiao-server/informationillegalitypond/`
+        var url =`/informationillegalitypond/`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -113,11 +130,11 @@ export function fetchCleanInformationIllegalityPond() {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
-
-        console.log("InformationIllegalityPondAction.fetchCleanInformationIllegalityPond() ----请求url: " + url);
 
         return fetch(url, myInit)
                     .then(
@@ -125,18 +142,20 @@ export function fetchCleanInformationIllegalityPond() {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(cleanInformationIllegalityPondSuccess(json))
+                            dispatch(cleanInformationIllegalityPondSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(cleanInformationIllegalityPondFailure(error));
+                        message.error(error);
                     })
     }
 }

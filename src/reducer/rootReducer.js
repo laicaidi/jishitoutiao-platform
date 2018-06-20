@@ -127,7 +127,8 @@ import {
 import { 
     getAllUserReducer,
     deleteUserReducer,
-    changeUserFiltrateReducer
+    changeUserFiltrateReducer,
+    userLoginReducer
 } from './UserReducer';
 
 const RootReducer = combineReducers({
@@ -219,6 +220,7 @@ const RootReducer = combineReducers({
     getUser: getAllUserReducer,
     deleteUser: deleteUserReducer,
     changeUserFiltrate: changeUserFiltrateReducer,
+    userState: userLoginReducer
 });
 // 顶层 reducer
 export default RootReducer

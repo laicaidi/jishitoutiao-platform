@@ -14,14 +14,11 @@ export const UpdateCrawlerCategoryComponent = Form.create()(
                 // 获取该条数据，填充至对应控件
                 if (key === 'cid') {
                     var cidInit = initData[key];
-                }
-                if (key === 'ckey') {
+                } else if (key === 'ckey') {
                     var ckeyInit = initData[key];
-                }
-                if (key === 'cname') {
+                } else if (key === 'cname') {
                     var cnameInit = initData[key];
-                }
-                if (key === 'remark') {
+                } else if (key === 'remark') {
                     var remarkInit = initData[key];
                 }
             }

@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /**
  *  action 类型
@@ -40,7 +54,7 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
         dispatch(getAllCrawlerCategoryRequest());
 
         // 拼接url请求
-        var url = "/jishitoutiao-server/crawlercategory/"
+        var url = "/crawlercategory/"
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;
         console.log("CrawlerCategoryAction.fetchGetAllCrawlerCategory() ----请求url: " + url + params);
 
@@ -51,7 +65,9 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -60,7 +76,7 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败; Code: ' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
@@ -69,6 +85,7 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
                     )
                     .catch((error) => {
                         dispatch(getAllCrawlerCategoryFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -106,7 +123,7 @@ export function fetchAddCrawlerCategory(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerCategoryRequest());
 
-        var url = "/jishitoutiao-server/crawlercategory/";
+        var url = "/crawlercategory/";
         var myInit = {
             method: "POST",
             mode: "cors",
@@ -114,7 +131,9 @@ export function fetchAddCrawlerCategory(formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 新增数据
         }
@@ -125,17 +144,19 @@ export function fetchAddCrawlerCategory(formData) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         json => {
                             dispatch(addCrawlerCategorySuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(addCrawlerCategoryFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -173,7 +194,7 @@ export function fetchDeleteCrawlerCategory(cid) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerCategoryRequest());
 
-        var url =`/jishitoutiao-server/crawlercategory/${cid}`
+        var url =`/crawlercategory/${cid}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -181,7 +202,9 @@ export function fetchDeleteCrawlerCategory(cid) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -191,18 +214,20 @@ export function fetchDeleteCrawlerCategory(cid) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(deleteCrawlerCategorySuccess(json))
+                            dispatch(deleteCrawlerCategorySuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(deleteCrawlerCategoryFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -241,7 +266,7 @@ export function fetchUpdateCrawlerCategory(cid, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerCategoryRequest());
 
-        var url = `/jishitoutiao-server/crawlercategory/${cid}`;
+        var url = `/crawlercategory/${cid}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
@@ -249,7 +274,9 @@ export function fetchUpdateCrawlerCategory(cid, formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 更新数据
         }
@@ -260,18 +287,20 @@ export function fetchUpdateCrawlerCategory(cid, formData) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 更新成功,将消息体赋值给json
                         json => {
-                            dispatch(updateCrawlerCategorySuccess(json))
+                            dispatch(updateCrawlerCategorySuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(updateCrawlerCategoryFailure(error));
+                        message.error(error);
                     })
     }
 }

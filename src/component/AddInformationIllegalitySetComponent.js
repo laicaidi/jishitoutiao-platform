@@ -16,11 +16,9 @@ export const AddInformationIllegalitySetComponent = Form.create()(
                     // 获取该条数据，填充至对应控件
                     if (key === 'ikey') {
                         var ikeyInit = initData[key];
-                    }
-                    if (key === 'ivalue') {
+                    } else if (key === 'ivalue') {
                         var ivalueInit = initData[key];
-                    }
-                    if (key === 'remark') {
+                    } else if (key === 'remark') {
                         var remarkInit = initData[key];
                     }
                 }

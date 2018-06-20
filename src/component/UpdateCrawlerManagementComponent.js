@@ -48,38 +48,27 @@ export const UpdateCrawlerManagementComponent = Form.create()(
                 // 获取该条数据，填充至对应控件
                 if (key === 'crawler_id') {
                     var crawlerIdInit = initData[key];
-                }
-                if (key === "bid") {
+                } else if (key === "bid") {
                     var bidInit = initData[key];
-                }
-                if (key === "sld") {
+                } else if (key === "sld") {
                     var sldInit = initData[key];
-                }
-                if (key === "cid") {
+                } else if (key === "cid") {
                     var cidInit = initData[key];
-                }
-                if (key === "crawler_name") {
+                } else if (key === "crawler_name") {
                     var crawlerNameInit = initData[key];
-                }
-                if (key === "base_url") {
+                } else if (key === "base_url") {
                     var baseUrlInit = initData[key];
-                }
-                if (key === "crawler_directory") {
+                } else if (key === "crawler_directory") {
                     var crawlerDirectoryInit = initData[key];
-                }
-                if (key === "crawler_weight_factor") {
+                } else if (key === "crawler_weight_factor") {
                     var crawlerWeightFactorInit = initData[key];
-                }
-                if (key === "crawler_weight_score") {
+                } else if (key === "crawler_weight_score") {
                     var crawlerWeightScoreInit = initData[key];
-                }
-                if (key === "crawler_status") {
+                } else if (key === "crawler_status") {
                     var crawlerStatusInit = initData[key];
-                }
-                if (key === "remark") {
+                } else if (key === "remark") {
                     var remarkInit = initData[key];
-                }
-                if (key === "crawler_switch") {
+                } else if (key === "crawler_switch") {
                     var crawlerSwitchInit = initData[key];
                 }
             }

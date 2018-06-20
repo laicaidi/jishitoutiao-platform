@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /*
  * action 类型
@@ -49,9 +63,8 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
         // 这并不是 redux middleware 所必须的，但这对于我们而言很方便。
 
         // 拼接请求url
-        var url = "/jishitoutiao-server/crawlersource/";        // 请求url
+        var url = "/crawlersource/";        // 请求url
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
-        console.log("CrawlerSourceAction.fetchGetAllCrawlerSource()--------请求url: " + url + params);
 
         var myInit = {
             method: "GET",
@@ -60,7 +73,9 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -69,7 +84,7 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
                             if (response.ok) {      //正常返回
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             } 
                         }
                     )
@@ -83,6 +98,7 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
                     // https://github.com/facebook/react/issues/6895
                     .catch((error) => {
                         dispatch(getAllCrawlerSourceFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -120,7 +136,7 @@ export function fetchAddCrawlerSource(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerSourceRequest());
 
-        var url = "/jishitoutiao-server/crawlersource/";
+        var url = "/crawlersource/";
         var myInit = {
             method: "POST",
             mode: 'cors',       // 允许跨域发送请求
@@ -128,7 +144,9 @@ export function fetchAddCrawlerSource(formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 新增数据
         }
@@ -139,7 +157,7 @@ export function fetchAddCrawlerSource(formData) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
@@ -147,10 +165,12 @@ export function fetchAddCrawlerSource(formData) {
                         // 新增成功,将消息体赋值给json
                         json => {
                             dispatch(addCrawlerSourceSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(addCrawlerSourceFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -188,7 +208,7 @@ export function fetchDeleteCrawlerSource(bid) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerSourceRequest());
 
-        var url =`/jishitoutiao-server/crawlersource/${bid}`
+        var url =`/crawlersource/${bid}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -196,7 +216,9 @@ export function fetchDeleteCrawlerSource(bid) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -206,18 +228,20 @@ export function fetchDeleteCrawlerSource(bid) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(deleteCrawlerSourceSuccess(json))
+                            dispatch(deleteCrawlerSourceSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(deleteCrawlerSourceFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -256,7 +280,7 @@ export function fetchUpdateCrawlerSource(bid, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerSourceRequest());
 
-        var url = `/jishitoutiao-server/crawlersource/${bid}`;
+        var url = `/crawlersource/${bid}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
@@ -264,7 +288,9 @@ export function fetchUpdateCrawlerSource(bid, formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 更新数据
         }
@@ -275,18 +301,20 @@ export function fetchUpdateCrawlerSource(bid, formData) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 更新成功,将消息体赋值给json
                         json => {
-                            dispatch(updateCrawlerSourceSuccess(json))
+                            dispatch(updateCrawlerSourceSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(updateCrawlerSourceFailure(error));
+                        message.error(error);
                     })
     }
 }

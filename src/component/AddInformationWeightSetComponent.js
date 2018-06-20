@@ -16,11 +16,9 @@ export const AddInformationWeightSetComponent = Form.create()(
                     // 获取该条数据，填充至对应控件
                     if (key === 'wkey') {
                         var wkeyInit = initData[key];
-                    }
-                    if (key === 'wvalue') {
+                    } else if (key === 'wvalue') {
                         var wvalueInit = initData[key];
-                    }
-                    if (key === 'remark') {
+                    } else if (key === 'remark') {
                         var remarkInit = initData[key];
                     }
                 }

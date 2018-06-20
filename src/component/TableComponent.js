@@ -12,6 +12,7 @@ export default class TableComponent extends Component {
         
         // 从container传递来的props渲染所需数据，value是关键字，用payloadObj对象获取
         let tableObj = this.props.tableData;
+        let rowKey = this.props.rowKey;
 
         if (tableObj !== undefined && tableObj !== null) {
             for (let key in tableObj) {
@@ -38,7 +39,7 @@ export default class TableComponent extends Component {
                 <Table 
                     columns={ columnsArr } 
                     dataSource={ dataSourceArr }
-                    rowKey="index" 
+                    rowKey={ rowKey } 
                     pagination={ false }
                     loading = { this.props.loading }
                     // 如果是得分数据/得分筛选/列表输出页，字段太多需要横向滚动，其他页面不需要

@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /**
  *  action 类型
@@ -40,7 +54,7 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
         dispatch(getAllCrawlerUserAgentRequest());
 
         // 拼接url请求
-        var url = "/jishitoutiao-server/crawleruseragent/"
+        var url = "/crawleruseragent/"
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;
         console.log("CrawlerUserAgentAction.fetchGetAllCrawlerUserAgent() ----请求url: " + url + params);
 
@@ -51,7 +65,9 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -60,7 +76,7 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败; Code: ' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
@@ -69,6 +85,7 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
                     )
                     .catch((error) => {
                         dispatch(getAllCrawlerUserAgentFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -106,7 +123,7 @@ export function fetchAddCrawlerUserAgent(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerUserAgentRequest());
 
-        var url = "/jishitoutiao-server/crawleruseragent/";
+        var url = "/crawleruseragent/";
         var myInit = {
             method: "POST",
             mode: "cors",
@@ -114,7 +131,9 @@ export function fetchAddCrawlerUserAgent(formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 新增数据
         }
@@ -125,17 +144,19 @@ export function fetchAddCrawlerUserAgent(formData) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         json => {
                             dispatch(addCrawlerUserAgentSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(addCrawlerUserAgentFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -173,7 +194,7 @@ export function fetchDeleteCrawlerUserAgent(id) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerUserAgentRequest());
 
-        var url =`/jishitoutiao-server/crawleruseragent/${id}`
+        var url =`/crawleruseragent/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -181,7 +202,9 @@ export function fetchDeleteCrawlerUserAgent(id) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -191,18 +214,20 @@ export function fetchDeleteCrawlerUserAgent(id) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(deleteCrawlerUserAgentSuccess(json))
+                            dispatch(deleteCrawlerUserAgentSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(deleteCrawlerUserAgentFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -241,7 +266,7 @@ export function fetchUpdateCrawlerUserAgent(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerUserAgentRequest());
 
-        var url = `/jishitoutiao-server/crawleruseragent/${id}`;
+        var url = `/crawleruseragent/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
@@ -249,7 +274,9 @@ export function fetchUpdateCrawlerUserAgent(id, formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 更新数据
         }
@@ -260,18 +287,20 @@ export function fetchUpdateCrawlerUserAgent(id, formData) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 更新成功,将消息体赋值给json
                         json => {
-                            dispatch(updateCrawlerUserAgentSuccess(json))
+                            dispatch(updateCrawlerUserAgentSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(updateCrawlerUserAgentFailure(error));
+                        message.error(error);
                     })
     }
 }

@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /**
  *  action 类型
@@ -43,7 +57,7 @@ export function fetchGetAllInformationWeightFiltrate(keyword, pageNum, bkey, cke
         dispatch(getAllInformationWeightFiltrateRequest());
 
         // 拼接url请求
-        var url = "/jishitoutiao-server/informationweightfiltrate/"
+        var url = "/informationweightfiltrate/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
         console.log("InformationWeightFiltrateAction.fetchGetAllInformationWeightFiltrate() ----请求url: " + url + params);
 
@@ -54,7 +68,9 @@ export function fetchGetAllInformationWeightFiltrate(keyword, pageNum, bkey, cke
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -63,15 +79,18 @@ export function fetchGetAllInformationWeightFiltrate(keyword, pageNum, bkey, cke
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败; Code: ' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
-                        json => dispatch(getAllInformationWeightFiltrateSuccess(json))
+                        json => {
+                            dispatch(getAllInformationWeightFiltrateSuccess(json));
+                        }
                     )
                     .catch((error) => {
                         dispatch(getAllInformationWeightFiltrateFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -109,7 +128,7 @@ export function fetchDeleteInformationWeightFiltrate(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationWeightFiltrateRequest());
 
-        var url =`/jishitoutiao-server/informationweightfiltrate/${id}`
+        var url =`/informationweightfiltrate/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -117,7 +136,9 @@ export function fetchDeleteInformationWeightFiltrate(id) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -127,18 +148,20 @@ export function fetchDeleteInformationWeightFiltrate(id) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(deleteInformationWeightFiltrateSuccess(json))
+                            dispatch(deleteInformationWeightFiltrateSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(deleteInformationWeightFiltrateFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -177,7 +200,7 @@ export function fetchUpdateInformationWeightFiltrate(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationWeightFiltrateRequest());
 
-        var url = `/jishitoutiao-server/informationweightfiltrate/${id}`;
+        var url = `/informationweightfiltrate/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
@@ -185,11 +208,12 @@ export function fetchUpdateInformationWeightFiltrate(id, formData) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 更新数据
         }
-        console.log("--------------fetchUpdateInformationWeightFiltrate id: " + id);
 
         return fetch(url, myInit)
                     .then(
@@ -197,18 +221,20 @@ export function fetchUpdateInformationWeightFiltrate(id, formData) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 更新成功,将消息体赋值给json
                         json => {
-                            dispatch(updateInformationWeightFiltrateSuccess(json))
+                            dispatch(updateInformationWeightFiltrateSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(updateInformationWeightFiltrateFailure(error));
+                        message.error(error);
                     })
     }
 }

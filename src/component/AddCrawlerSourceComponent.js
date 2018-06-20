@@ -17,17 +17,15 @@ export const AddCrawlerSourceComponent = Form.create()(
                   // 获取该条数据，填充至对应控件
                   if (key === 'bkey') {
                       var bkeyInit = initData[key];
-                  }
-                  if (key === 'bname') {
+                  } else if (key === 'bname') {
                       var bnameInit = initData[key];
-                  }
-                  if (key === 'homepage') {
+                  } else if (key === 'homepage') {
                       var homepageInit = initData[key];
                   }
-                  // if (key === 'logo') {
+                  // else if (key === 'logo') {
                   //     var logoInit = initData[key];
                   // }
-                  if (key === 'remark') {
+                  else if (key === 'remark') {
                       var remarkInit = initData[key];
                   }
                 }

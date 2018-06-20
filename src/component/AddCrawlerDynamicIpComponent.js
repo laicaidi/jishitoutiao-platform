@@ -16,29 +16,21 @@ export const AddCrawlerDynamicIpComponent = Form.create()(
                     // 获取该条数据，填充至对应控件
                     if (key === "ip_address") {
                         var ipAddressInit = initData[key];
-                    }
-                    if (key === "port") {
+                    } else if (key === "port") {
                         var portInit = initData[key];
-                    }
-                    if (key === "server_address") {
+                    } else if (key === "server_address") {
                         var serverAddressInit = initData[key];
-                    }
-                    if (key === "anonymity") {
+                    } else if (key === "anonymity") {
                         var anonymityInit = initData[key];
-                    }
-                    if (key === "protocol") {
+                    } else if (key === "protocol") {
                         var protocolInit = initData[key];
-                    }
-                    if (key === "speed") {
+                    } else if (key === "speed") {
                         var speedInit = initData[key];
-                    }
-                    if (key === "connect_time") {
+                    } else if (key === "connect_time") {
                         var connectTimeInit = initData[key];
-                    }
-                    if (key === "alive_duration") {
+                    } else if (key === "alive_duration") {
                         var aliveDurationInit = initData[key];
-                    }
-                    if (key === "verify_time") {
+                    } else if (key === "verify_time") {
                         var verifyTimeInit = initData[key];
                     }
                 }
@@ -108,7 +100,7 @@ export const AddCrawlerDynamicIpComponent = Form.create()(
                                 rules: [{
                                     required: true,
                                     message: "请选择类型",
-                                    pattern: '^[A-Za-z]{4,6}$'
+                                    pattern: 'HTTP|HTTPS'
                                 }]
                             })(
                                 <RadioGroup name="protocol" >

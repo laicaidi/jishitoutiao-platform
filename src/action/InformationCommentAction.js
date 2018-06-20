@@ -1,5 +1,19 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
+
+function consoleAndMessageOnError(text) {
+    console.log(text);
+    message.error(text);
+}
+
+function messageAfterFetch(success, message) {
+    if (success) {
+        message.success(message);
+    } else {
+        message.error(message);
+    }
+}
 
 /**
  *  action 类型
@@ -41,7 +55,7 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
         dispatch(getAllInformationCommentRequest());
 
         // 拼接url请求
-        var url = "/jishitoutiao-server/informationcomment/"
+        var url = "/informationcomment/"
         var params = "?keyword=" + keyword + "&bkey="  + pageNum;
         console.log("InformationCommentAction.fetchGetAllInformationComment() ----请求url: " + url + params);
 
@@ -52,7 +66,9 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -61,7 +77,7 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
                             if (response.ok) {
                                 return response.json();
                             } else {
-                                console.error('请求失败; Code: ' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
@@ -70,6 +86,7 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
                     )
                     .catch((error) => {
                         dispatch(getAllInformationCommentFailure(error));
+                        message.error(error);
                     })
     }
 }
@@ -107,7 +124,7 @@ export function fetchDeleteInformationComment(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationCommentRequest());
 
-        var url =`/jishitoutiao-server/informationcomment/${id}`
+        var url =`/informationcomment/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
@@ -115,7 +132,9 @@ export function fetchDeleteInformationComment(id) {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -125,18 +144,20 @@ export function fetchDeleteInformationComment(id) {
                             if (response.ok) {
                                 return response.json()
                             } else {
-                                console.error('请求失败；Code:' + response.status);
+                                consoleAndMessageOnError('请求失败；Code:' + response.status);
                             }
                         }
                     )
                     .then(
                         // 删除成功,将消息体赋值给json
                         json => {
-                            dispatch(deleteInformationCommentSuccess(json))
+                            dispatch(deleteInformationCommentSuccess(json));
+                            messageAfterFetch(json.status.success, json.status.message);
                         }
                     )
                     .catch((error) => {
                         dispatch(deleteInformationCommentFailure(error));
+                        message.error(error);
                     })
     }
 }

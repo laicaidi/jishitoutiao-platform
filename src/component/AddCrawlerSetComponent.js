@@ -16,11 +16,9 @@ export const AddCrawlerSetComponent = Form.create()(
                     // 获取该条数据，填充至对应控件
                     if (key === 'ckey') {
                         var ckeyInit = initData[key];
-                    }
-                    if (key === 'cvalue') {
+                    } else if (key === 'cvalue') {
                         var cvalueInit = initData[key];
-                    }
-                    if (key === 'remark') {
+                    } else if (key === 'remark') {
                         var remarkInit = initData[key];
                     }
                 }

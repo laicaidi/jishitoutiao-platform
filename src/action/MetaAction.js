@@ -1,5 +1,6 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
+import { message } from 'antd';
 
 /*
  * action 类型
@@ -42,7 +43,7 @@ export function fetchGetMeta() {
         dispatch(getMetaRequest());
 
         // 拼接请求url
-        var url = "/jishitoutiao-server/meta/";        // 请求url
+        var url = "/meta/";        // 请求url
         console.log("MetaAction.fetchGetMeta()--------请求url: " + url);
 
         var myInit = {
@@ -52,7 +53,9 @@ export function fetchGetMeta() {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8'
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
+                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url, myInit)
@@ -62,15 +65,16 @@ export function fetchGetMeta() {
                                 return response.json()
                             } else {
                                 console.error('请求失败；Code:' + response.status);
+                                message.error('请求失败；Code:' + response.status);
                             } 
                         }
                     )
                     .then(
-
                         json => dispatch(getMetaSuccess(json))
                     )
                     .catch((error) => {
                         dispatch(getMetaFailure(error));
+                        message.error(error);
                     })
     }
 }

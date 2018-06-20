@@ -6,7 +6,7 @@ import {
     fetchDeleteUser,
     changeUserFiltrate,
 } from '../action/UserAction';
-import { Layout, message, Popconfirm } from 'antd';
+import { Layout, Popconfirm } from 'antd';
 import SearchComponent from '../component/SearchComponent';
 import TableComponent from '../component/TableComponent';
 
@@ -18,7 +18,6 @@ class UserContainer extends Component {
         // 绑定回调方法
         this.handleGet = this.handleGet.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        this.deleteResult = this.deleteResult.bind(this);  
         this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
 
         // 初始化数据
@@ -52,7 +51,12 @@ class UserContainer extends Component {
                         payloadObj[field].unshift({
                             title: '序号',
                             dataIndex: 'index',
-                            key: 'index'
+                            key: 'index',
+                            render: (text, record, index) => {
+                                return (
+                                    <span>{index + 1}</span>
+                                )
+                            }
                         });
 
                         // 在数组末尾添加操作标题
@@ -103,14 +107,6 @@ class UserContainer extends Component {
                         });
                     }
                 }
-
-                // 判断list节点,挂载的是表格所需数据
-                if (field === "list") {
-                    // 增加序号序列
-                    for (let i = 0; i < payloadObj[field].length; i++) {
-                        payloadObj[field][i]['index'] = i + 1;
-                    }
-                }
             }
         }
     }
@@ -151,33 +147,7 @@ class UserContainer extends Component {
         // 提交删除请求
         dispatch(fetchDeleteUser(informationCommentId));
 
-        // 100毫秒后(删除成功/失败)，弹出message
-        setTimeout(this.deleteResult, 100);
-    }
-
-    // 根据删除请求返回status的状态，弹出对应的成功/失败message
-    deleteResult() {
-        const { deleteStatus } = this.props;
-        let deleteResultSuccess = false;
-        let deleteResultMessage = '';
-
-        for (let key in deleteStatus) {
-            if (key === 'success') {    // 是否成功标识
-                if (deleteStatus[key]) {    // 成功
-                    deleteResultSuccess = true;
-                }
-            }
-            if (key === 'message') {
-                deleteResultMessage = deleteStatus[key];
-            }
-        }
-
-        if (deleteResultSuccess) {    // 删除成功
-            message.success(deleteResultMessage);
-        } else {
-            message.error(deleteResultMessage);
-        }
-        this.handleGet();
+        setTimeout(this.handleGet, 200);
     }
 
     // 搜索框内容改变时的回调
@@ -192,7 +162,7 @@ class UserContainer extends Component {
         return ( 
             <Content style={ {margin: '24px 16px', padding: 24, background: '#fff', minHeight: 615} }>
                 <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
-                <TableComponent tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
+                <TableComponent rowKey='user_id' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
             </Content>
         );
     }

@@ -27,42 +27,29 @@ export const AddInformationSourceComponent = Form.create()(
                     // 获取该条数据，填充至对应控件
                     if (key === "crawler_id") {
                         var crawlerIdInit = initData[key];
-                    }
-                    if (key === "crawler_name") {
+                    } else if (key === "crawler_name") {
                         var crawlerNameInit = initData[key];
-                    }
-                    if (key === "bid") {
+                    } else if (key === "bid") {
                         var bidInit = initData[key];
-                    }
-                    if (key === "bname") {
+                    } else if (key === "bname") {
                         var bnameInit = initData[key];
-                    }
-                    
-                    if (key === "cid") {
+                    } else if (key === "cid") {
                         var cidInit = initData[key];
-                    }
-                    if (key === "cname") {
+                    } else if (key === "cname") {
                         var cnameInit = initData[key];
-                    }
-                    if (key === "title") {
+                    } else if (key === "title") {
                         var titleInit = initData[key];
-                    }
-                    if (key === "read_count") {
+                    } else if (key === "read_count") {
                         var readCountInit = initData[key];
-                    }
-                    if (key === "comment_count") {
+                    } else if (key === "comment_count") {
                         var commentCountInit = initData[key];
-                    }
-                    if (key === "like_count") {
+                    } else if (key === "like_count") {
                         var likeCountInit = initData[key];
-                    }
-                    if (key === "word_count") {
+                    } else if (key === "word_count") {
                         var wordCountInit = initData[key];
-                    }
-                    if (key === "url") {
+                    } else if (key === "url") {
                         var urlInit = initData[key];
-                    }
-                    if (key === "created_time") {
+                    } else if (key === "created_time") {
                         var createdTimeInit = initData[key];
                     }
                 }

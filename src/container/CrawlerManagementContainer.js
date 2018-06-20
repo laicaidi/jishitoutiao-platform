@@ -8,7 +8,7 @@ import {
     fetchUpdateCrawlerManagement,
     changeCrawlerManagementFiltrate
 } from '../action/CrawlerManagementAction';
-import { Layout, Button, message, Divider, Popconfirm, Select } from 'antd';
+import { Layout, Button, Divider, Popconfirm, Select } from 'antd';
 import SearchComponent from '../component/SearchComponent';
 import TableComponent from '../component/TableComponent';
 import { AddCrawlerManagementComponent } from '../component/AddCrawlerManagementComponent';
@@ -32,17 +32,18 @@ class CrawlerManagementContainer extends Component {
         this.handleShowCopyModal = this.handleShowCopyModal.bind(this);
         this.addResult = this.addResult.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        this.deleteResult = this.deleteResult.bind(this);
         this.handleShowUpdateModal = this.handleShowUpdateModal.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
-        this.updateResult = this.updateResult.bind(this);
         this.handleUpdateModalCancel = this.handleUpdateModalCancel.bind(this);
+        this.updateResult = this.updateResult.bind(this);
         this.handleSourceChange = this.handleSourceChange.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleSwitchChange = this.handleSwitchChange.bind(this);
         this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
-
+    }
+    
+    componentWillMount() {
         // 初始化数据
         this.handleGet();
     }
@@ -76,7 +77,12 @@ class CrawlerManagementContainer extends Component {
                         payloadObj[field].unshift({
                             title: '序号',
                             dataIndex: 'index',
-                            key: 'index'
+                            key: 'index',
+                            render: (text, record, index) => {
+                                return (
+                                    <span>{index + 1}</span>
+                                )
+                            }
                         });
 
                         // 在数组末尾添加操作标题
@@ -142,14 +148,6 @@ class CrawlerManagementContainer extends Component {
                                 )
                             }
                         });
-                    }
-                }
-
-                // 判断list节点,挂载的是表格所需数据
-                if (field === "list") {
-                    // 增加序号序列
-                    for (let i = 0; i < payloadObj[field].length; i++) {
-                        payloadObj[field][i]['index'] = i + 1;
                     }
                 }
             }
@@ -293,8 +291,7 @@ class CrawlerManagementContainer extends Component {
             // 提交新增请求
             dispatch(fetchAddCrawlerManagement(formData));
 
-            // 100毫秒后(删除成功/失败)，弹出message
-            setTimeout(this.addResult, 100);
+            setTimeout(this.addResult, 200);
         });
     }
 
@@ -303,32 +300,19 @@ class CrawlerManagementContainer extends Component {
         this.addFormRef = formRef;
     }
 
-    // 根据新增返回status的状态，弹出对应的成功/失败message
     addResult() {
         const { createStatus } = this.props;
         const form = this.addFormRef.props.form;
-        let addResultSuccess = false;
-        let addResultMessage = '';
-
         for (let key in createStatus) {
-            if (key === 'success') {    // 是否成功标识
-                if (createStatus[key]) {    // 成功
-                    addResultSuccess = true;
-                }
+          if (key === 'success') {
+            const addResultSuccess = createStatus[key];
+            if (addResultSuccess) {   // 新增成功
+              this.setState({ addModalVisible: false});   // 关闭对话框
+              form.resetFields();   // 重置表单组件的值
+              this.handleGet();
             }
-            if (key === 'message') {    // 服务端返回文案
-                addResultMessage = createStatus[key];
-            }
+          }
         }
-
-        if (addResultSuccess) {   // 新增成功
-            message.success(addResultMessage);
-            this.setState({ addModalVisible: false});   // 关闭对话框
-            form.resetFields();   // 重置表单组件的值
-        } else {
-            message.error(addResultMessage);
-        }
-        this.handleGet();
     }
 
     // 删除爬虫
@@ -337,33 +321,7 @@ class CrawlerManagementContainer extends Component {
         // 提交删除请求
         dispatch(fetchDeleteCrawlerManagement(crawlerId));
 
-        // 100毫秒后(删除成功/失败)，弹出message
-        setTimeout(this.deleteResult, 100);
-    }
-
-    // 根据删除请求返回status的状态，弹出对应的成功/失败message
-    deleteResult() {
-        const { deleteStatus } = this.props;
-        let deleteResultSuccess = false;
-        let deleteResultMessage = '';
-
-        for (let key in deleteStatus) {
-            if (key === 'success') {    // 是否成功标识
-                if (deleteStatus[key]) {    // 成功
-                    deleteResultSuccess = true;
-                }
-            }
-            if (key === 'message') {
-                deleteResultMessage = deleteStatus[key];
-            }
-        }
-
-        if (deleteResultSuccess) {    // 删除成功
-            message.success(deleteResultMessage);
-        } else {
-            message.error(deleteResultMessage);
-        }
-        this.handleGet();
+        setTimeout(this.handleGet, 200);
     }
 
     // 更新爬虫
@@ -388,8 +346,7 @@ class CrawlerManagementContainer extends Component {
             // 提交更新请求
             dispatch(fetchUpdateCrawlerManagement(crawlerId, formData));
 
-            // 100毫秒后(删除成功)，弹出message
-            setTimeout(this.updateResult, 100);
+            setTimeout(this.updateResult, 200);
         });
     }
 
@@ -398,32 +355,19 @@ class CrawlerManagementContainer extends Component {
         this.updateFormRef = formRef;
     }
 
-    // 根据更新请求返回status的状态，弹出对应的成功/失败message
     updateResult() {
         const { updateStatus } = this.props;
         const form = this.updateFormRef.props.form;
-        let updateResultSuccess = false;
-        let updateResultMessage = '';
-
         for (let key in updateStatus) {
-            if (key === 'success') {    // 是否成功标识
-                if (updateStatus[key]) {    // 成功
-                    updateResultSuccess = true;
+            if (key === 'success') {
+                const updateResultSuccess = updateStatus[key];
+                if (updateResultSuccess) {    // 更新成功     
+                    this.setState({ updateModalVisible: false});   // 关闭对话框
+                    form.resetFields();   // 重置表单组件的值
+                    this.handleGet();
                 }
             }
-            if (key === 'message') {
-                updateResultMessage = updateStatus[key];
-            }
         }
-
-        if (updateResultSuccess) {    // 更新成功
-            message.success(updateResultMessage); 
-            this.setState({ updateModalVisible: false});   // 关闭对话框
-            form.resetFields();   // 重置表单组件的值
-        } else {
-            message.error(updateResultMessage);
-        }
-        this.handleGet();
     }
 
     // 源下拉列表更改时的回调
@@ -534,7 +478,7 @@ class CrawlerManagementContainer extends Component {
                     <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
                     <Button type="primary" style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增爬虫</Button>
                 </div>
-                <TableComponent tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
+                <TableComponent rowKey='crawler_id' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
                 <AddCrawlerManagementComponent 
                     wrappedComponentRef={ this.wrappedAddFormRef }
                     visible={ this.state.addModalVisible }

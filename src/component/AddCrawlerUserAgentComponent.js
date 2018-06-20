@@ -16,23 +16,17 @@ export const AddCrawlerUserAgentComponent = Form.create()(
                   // 获取该条数据，填充至对应控件
                   if (key === 'accept') {
                       var acceptInit = initData[key];
-                  }
-                  if (key === 'accept_encoding') {
+                  } else if (key === 'accept_encoding') {
                       var acceptEncodingInit = initData[key];
-                  }
-                  if (key === 'accept_language') {
+                  } else if (key === 'accept_language') {
                       var acceptLanguageInit = initData[key];
-                  }
-                  if (key === 'connection') {
+                  } else if (key === 'connection') {
                       var connectionInit = initData[key];
-                  }
-                  if (key === 'host') {
+                  } else if (key === 'host') {
                       var hostInit = initData[key];
-                  }
-                  if (key === 'user_agent') {
+                  } else if (key === 'user_agent') {
                       var userAgentInit = initData[key];
-                  }
-                  if (key === 'remark') {
+                  } else if (key === 'remark') {
                       var remarkInit = initData[key];
                   }
                 }

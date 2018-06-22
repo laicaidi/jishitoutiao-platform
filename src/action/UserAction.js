@@ -1,6 +1,8 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+// action文件
+import { routerActions } from 'react-router-redux';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -102,7 +104,7 @@ function userLoginRequest() {
 function userLoginSuccess(json) {
     return {
         type: USER_LOGIN_SUCCESS,
-        auth: json.authentication,
+        auth: json.auth ? json.auth : "",
         status: json.status
     }
 }
@@ -155,6 +157,14 @@ export function fetchUserLogin(formData) {
                         // 登录成功,将消息体赋值给json
                         json => {
                             dispatch(userLoginSuccess(json));
+                            if (json.status.success) {
+                                if (json.auth.passport === true) {
+                                    // 跳转 
+                                    dispatch(routerActions.push('/home')); 
+                                }
+                            } else {
+                               messageAfterFetch(json.status.success, json.status.message); 
+                            }
                         }
                     )
                     .catch((error) => {

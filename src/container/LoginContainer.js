@@ -5,6 +5,9 @@ import {
   fetchUserLogin,
 } from '../action/UserAction';
 import { Form, Icon, Input, Button} from 'antd';
+import {
+  withRouter,
+} from 'react-router-dom';
 import '../css/Login.css';
 const FormItem = Form.Item;
 
@@ -42,10 +45,9 @@ const LoginContainer =  Form.create()(
         for (let key in values) {
           // 赋值给传递对象
           formData[key] = values[key];
-
-          // 提交登录请求
-          dispatch(fetchUserLogin(formData));
         }
+        // 提交登录请求
+        dispatch(fetchUserLogin(formData));
       });
     }
     
@@ -111,8 +113,8 @@ LoginContainer.propTypes = {
 // 从state中注入数据
 function mapStateToProps(state) {
   return {
-    auth: state.userState.auth    // 用户(登录)状态
+    auth: state.userLoginState.auth    // 用户(登录)状态
   }
 }
 
-export default connect(mapStateToProps)(LoginContainer);
+export default withRouter(connect(mapStateToProps)(LoginContainer));

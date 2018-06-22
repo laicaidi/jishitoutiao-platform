@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux';
 import {
+    routerReducer
+  } from "react-router-redux";
+import {
     getMetaReducer,
     updateScreenReducer
 } from './MetaReducer';
@@ -220,7 +223,8 @@ const RootReducer = combineReducers({
     getUser: getAllUserReducer,
     deleteUser: deleteUserReducer,
     changeUserFiltrate: changeUserFiltrateReducer,
-    userState: userLoginReducer
+    userLoginState: userLoginReducer,
+    router: routerReducer
 });
 // 顶层 reducer
 export default RootReducer

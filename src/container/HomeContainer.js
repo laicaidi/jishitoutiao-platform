@@ -5,7 +5,8 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  withRouter
+  withRouter,
+  Redirect
 } from 'react-router-dom';
 import {
   fetchGetMeta,
@@ -57,9 +58,9 @@ class HomeContainer extends Component {
       }
     }
 
-    // if (!passport) {   // 未登录
-    //   this.props.history.push("/login");    // 跳转至登录页
-    // }
+    if (!passport) {   // 未登录
+      this.props.history.push("/login");    // 跳转至登录页
+    }
   }
 
   componentDidMount() {
@@ -109,27 +110,285 @@ class HomeContainer extends Component {
           <Layout style={ {minHeight: 663} }>    
             <SiderComponent />
             <Switch>
-              <Route path='/crawlersource' exact component={ CrawlerSourceContainer } />
-              <Route path='/crawlercategory' exact component={ CrawlerCategoryContainer } />
-              <Route path='/crawlermanagement' exact component={ CrawlerManagementContainer } />
-              <Route path='/crawleruseragent' exact component={ CrawlerUserAgentContainer } />
-              <Route path='/crawlerdynamicip' exact component={ CrawlerDynamicIpContainer } />
-              <Route path='/crawlerset' exact component={ CrawlerSetContainer } />
-              <Route path='/informationsource' exact component={ InformationSourceContainer } />
-              <Route path='/informationrepetitionpond' exact component={ InformationRepetitionPondContainer } />
-              <Route path='/informationrepetitionresult' exact component={ InformationRepetitionResultContainer } />
-              <Route path='/informationillegalitypond' exact component={ InformationIllegalityPondContainer } />
-              <Route path='/informationillegalityresult' exact component={ InformationIllegalityResultContainer } />
-              <Route path='/informationillegalityset' exact component={ InformationIllegalitySetContainer } />
-              <Route path='/informationweightsource' exact component={ InformationWeightSourceContainer } />
-              <Route path='/informationweightsort' exact component={ InformationWeightSortContainer } />
-              <Route path='/informationweightfiltrate' exact component={ InformationWeightFiltrateContainer } />
-              <Route path='/informationweightset' exact component={ InformationWeightSetContainer } />
-              <Route path='/informationoutputlist' exact component={ InformationOutputListContainer } />
-              <Route path='/informationoutputarticle' exact component={ InformationOutputArticleContainer } />
-              <Route path='/informationcomment' exact component={ InformationCommentContainer } />
-              <Route path='/user' exact component={ UserContainer } />
-              {/* <Route path='/' component={ CrawlerSourceContainer } /> */}
+              <Route path='/crawlersource' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }
+                if (!passport) {   // 未登录
+                  return <Redirect to="/login" />
+                } else {
+                  return <CrawlerSourceContainer />
+                }
+              } } />
+
+              <Route path='/crawlercategory' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/login" />
+                } else {
+                  return <CrawlerCategoryContainer />
+                }
+              } } />
+
+              <Route path='/crawlermanagement' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/login" />
+                } else {
+                  return <CrawlerManagementContainer />
+                }
+              } } />
+
+              <Route path='/crawleruseragent' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <CrawlerUserAgentContainer />
+                }
+              } } />
+
+              <Route path='/crawlerdynamicip' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <CrawlerDynamicIpContainer />
+                }
+              } } />
+
+              <Route path='/crawlerset' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <CrawlerSetContainer />
+                }
+              } } />
+
+              <Route path='/informationsource' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationSourceContainer />
+                }
+              } } />
+
+              <Route path='/informationrepetitionpond' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationRepetitionPondContainer />
+                }
+              } } />
+
+              <Route path='/informationrepetitionresult' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationRepetitionResultContainer />
+                }
+              } } />
+
+              <Route path='/informationillegalitypond' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationIllegalityPondContainer />
+                }
+              } } />
+
+              <Route path='/informationillegalityresult' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationIllegalityResultContainer />
+                }
+              } } />
+
+              <Route path='/informationillegalityset' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationIllegalitySetContainer />
+                }
+              } } />
+
+              <Route path='/informationweightsource' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationWeightSourceContainer />
+                }
+              } } />
+
+              <Route path='/informationweightsort' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationWeightSortContainer />
+                }
+              } } />
+
+              <Route path='/informationweightfiltrate' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationWeightFiltrateContainer />
+                }
+              } } />
+
+              <Route path='/informationweightset' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationWeightSetContainer />
+                }
+              } } />
+
+              <Route path='/informationoutputlist' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationOutputListContainer />
+                }
+              } } />
+
+              <Route path='/informationoutputarticle' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationOutputArticleContainer />
+                }
+              } } />
+
+              <Route path='/informationcomment' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <InformationCommentContainer />
+                }
+              } } />
+
+              <Route path='/user' exact render={ () => {
+                const { auth } = this.props;
+                for (let key in auth) {
+                  if (key === "passport") {
+                    var passport = auth[key];   // 用户登录状态
+                  }
+                }     
+                if (!passport) {   // 未登录
+                  return <Redirect to="/home" />
+                } else {
+                  return <UserContainer />
+                }
+              } } />
             </Switch>
           </Layout>      
         </Layout>
@@ -149,7 +408,7 @@ function mapStateToProps(state) {
     isFetching: state.getMeta.isFetching,   // 获取元数据加载态
     status: state.getMeta.status,   // 获取元数据结果
     menu: state.getMeta.menu,   // 菜单元数据
-    auth: state.userState.auth    // 用户(登录)状态
+    auth: state.userLoginState.auth    // 用户(登录)状态
   }
 }
 

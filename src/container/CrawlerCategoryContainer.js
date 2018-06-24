@@ -247,7 +247,6 @@ class CrawlerCategoryContainer extends Component {
             if (addResultSuccess) {   // 新增成功
               this.setState({ addModalVisible: false});   // 关闭对话框
               form.resetFields();   // 重置表单组件的值
-              this.handleGet();
             }
           }
         }
@@ -263,8 +262,6 @@ class CrawlerCategoryContainer extends Component {
         const { dispatch } = this.props;
         // 提交删除请求
         dispatch(fetchDeleteCrawlerCategory(id));
-
-        setTimeout(this.handleGet, 200);
     }
 
     // 更新类别
@@ -307,7 +304,6 @@ class CrawlerCategoryContainer extends Component {
                 if (updateResultSuccess) {    // 更新成功     
                     this.setState({ updateModalVisible: false});   // 关闭对话框
                     form.resetFields();   // 重置表单组件的值
-                    this.handleGet();
                 }
             }
         }

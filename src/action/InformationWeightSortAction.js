@@ -56,6 +56,10 @@ export function fetchGetAllInformationWeightSort(keyword, pageNum, bkey, ckey) {
     return function(dispatch, getState) {
         dispatch(getAllInformationWeightSortRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/informationweightsort/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
@@ -65,6 +69,7 @@ export function fetchGetAllInformationWeightSort(keyword, pageNum, bkey, ckey) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -128,11 +133,16 @@ export function fetchDeleteInformationWeightSort(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationWeightSortRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationweightsort/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -157,6 +167,7 @@ export function fetchDeleteInformationWeightSort(id) {
                         json => {
                             dispatch(deleteInformationWeightSortSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationWeightSort());
                         }
                     )
                     .catch((error) => {
@@ -200,11 +211,16 @@ export function fetchUpdateInformationWeightSort(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationWeightSortRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/informationweightsort/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -231,6 +247,7 @@ export function fetchUpdateInformationWeightSort(id, formData) {
                         json => {
                             dispatch(updateInformationWeightSortSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationWeightSort());
                         }
                     )
                     .catch((error) => {

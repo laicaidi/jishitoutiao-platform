@@ -56,6 +56,10 @@ export function fetchGetAllInformationRepetitionPond(keyword, pageNum, bkey, cke
     return function(dispatch, getState) {
         dispatch(getAllInformationRepetitionPondRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/informationrepetitionpond/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
@@ -65,6 +69,7 @@ export function fetchGetAllInformationRepetitionPond(keyword, pageNum, bkey, cke
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -122,11 +127,16 @@ export function fetchCleanInformationRepetitionPond() {
     return function(dispatch, getState) {
         dispatch(cleanInformationRepetitionPondRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationrepetitionpond/`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -151,6 +161,7 @@ export function fetchCleanInformationRepetitionPond() {
                         json => {
                             dispatch(cleanInformationRepetitionPondSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationRepetitionPond());
                         }
                     )
                     .catch((error) => {

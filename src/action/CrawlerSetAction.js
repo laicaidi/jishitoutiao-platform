@@ -52,6 +52,10 @@ export function fetchGetAllCrawlerSet(keyword, pageNum) {
     return function(dispatch, getState) {
         dispatch(getAllCrawlerSetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接请求url
         var url = "/crawlerset/";        // 请求url
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
@@ -61,6 +65,7 @@ export function fetchGetAllCrawlerSet(keyword, pageNum) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -122,11 +127,16 @@ export function fetchAddCrawlerSet(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerSetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/crawlerset/";
         var myInit = {
             method: "POST",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -152,6 +162,7 @@ export function fetchAddCrawlerSet(formData) {
                         json => {
                             dispatch(addCrawlerSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerSet());
                         }
                     )
                     .catch((error) => {
@@ -194,11 +205,16 @@ export function fetchDeleteCrawlerSet(id) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerSetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/crawlerset/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -223,6 +239,7 @@ export function fetchDeleteCrawlerSet(id) {
                         json => {
                             dispatch(deleteCrawlerSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerSet());
                         }
                     )
                     .catch((error) => {
@@ -266,11 +283,16 @@ export function fetchUpdateCrawlerSet(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerSetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/crawlerset/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -296,6 +318,7 @@ export function fetchUpdateCrawlerSet(id, formData) {
                         json => {
                             dispatch(updateCrawlerSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerSet());
                         }
                     )
                     .catch((error) => {

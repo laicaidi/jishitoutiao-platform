@@ -42,6 +42,10 @@ export function fetchGetMeta() {
         // 首次 dispatch：更新应用的 state 来通知 API 请求发起了。
         dispatch(getMetaRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接请求url
         var url = "/meta/";        // 请求url
         console.log("MetaAction.fetchGetMeta()--------请求url: " + url);
@@ -50,6 +54,7 @@ export function fetchGetMeta() {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',

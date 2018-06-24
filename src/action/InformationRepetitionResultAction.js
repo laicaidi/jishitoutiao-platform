@@ -56,6 +56,10 @@ export function fetchGetAllInformationRepetitionResult(keyword, pageNum, bkey, c
     return function(dispatch, getState) {
         dispatch(getAllInformationRepetitionResultRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/informationrepetitionresult/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
@@ -65,6 +69,7 @@ export function fetchGetAllInformationRepetitionResult(keyword, pageNum, bkey, c
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -126,11 +131,16 @@ export function fetchDeleteInformationRepetitionResult(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationRepetitionResultRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationrepetitionresult/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -155,6 +165,7 @@ export function fetchDeleteInformationRepetitionResult(id) {
                         json => {
                             dispatch(deleteInformationRepetitionResultSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationRepetitionResult());
                         }
                     )
                     .catch((error) => {
@@ -198,11 +209,16 @@ export function fetchUpdateInformationRepetitionResult(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationRepetitionResultRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/informationrepetitionresult/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -228,6 +244,7 @@ export function fetchUpdateInformationRepetitionResult(id, formData) {
                         json => {
                             dispatch(updateInformationRepetitionResultSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationRepetitionResult());
                         }
                     )
                     .catch((error) => {

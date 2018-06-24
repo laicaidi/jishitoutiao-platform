@@ -56,6 +56,10 @@ export function fetchGetAllInformationWeightFiltrate(keyword, pageNum, bkey, cke
     return function(dispatch, getState) {
         dispatch(getAllInformationWeightFiltrateRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/informationweightfiltrate/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
@@ -65,6 +69,7 @@ export function fetchGetAllInformationWeightFiltrate(keyword, pageNum, bkey, cke
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -128,11 +133,16 @@ export function fetchDeleteInformationWeightFiltrate(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationWeightFiltrateRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationweightfiltrate/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -157,6 +167,7 @@ export function fetchDeleteInformationWeightFiltrate(id) {
                         json => {
                             dispatch(deleteInformationWeightFiltrateSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationWeightFiltrate());
                         }
                     )
                     .catch((error) => {
@@ -200,11 +211,16 @@ export function fetchUpdateInformationWeightFiltrate(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationWeightFiltrateRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/informationweightfiltrate/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -230,6 +246,7 @@ export function fetchUpdateInformationWeightFiltrate(id, formData) {
                         json => {
                             dispatch(updateInformationWeightFiltrateSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationWeightFiltrate());
                         }
                     )
                     .catch((error) => {

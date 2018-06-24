@@ -54,6 +54,10 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
     return function(dispatch, getState) {
         dispatch(getAllInformationCommentRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/informationcomment/"
         var params = "?keyword=" + keyword + "&bkey="  + pageNum;
@@ -63,6 +67,7 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -124,11 +129,16 @@ export function fetchDeleteInformationComment(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationCommentRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationcomment/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -153,6 +163,7 @@ export function fetchDeleteInformationComment(id) {
                         json => {
                             dispatch(deleteInformationCommentSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationComment());
                         }
                     )
                     .catch((error) => {

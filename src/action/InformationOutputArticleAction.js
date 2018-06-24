@@ -56,6 +56,10 @@ export function fetchGetAllInformationOutputArticle(keyword, pageNum, bkey, ckey
     return function(dispatch, getState) {
         dispatch(getAllInformationOutputArticleRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/informationoutputarticle/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
@@ -65,6 +69,7 @@ export function fetchGetAllInformationOutputArticle(keyword, pageNum, bkey, ckey
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -126,11 +131,16 @@ export function fetchDeleteInformationOutputArticle(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationOutputArticleRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationoutputarticle/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -155,6 +165,7 @@ export function fetchDeleteInformationOutputArticle(id) {
                         json => {
                             dispatch(deleteInformationOutputArticleSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationOutputArticle());
                         }
                     )
                     .catch((error) => {
@@ -198,11 +209,16 @@ export function fetchUpdateInformationOutputArticle(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationOutputArticleRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/informationoutputarticle/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -228,6 +244,7 @@ export function fetchUpdateInformationOutputArticle(id, formData) {
                         json => {
                             dispatch(updateInformationOutputArticleSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationOutputArticle());
                         }
                     )
                     .catch((error) => {

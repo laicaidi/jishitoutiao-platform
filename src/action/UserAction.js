@@ -56,6 +56,10 @@ export function fetchGetAllUser(keyword, pageNum) {
     return function(dispatch, getState) {
         dispatch(getAllUserRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/user/"
         var params = "?keyword=" + keyword + "&bkey="  + pageNum;
@@ -65,6 +69,7 @@ export function fetchGetAllUser(keyword, pageNum) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -207,11 +212,16 @@ export function fetchDeleteUser(id) {
     return function(dispatch, getState) {
         dispatch(deleteUserRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/user/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -236,6 +246,7 @@ export function fetchDeleteUser(id) {
                         json => {
                             dispatch(deleteUserSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllUser());
                         }
                     )
                     .catch((error) => {

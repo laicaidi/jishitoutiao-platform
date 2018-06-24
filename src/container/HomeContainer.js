@@ -50,6 +50,7 @@ class HomeContainer extends Component {
 
   // -------登录鉴权 + 自动适应屏幕宽高 + 获取元数据-------
   componentWillMount() {
+    this.mounted = true;
     const { auth } = this.props;
     console.log("HomeContainer auth: " + auth);
     for (let key in auth) {
@@ -60,17 +61,25 @@ class HomeContainer extends Component {
 
     if (!passport) {   // 未登录
       this.props.history.push("/login");    // 跳转至登录页
+    } else {
+      this.handleGetMeta();
     }
   }
 
   componentDidMount() {
-    this.updateSize();
-    window.addEventListener('resize', () => this.updateSize());
-    this.handleGetMeta();
+    if (this.mounted) {
+      this.updateSize();
+      window.addEventListener('resize', () => this.updateSize());
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.updateSize());
+    this.mounted = false;
+    // 重写组件的setState方法，直接返回空，避免”Can only update a mounted or mounting component“异常
+    this.setState = (state,callback)=>{
+      return;
+    }; 
   }
   
   // 自适应屏幕
@@ -85,10 +94,12 @@ class HomeContainer extends Component {
       if (!height) {
         height = document.body.clientHeight;
       }
+
       this.setState({
         width,
         height
       });
+
       // 将宽高通过action保存至store中，以便其他组件使用
       dispatch(updateScreenSize(width, height));
     } catch(ignore) {
@@ -160,7 +171,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <CrawlerUserAgentContainer />
                 }
@@ -174,7 +185,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <CrawlerDynamicIpContainer />
                 }
@@ -188,7 +199,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <CrawlerSetContainer />
                 }
@@ -202,7 +213,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationSourceContainer />
                 }
@@ -216,7 +227,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationRepetitionPondContainer />
                 }
@@ -230,7 +241,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationRepetitionResultContainer />
                 }
@@ -244,7 +255,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationIllegalityPondContainer />
                 }
@@ -258,7 +269,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationIllegalityResultContainer />
                 }
@@ -272,7 +283,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationIllegalitySetContainer />
                 }
@@ -286,7 +297,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationWeightSourceContainer />
                 }
@@ -300,7 +311,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationWeightSortContainer />
                 }
@@ -314,7 +325,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationWeightFiltrateContainer />
                 }
@@ -328,7 +339,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationWeightSetContainer />
                 }
@@ -342,7 +353,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationOutputListContainer />
                 }
@@ -356,7 +367,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationOutputArticleContainer />
                 }
@@ -370,7 +381,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <InformationCommentContainer />
                 }
@@ -384,7 +395,7 @@ class HomeContainer extends Component {
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/home" />
+                  return <Redirect to="/login" />
                 } else {
                   return <UserContainer />
                 }

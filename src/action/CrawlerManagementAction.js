@@ -57,6 +57,10 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
     return function(dispatch, getState) {
         dispatch(getAllCrawlerManagementRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/crawlermanagement/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&crawler_status=" + crawlerStatus + "&crawler_switch=" + crawlerSwitch + "&page_num=" + pageNum;
@@ -66,6 +70,7 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -127,11 +132,16 @@ export function fetchAddCrawlerManagement(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerManagementRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/crawlermanagement/";
         var myInit = {
             method: "POST",
             mode: "cors",
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -156,6 +166,7 @@ export function fetchAddCrawlerManagement(formData) {
                         json => {
                             dispatch(addCrawlerManagementSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerManagement());
                         }
                     )
                     .catch((error) => {
@@ -198,11 +209,16 @@ export function fetchDeleteCrawlerManagement(id) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerManagementRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/crawlermanagement/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -227,6 +243,7 @@ export function fetchDeleteCrawlerManagement(id) {
                         json => {
                             dispatch(deleteCrawlerManagementSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerManagement());
                         }
                     )
                     .catch((error) => {
@@ -270,11 +287,16 @@ export function fetchUpdateCrawlerManagement(crawlerId, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerManagementRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/crawlermanagement/${crawlerId}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -300,6 +322,7 @@ export function fetchUpdateCrawlerManagement(crawlerId, formData) {
                         json => {
                             dispatch(updateCrawlerManagementSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerManagement());
                         }
                     )
                     .catch((error) => {

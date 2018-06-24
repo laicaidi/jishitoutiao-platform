@@ -225,8 +225,6 @@ class InformationWeightFiltrateContainer extends Component {
         const { dispatch } = this.props;
         // 提交删除请求
         dispatch(fetchDeleteInformationWeightFiltrate(informationWeightFiltrateId));
-
-        setTimeout(this.handleGet, 200);
     }
 
     // ----------更新爬虫得分 = 爬虫权重系数 * 爬虫权重分----------
@@ -414,7 +412,6 @@ class InformationWeightFiltrateContainer extends Component {
             if (updateResultSuccess) {    // 更新成功     
                 this.setState({ updateModalVisible: false});   // 关闭对话框
                 form.resetFields();   // 重置表单组件的值
-                this.handleGet();
             }
           }
         }

@@ -54,6 +54,10 @@ export function fetchGetAllCrawlerDynamicIp(keyword, pageNum, protocol) {
     return function(dispatch, getState) {
         dispatch(getAllCrawlerDynamicIpRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/crawlerdynamicip/"
         var params = "?keyword=" + keyword + "&protocol=" + protocol + "&page_num=" + pageNum;
@@ -63,6 +67,7 @@ export function fetchGetAllCrawlerDynamicIp(keyword, pageNum, protocol) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -124,11 +129,16 @@ export function fetchAddCrawlerDynamicIp(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerDynamicIpRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/crawlerdynamicip/";
         var myInit = {
             method: "POST",
             mode: "cors",
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -153,6 +163,7 @@ export function fetchAddCrawlerDynamicIp(formData) {
                         json => {
                             dispatch(addCrawlerDynamicIpSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerDynamicIp());
                         }
                     )
                     .catch((error) => {
@@ -195,11 +206,16 @@ export function fetchDeleteCrawlerDynamicIp(id) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerDynamicIpRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/crawlerdynamicip/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -224,6 +240,7 @@ export function fetchDeleteCrawlerDynamicIp(id) {
                         json => {
                             dispatch(deleteCrawlerDynamicIpSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerDynamicIp());
                         }
                     )
                     .catch((error) => {
@@ -267,11 +284,16 @@ export function fetchUpdateCrawlerDynamicIp(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerDynamicIpRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/crawlerdynamicip/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -297,6 +319,7 @@ export function fetchUpdateCrawlerDynamicIp(id, formData) {
                         json => {
                             dispatch(updateCrawlerDynamicIpSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerDynamicIp());
                         }
                     )
                     .catch((error) => {

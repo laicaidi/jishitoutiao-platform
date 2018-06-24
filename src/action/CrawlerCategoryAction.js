@@ -53,6 +53,10 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
     return function(dispatch, getState) {
         dispatch(getAllCrawlerCategoryRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/crawlercategory/"
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;
@@ -62,6 +66,7 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -123,11 +128,16 @@ export function fetchAddCrawlerCategory(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerCategoryRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/crawlercategory/";
         var myInit = {
             method: "POST",
             mode: "cors",
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -152,6 +162,7 @@ export function fetchAddCrawlerCategory(formData) {
                         json => {
                             dispatch(addCrawlerCategorySuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerCategory());
                         }
                     )
                     .catch((error) => {
@@ -194,11 +205,16 @@ export function fetchDeleteCrawlerCategory(cid) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerCategoryRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/crawlercategory/${cid}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -223,6 +239,7 @@ export function fetchDeleteCrawlerCategory(cid) {
                         json => {
                             dispatch(deleteCrawlerCategorySuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerCategory());
                         }
                     )
                     .catch((error) => {
@@ -266,11 +283,16 @@ export function fetchUpdateCrawlerCategory(cid, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerCategoryRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/crawlercategory/${cid}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -296,6 +318,8 @@ export function fetchUpdateCrawlerCategory(cid, formData) {
                         json => {
                             dispatch(updateCrawlerCategorySuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerCategory());
+
                         }
                     )
                     .catch((error) => {

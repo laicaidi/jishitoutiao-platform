@@ -142,8 +142,6 @@ class InformationRepetitionPondContainer extends Component {
         const { dispatch } = this.props;
         // 提交清空请求
         dispatch(fetchCleanInformationRepetitionPond());
-
-        setTimeout(this.handleGet, 200);
     }
 
     // 源下拉列表更改时的回调

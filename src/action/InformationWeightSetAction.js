@@ -52,6 +52,10 @@ export function fetchGetAllInformationWeightSet(keyword, pageNum) {
     return function(dispatch, getState) {
         dispatch(getAllInformationWeightSetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接请求url
         var url = "/informationweightset/";        // 请求url
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
@@ -61,6 +65,7 @@ export function fetchGetAllInformationWeightSet(keyword, pageNum) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -122,11 +127,16 @@ export function fetchAddInformationWeightSet(formData) {
     return function(dispatch, getState) {
         dispatch(addInformationWeightSetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/informationweightset/";
         var myInit = {
             method: "POST",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -152,6 +162,7 @@ export function fetchAddInformationWeightSet(formData) {
                         json => {
                             dispatch(addInformationWeightSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationWeightSet());
                         }
                     )
                     .catch((error) => {
@@ -194,11 +205,16 @@ export function fetchDeleteInformationWeightSet(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationWeightSetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationweightset/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -223,6 +239,7 @@ export function fetchDeleteInformationWeightSet(id) {
                         json => {
                             dispatch(deleteInformationWeightSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationWeightSet());
                         }
                     )
                     .catch((error) => {
@@ -266,11 +283,16 @@ export function fetchUpdateInformationWeightSet(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationWeightSetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/informationweightset/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -296,6 +318,7 @@ export function fetchUpdateInformationWeightSet(id, formData) {
                         json => {
                             dispatch(updateInformationWeightSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationWeightSet());
                         }
                     )
                     .catch((error) => {

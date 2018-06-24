@@ -52,6 +52,10 @@ export function fetchGetAllInformationIllegalitySet(keyword, pageNum) {
     return function(dispatch, getState) {
         dispatch(getAllInformationIllegalitySetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接请求url
         var url = "/informationillegalityset/";        // 请求url
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
@@ -61,6 +65,7 @@ export function fetchGetAllInformationIllegalitySet(keyword, pageNum) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -122,11 +127,16 @@ export function fetchAddInformationIllegalitySet(formData) {
     return function(dispatch, getState) {
         dispatch(addInformationIllegalitySetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/informationillegalityset/";
         var myInit = {
             method: "POST",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -152,6 +162,7 @@ export function fetchAddInformationIllegalitySet(formData) {
                         json => {
                             dispatch(addInformationIllegalitySetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationIllegalitySet());
                         }
                     )
                     .catch((error) => {
@@ -194,11 +205,16 @@ export function fetchDeleteInformationIllegalitySet(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationIllegalitySetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationillegalityset/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -223,6 +239,7 @@ export function fetchDeleteInformationIllegalitySet(id) {
                         json => {
                             dispatch(deleteInformationIllegalitySetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationIllegalitySet());
                         }
                     )
                     .catch((error) => {
@@ -266,11 +283,16 @@ export function fetchUpdateInformationIllegalitySet(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationIllegalitySetRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/informationillegalityset/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -296,6 +318,7 @@ export function fetchUpdateInformationIllegalitySet(id, formData) {
                         json => {
                             dispatch(updateInformationIllegalitySetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationIllegalitySet());
                         }
                     )
                     .catch((error) => {

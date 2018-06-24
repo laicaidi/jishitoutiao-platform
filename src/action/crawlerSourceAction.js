@@ -58,6 +58,10 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
         // 首次 dispatch：更新应用的 state 来通知 API 请求发起了。
         dispatch(getAllCrawlerSourceRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // thunk middleware 调用的函数可以有返回值，它会被当作 dispatch 方法的返回值传递。
         // 这个案例中，我们返回一个等待处理的 promise。
         // 这并不是 redux middleware 所必须的，但这对于我们而言很方便。
@@ -70,6 +74,7 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -136,11 +141,16 @@ export function fetchAddCrawlerSource(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerSourceRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/crawlersource/";
         var myInit = {
             method: "POST",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -166,6 +176,7 @@ export function fetchAddCrawlerSource(formData) {
                         json => {
                             dispatch(addCrawlerSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerSource());
                         }
                     )
                     .catch((error) => {
@@ -208,11 +219,16 @@ export function fetchDeleteCrawlerSource(bid) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerSourceRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/crawlersource/${bid}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -237,6 +253,7 @@ export function fetchDeleteCrawlerSource(bid) {
                         json => {
                             dispatch(deleteCrawlerSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerSource());
                         }
                     )
                     .catch((error) => {
@@ -280,11 +297,16 @@ export function fetchUpdateCrawlerSource(bid, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerSourceRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/crawlersource/${bid}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -310,6 +332,7 @@ export function fetchUpdateCrawlerSource(bid, formData) {
                         json => {
                             dispatch(updateCrawlerSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerSource());
                         }
                     )
                     .catch((error) => {

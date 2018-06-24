@@ -41,6 +41,7 @@ class CrawlerSourceContainer extends Component {
   }
 
   componentWillMount() {
+    this.mounted = true;
     // 初始化数据
     this.handleGet();
   }
@@ -249,7 +250,6 @@ class CrawlerSourceContainer extends Component {
         if (addResultSuccess) {   // 新增成功
           this.setState({ addModalVisible: false});   // 关闭对话框
           form.resetFields();   // 重置表单组件的值
-          this.handleGet();
         }
       }
     }
@@ -265,8 +265,6 @@ class CrawlerSourceContainer extends Component {
     const { dispatch } = this.props;
     // 提交删除请求
     dispatch(fetchDeleteCrawlerSource(id));
-
-    setTimeout(this.handleGet, 200);
   }
 
   // 更新爬虫源
@@ -309,7 +307,6 @@ class CrawlerSourceContainer extends Component {
         if (updateResultSuccess) {    // 更新成功     
           this.setState({ updateModalVisible: false});   // 关闭对话框
           form.resetFields();   // 重置表单组件的值
-          this.handleGet();
         }
       }
     }

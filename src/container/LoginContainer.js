@@ -9,6 +9,9 @@ import {
   withRouter,
 } from 'react-router-dom';
 import '../css/Login.css';
+import md5 from 'js-md5';
+import { Base64 } from 'js-base64';
+
 const FormItem = Form.Item;
 
 const LoginContainer =  Form.create()(
@@ -25,13 +28,24 @@ const LoginContainer =  Form.create()(
     }
   
     // -------自动适应屏幕宽高+获取元数据-------
+    componentWillMount() {
+      this.mounted = true;
+    }
+
     componentDidMount() {
-      this.updateSize();
-      window.addEventListener('resize', () => this.updateSize());
+      if (this.mounted) {
+        this.updateSize();
+        window.addEventListener('resize', () => this.updateSize());
+      }
     }
   
     componentWillUnmount() {
       window.removeEventListener('resize', () => this.updateSize());
+      this.mounted = false;
+      // 重写组件的setState方法，直接返回空，避免”Can only update a mounted or mounting component“异常
+      this.setState = (state,callback)=>{
+        return;
+      }; 
     }
   
     handleSubmit = (e) => {
@@ -43,9 +57,17 @@ const LoginContainer =  Form.create()(
           return;
         }
         for (let key in values) {
-          // 赋值给传递对象
-          formData[key] = values[key];
+          if (key === 'password') {
+            // 密码经过md5和base64编码
+            let md5Pass = md5(values[key]);
+            let base64Pass = Base64.encode(md5Pass);
+            formData[key] = base64Pass;
+          } else {
+            // 用户名user直接赋值
+            formData[key] = values[key];
+          }
         }
+
         // 提交登录请求
         dispatch(fetchUserLogin(formData));
       });

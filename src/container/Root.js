@@ -17,44 +17,6 @@ import { history } from '../store/ConfigureStore';
 moment.locale('zh-cn');
 
 class Root extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          width: props.width || -1,     // 整体布局宽
-          height: props.height || -1,   // 整体布局高
-        }
-        // 绑定回调方法
-        this.updateSize = this.updateSize.bind(this);
-    }
-
-    componentDidMount() {
-        this.updateSize();
-        window.addEventListener('resize', () => this.updateSize());
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', () => this.updateSize());
-    }
-    
-    // 自适应屏幕
-    updateSize() {
-        try {
-            let { width, height } = this.props;
-            // 如果props没有指定height和width就自适应
-            if (!width) {
-            width = document.body.clientWidth;
-            }
-            if (!height) {
-            height = document.body.clientHeight;
-            }
-            this.setState({
-                width,
-                height
-            });
-        } catch(ignore) {
-        }
-    }
-
     render() {
         return (
             <Router history={ history }>

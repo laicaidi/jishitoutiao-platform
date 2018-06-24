@@ -56,6 +56,10 @@ export function fetchGetAllInformationSource(keyword, pageNum, bkey, ckey) {
     return function(dispatch, getState) {
         dispatch(getAllInformationSourceRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/informationsource/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
@@ -65,6 +69,7 @@ export function fetchGetAllInformationSource(keyword, pageNum, bkey, ckey) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -126,11 +131,16 @@ export function fetchAddInformationSource(formData) {
     return function(dispatch, getState) {
         dispatch(addInformationSourceRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/informationsource/";
         var myInit = {
             method: "POST",
             mode: "cors",
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -155,6 +165,7 @@ export function fetchAddInformationSource(formData) {
                         json => {
                             dispatch(addInformationSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationSource());
                         }
                     )
                     .catch((error) => {
@@ -197,11 +208,16 @@ export function fetchDeleteInformationSource(id) {
     return function(dispatch, getState) {
         dispatch(deleteInformationSourceRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/informationsource/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -226,6 +242,7 @@ export function fetchDeleteInformationSource(id) {
                         json => {
                             dispatch(deleteInformationSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationSource());
                         }
                     )
                     .catch((error) => {
@@ -269,11 +286,16 @@ export function fetchUpdateInformationSource(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateInformationSourceRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/informationsource/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -299,6 +321,7 @@ export function fetchUpdateInformationSource(id, formData) {
                         json => {
                             dispatch(updateInformationSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllInformationSource());
                         }
                     )
                     .catch((error) => {

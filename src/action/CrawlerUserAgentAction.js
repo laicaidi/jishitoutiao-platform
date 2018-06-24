@@ -53,6 +53,10 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
     return function(dispatch, getState) {
         dispatch(getAllCrawlerUserAgentRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         // 拼接url请求
         var url = "/crawleruseragent/"
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;
@@ -62,6 +66,7 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
             method: "GET",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -123,11 +128,16 @@ export function fetchAddCrawlerUserAgent(formData) {
     return function(dispatch, getState) {
         dispatch(addCrawlerUserAgentRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = "/crawleruseragent/";
         var myInit = {
             method: "POST",
             mode: "cors",
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -152,6 +162,7 @@ export function fetchAddCrawlerUserAgent(formData) {
                         json => {
                             dispatch(addCrawlerUserAgentSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerUserAgent());
                         }
                     )
                     .catch((error) => {
@@ -194,11 +205,16 @@ export function fetchDeleteCrawlerUserAgent(id) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerUserAgentRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url =`/crawleruseragent/${id}`
         var myInit = {
             method: "DELETE",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -223,6 +239,7 @@ export function fetchDeleteCrawlerUserAgent(id) {
                         json => {
                             dispatch(deleteCrawlerUserAgentSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerUserAgent());
                         }
                     )
                     .catch((error) => {
@@ -266,11 +283,16 @@ export function fetchUpdateCrawlerUserAgent(id, formData) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerUserAgentRequest());
 
+        const state = getState();
+        // 获取token
+        var token = state.userLoginState.auth.access_token;
+
         var url = `/crawleruseragent/${id}`;
         var myInit = {
             method: "PUT",
             mode: 'cors',       // 允许跨域发送请求
             headers: {
+                'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
                 'Access-Control-Allow-Origin':'*',
                 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
@@ -296,6 +318,7 @@ export function fetchUpdateCrawlerUserAgent(id, formData) {
                         json => {
                             dispatch(updateCrawlerUserAgentSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
+                            dispatch(fetchGetAllCrawlerUserAgent());
                         }
                     )
                     .catch((error) => {

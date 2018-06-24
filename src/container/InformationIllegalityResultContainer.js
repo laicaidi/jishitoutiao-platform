@@ -213,8 +213,6 @@ class InformationIllegalityResultContainer extends Component {
         const { dispatch } = this.props;
         // 提交删除请求
         dispatch(fetchDeleteInformationIllegalityResult(informationIllegalityResultId));
-
-        setTimeout(this.handleGet, 200);
     }
 
     // 更新滤非法结果
@@ -259,7 +257,6 @@ class InformationIllegalityResultContainer extends Component {
             if (updateResultSuccess) {    // 更新成功     
               this.setState({ updateModalVisible: false});   // 关闭对话框
               form.resetFields();   // 重置表单组件的值
-              this.handleGet();
             }
           }
         }

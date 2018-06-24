@@ -148,8 +148,6 @@ class InformationCommentContainer extends Component {
         const { dispatch } = this.props;
         // 提交删除请求
         dispatch(fetchDeleteInformationComment(informationCommentId));
-
-        setTimeout(this.handleGet, 200);
     }
 
     // 搜索框内容改变时的回调

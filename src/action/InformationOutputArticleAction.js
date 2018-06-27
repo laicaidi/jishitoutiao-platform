@@ -63,7 +63,6 @@ export function fetchGetAllInformationOutputArticle(keyword, pageNum, bkey, ckey
         // 拼接url请求
         var url = "/informationoutputarticle/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
-        console.log("InformationOutputArticleAction.fetchGetAllInformationOutputArticle() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

@@ -64,7 +64,6 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
         // 拼接url请求
         var url = "/crawlermanagement/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&crawler_status=" + crawlerStatus + "&crawler_switch=" + crawlerSwitch + "&page_num=" + pageNum;
-        console.log("CrawlerManagementAction.fetchGetAllCrawlerManagement() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

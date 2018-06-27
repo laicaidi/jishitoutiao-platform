@@ -63,7 +63,6 @@ export function fetchGetAllInformationOutputList(keyword, pageNum, bkey, ckey) {
         // 拼接url请求
         var url = "/informationoutputlist/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
-        console.log("InformationOutputListAction.fetchGetAllInformationOutputList() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

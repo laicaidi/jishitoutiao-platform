@@ -48,7 +48,6 @@ export function fetchGetMeta() {
 
         // 拼接请求url
         var url = "/meta/";        // 请求url
-        console.log("MetaAction.fetchGetMeta()--------请求url: " + url);
 
         var myInit = {
             method: "GET",

@@ -63,7 +63,6 @@ export function fetchGetAllInformationWeightSource(keyword, pageNum, bkey, ckey)
         // 拼接url请求
         var url = "/informationweightsource/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
-        console.log("InformationWeightSourceAction.fetchGetAllInformationWeightSource() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

@@ -60,7 +60,6 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
         // 拼接url请求
         var url = "/crawleruseragent/"
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;
-        console.log("CrawlerUserAgentAction.fetchGetAllCrawlerUserAgent() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

@@ -61,7 +61,6 @@ export function fetchGetAllCrawlerDynamicIp(keyword, pageNum, protocol) {
         // 拼接url请求
         var url = "/crawlerdynamicip/"
         var params = "?keyword=" + keyword + "&protocol=" + protocol + "&page_num=" + pageNum;
-        console.log("CrawlerDynamicIpAction.fetchGetAllCrawlerDynamicIp() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

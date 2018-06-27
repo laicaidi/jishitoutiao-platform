@@ -61,7 +61,6 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
         // 拼接url请求
         var url = "/informationcomment/"
         var params = "?keyword=" + keyword + "&bkey="  + pageNum;
-        console.log("InformationCommentAction.fetchGetAllInformationComment() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

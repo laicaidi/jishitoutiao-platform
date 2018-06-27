@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import {
   fetchUserLogin,
 } from '../action/UserAction';
-import { Form, Icon, Input, Button} from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
 import {
   withRouter,
 } from 'react-router-dom';
-import '../css/Login.css';
+import '../css/Login.less';
 import md5 from 'js-md5';
 import { Base64 } from 'js-base64';
 
@@ -95,33 +95,30 @@ const LoginContainer =  Form.create()(
     render() {
       const { getFieldDecorator } = this.props.form;
       return (
-        <Form onSubmit={ this.handleSubmit } className="login-form" >
-          <FormItem>
-            { getFieldDecorator("username", {
-                rules: [{ 
-                  required: true,
-                  message: '请输入您的用户名'
-                 }]
-              })(
-                <Input prefix={ <Icon type="user" style={ {color: 'rgba(0,0,0,.25)'} } /> } placeholder="username" />
-              ) }
-          </FormItem>
-  
-          <FormItem>
-            { getFieldDecorator("password", {
-                rules: [{
-                  required: true,
-                  message: "请输入密码"
-                }]
-            })(
-              <Input prefix={ <Icon type="lock" style={ { color: 'rgba(0,0,0,.25)' } } /> } type="password" placeholder="password" />
-            ) }
-          </FormItem>
-  
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            登录
-          </Button>
-        </Form>
+        <div className="loginPageWrap">
+                <div className="box">
+                    <p>即时头条管理系统</p>
+                    <div className="loginWrap">
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormItem>
+                                {getFieldDecorator('username', {
+                                    rules: [{ required: true, message: '请输入用户名' }],
+                                })(
+                                    <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名" />
+                                )}
+                            </FormItem>
+                            <FormItem>
+                                {getFieldDecorator('password', {
+                                    rules: [{ required: true, message: '请输入密码' }],
+                                })(
+                                    <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="密码" />
+                                )}
+                            </FormItem>
+                            <Button type="primary" htmlType="submit" className="loginBtn">登录</Button>
+                        </Form>
+                    </div>
+                </div>
+            </div>
       );
     }
   }

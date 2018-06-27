@@ -60,7 +60,6 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
         // 拼接url请求
         var url = "/crawlercategory/"
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;
-        console.log("CrawlerCategoryAction.fetchGetAllCrawlerCategory() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

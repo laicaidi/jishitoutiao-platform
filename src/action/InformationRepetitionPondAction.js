@@ -63,7 +63,6 @@ export function fetchGetAllInformationRepetitionPond(keyword, pageNum, bkey, cke
         // 拼接url请求
         var url = "/informationrepetitionpond/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
-        console.log("InformationRepetitionPondAction.fetchGetAllInformationRepetitionPond() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

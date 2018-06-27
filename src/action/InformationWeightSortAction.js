@@ -63,7 +63,6 @@ export function fetchGetAllInformationWeightSort(keyword, pageNum, bkey, ckey) {
         // 拼接url请求
         var url = "/informationweightsort/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
-        console.log("InformationWeightSortAction.fetchGetAllInformationWeightSort() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

@@ -63,7 +63,6 @@ export function fetchGetAllInformationIllegalityPond(keyword, pageNum, bkey, cke
         // 拼接url请求
         var url = "/informationillegalitypond/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
-        console.log("InformationIllegalityPondAction.fetchGetAllInformationIllegalityPond() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

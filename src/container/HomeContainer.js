@@ -52,7 +52,6 @@ class HomeContainer extends Component {
   componentWillMount() {
     this.mounted = true;
     const { auth } = this.props;
-    console.log("HomeContainer auth: " + auth);
     for (let key in auth) {
       if (key === "passport") {
         var passport = auth[key];   // 用户登录状态

@@ -63,7 +63,6 @@ export function fetchGetAllInformationRepetitionResult(keyword, pageNum, bkey, c
         // 拼接url请求
         var url = "/informationrepetitionresult/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
-        console.log("InformationRepetitionResultAction.fetchGetAllInformationRepetitionResult() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

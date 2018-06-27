@@ -63,7 +63,6 @@ export function fetchGetAllInformationWeightFiltrate(keyword, pageNum, bkey, cke
         // 拼接url请求
         var url = "/informationweightfiltrate/"
         var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
-        console.log("InformationWeightFiltrateAction.fetchGetAllInformationWeightFiltrate() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",

@@ -59,7 +59,6 @@ export function fetchGetAllInformationIllegalitySet(keyword, pageNum) {
         // 拼接请求url
         var url = "/informationillegalityset/";        // 请求url
         var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
-        console.log("InformationIllegalitySetAction.fetchGetAllInformationIllegalitySet()--------请求url: " + url + params);
 
         var myInit = {
             method: "GET",

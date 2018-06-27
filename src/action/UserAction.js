@@ -63,7 +63,6 @@ export function fetchGetAllUser(keyword, pageNum) {
         // 拼接url请求
         var url = "/user/"
         var params = "?keyword=" + keyword + "&bkey="  + pageNum;
-        console.log("UserAction.fetchGetAllUser() ----请求url: " + url + params);
 
         var myInit = {
             method: "GET",
@@ -255,7 +254,6 @@ export function fetchDeleteUser(id) {
                     })
     }
 }
-
 
 export const CHANGE_USER_FILTRATE = 'CHANGE_USER_FILTRATE';
 /**

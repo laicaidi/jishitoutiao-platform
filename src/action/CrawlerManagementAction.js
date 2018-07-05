@@ -62,11 +62,11 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/crawlermanagement/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&crawler_status=" + crawlerStatus + "&crawler_switch=" + crawlerSwitch + "&page_num=" + pageNum;
+        var url = '/crawlermanagement/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&crawler_status=${crawlerStatus}&crawler_switch=${crawlerSwitch}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -116,9 +116,9 @@ function addCrawlerManagementFailure(error) {
     return {
         type: ADD_CRAWLER_MANAGEMENT_FAILURE,
         status: {
-            "success": false,
-            "message": "新增失败,请检查爬虫名或爬虫base_url是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '新增失败,请检查爬虫名或爬虫base_url是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -126,8 +126,10 @@ function addCrawlerManagementFailure(error) {
 /**
  * 
  * @param {*} formData 要增加的爬虫数据
+ * @param {*} addResult 新增结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchAddCrawlerManagement(formData) {
+export function fetchAddCrawlerManagement(formData, addResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(addCrawlerManagementRequest());
 
@@ -135,10 +137,10 @@ export function fetchAddCrawlerManagement(formData) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = "/crawlermanagement/";
+        var url = '/crawlermanagement/';
         var myInit = {
-            method: "POST",
-            mode: "cors",
+            method: 'POST',
+            mode: 'cors',
             headers: {
                 'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
@@ -165,7 +167,8 @@ export function fetchAddCrawlerManagement(formData) {
                         json => {
                             dispatch(addCrawlerManagementSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerManagement());
+                            handleGet();
+                            addResult();
                         }
                     )
                     .catch((error) => {
@@ -193,9 +196,9 @@ function deleteCrawlerManagementFailure(error) {
     return {
         type: DELETE_CRAWLER_MANAGEMENT_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -203,8 +206,9 @@ function deleteCrawlerManagementFailure(error) {
 /**
  * 
  * @param {*} id 要删除的爬虫id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteCrawlerManagement(id) {
+export function fetchDeleteCrawlerManagement(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerManagementRequest());
 
@@ -212,9 +216,9 @@ export function fetchDeleteCrawlerManagement(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlermanagement/${id}`
+        var url =`/crawlermanagement/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -242,7 +246,7 @@ export function fetchDeleteCrawlerManagement(id) {
                         json => {
                             dispatch(deleteCrawlerManagementSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerManagement());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -270,9 +274,9 @@ function updateCrawlerManagementFailure(error) {
     return {
         type: UPDATE_CRAWLER_MANAGEMENT_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败,请检查爬虫名或爬虫base_url是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败,请检查爬虫名或爬虫base_url是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -281,8 +285,10 @@ function updateCrawlerManagementFailure(error) {
  * 
  * @param {*} crawlerId 要更新的爬虫id
  * @param {*} formData 要更新的爬虫数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateCrawlerManagement(crawlerId, formData) {
+export function fetchUpdateCrawlerManagement(crawlerId, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerManagementRequest());
 
@@ -292,7 +298,7 @@ export function fetchUpdateCrawlerManagement(crawlerId, formData) {
 
         var url = `/crawlermanagement/${crawlerId}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -321,7 +327,8 @@ export function fetchUpdateCrawlerManagement(crawlerId, formData) {
                         json => {
                             dispatch(updateCrawlerManagementSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerManagement());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

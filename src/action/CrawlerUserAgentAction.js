@@ -58,11 +58,11 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/crawleruseragent/"
-        var params = "?keyword=" + keyword + "&page_num=" + pageNum;
+        var url = '/crawleruseragent/';
+        var params = `?keyword=${keyword}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -94,7 +94,7 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
     }
 }
 
-export const ADD_CRAWLER_USER_AGENT_REQUEST = 'ADD_CRAWLER_USER_AGENT_REQUEST';     // 新增分类
+export const ADD_CRAWLER_USER_AGENT_REQUEST = 'ADD_CRAWLER_USER_AGENT_REQUEST';     // 新增用户代理
 export const ADD_CRAWLER_USER_AGENT_SUCCESS = 'ADD_CRAWLER_USER_AGENT_SUCCESS';     // 新增成功
 export const ADD_CRAWLER_USER_AGENT_FAILURE = 'ADD_CRAWLER_USER_AGENT_FAILURE';     // 新增失败
 function addCrawlerUserAgentRequest() {
@@ -112,18 +112,20 @@ function addCrawlerUserAgentFailure(error) {
     return {
         type: ADD_CRAWLER_USER_AGENT_FAILURE,
         status: {
-            "success": false,
-            "message": "新增失败,请检查User-Agent是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '新增失败,请检查User-Agent是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
 }
 /**
  * 
- * @param {*} formData 要增加的分类数据
+ * @param {*} formData 要增加的用户代理数据
+ * @param {*} addResult 新增结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchAddCrawlerUserAgent(formData) {
+export function fetchAddCrawlerUserAgent(formData, addResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(addCrawlerUserAgentRequest());
 
@@ -131,10 +133,10 @@ export function fetchAddCrawlerUserAgent(formData) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = "/crawleruseragent/";
+        var url = '/crawleruseragent/';
         var myInit = {
-            method: "POST",
-            mode: "cors",
+            method: 'POST',
+            mode: 'cors',
             headers: {
                 'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
@@ -161,7 +163,8 @@ export function fetchAddCrawlerUserAgent(formData) {
                         json => {
                             dispatch(addCrawlerUserAgentSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerUserAgent());
+                            handleGet();
+                            addResult();
                         }
                     )
                     .catch((error) => {
@@ -171,7 +174,7 @@ export function fetchAddCrawlerUserAgent(formData) {
     }
 }
 
-export const DELETE_CRAWLER_USER_AGENT_REQUEST = 'DELETE_CRAWLER_USER_AGENT_REQUEST';       // 删除分类
+export const DELETE_CRAWLER_USER_AGENT_REQUEST = 'DELETE_CRAWLER_USER_AGENT_REQUEST';       // 删除用户代理
 export const DELETE_CRAWLER_USER_AGENT_SUCCESS = 'DELETE_CRAWLER_USER_AGENT_SUCCESS';       // 删除成功
 export const DELETE_CRAWLER_USER_AGENT_FAILURE = 'DELETE_CRAWLER_CATEGROY_FAILURE';       // 删除失败
 function deleteCrawlerUserAgentRequest() {
@@ -189,18 +192,19 @@ function deleteCrawlerUserAgentFailure(error) {
     return {
         type: DELETE_CRAWLER_USER_AGENT_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
 }
 /**
  * 
- * @param {*} cid 要删除的分类id
+ * @param {*} cid 要删除的用户代理id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteCrawlerUserAgent(id) {
+export function fetchDeleteCrawlerUserAgent(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerUserAgentRequest());
 
@@ -208,9 +212,9 @@ export function fetchDeleteCrawlerUserAgent(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawleruseragent/${id}`
+        var url =`/crawleruseragent/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -238,7 +242,7 @@ export function fetchDeleteCrawlerUserAgent(id) {
                         json => {
                             dispatch(deleteCrawlerUserAgentSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerUserAgent());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -266,19 +270,21 @@ function updateCrawlerUserAgentFailure(error) {
     return {
         type: UPDATE_CRAWLER_USER_AGENT_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败,请检查User-Agent是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败,请检查User-Agent是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
 }
 /**
  * 
- * @param {*} cid 要更新的分类id
- * @param {*} formData 要更新的分类数据
+ * @param {*} cid 要更新的用户代理id
+ * @param {*} formData 要更新的用户代理数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateCrawlerUserAgent(id, formData) {
+export function fetchUpdateCrawlerUserAgent(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerUserAgentRequest());
 
@@ -288,7 +294,7 @@ export function fetchUpdateCrawlerUserAgent(id, formData) {
 
         var url = `/crawleruseragent/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -317,7 +323,8 @@ export function fetchUpdateCrawlerUserAgent(id, formData) {
                         json => {
                             dispatch(updateCrawlerUserAgentSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerUserAgent());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

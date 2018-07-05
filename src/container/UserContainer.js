@@ -33,7 +33,7 @@ class UserContainer extends Component {
 
             for (let field in payloadObj) {
                 // 判断columns节点，挂载的是表格标题所需的数据
-                if (field === "columns") {
+                if (field === 'columns') {
                     let pushed = false;
                     for (let i = 0; i < payloadObj[field].length; i++) {
                         // 因antd字段名为dataIndex，所以将后台返回的data_index赋值给dataIndex
@@ -94,11 +94,11 @@ class UserContainer extends Component {
                                 return (
                                     <span>
                                         <Popconfirm 
-                                                placement="topRight" 
+                                                placement='topRight' 
                                                 title={ msgText } 
                                                 onConfirm={ deleteConfirm }
-                                                okText="确定"
-                                                cancelText="取消">
+                                                okText='确定'
+                                                cancelText='取消'>
                                             <a>删除</a>
                                         </Popconfirm>
                                     </span>
@@ -126,7 +126,7 @@ class UserContainer extends Component {
             // 更新props中的内容
             dispatch(changeUserFiltrate(keyword));
         } else {        // 1.2如果未定义或为null，证明非搜索框激活
-            keyword = "";
+            keyword = '';
             if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
                 keyword = this.props.keyword;
             }
@@ -145,7 +145,7 @@ class UserContainer extends Component {
     handleDelete(informationCommentId) {
         const { dispatch } = this.props;
         // 提交删除请求
-        dispatch(fetchDeleteUser(informationCommentId));
+        dispatch(fetchDeleteUser(informationCommentId, this.handleGet));
     }
 
     // 搜索框内容改变时的回调

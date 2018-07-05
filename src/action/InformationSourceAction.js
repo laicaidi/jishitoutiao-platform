@@ -61,11 +61,11 @@ export function fetchGetAllInformationSource(keyword, pageNum, bkey, ckey) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationsource/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationsource/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -115,9 +115,9 @@ function addInformationSourceFailure(error) {
     return {
         type: ADD_INFORMATION_SOURCE_FAILURE,
         status: {
-            "success": false,
-            "message": "新增失败,请资讯url是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '新增失败,请资讯url是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -125,8 +125,10 @@ function addInformationSourceFailure(error) {
 /**
  * 
  * @param {*} formData 要增加的资讯源数据
+ * @param {*} addResult 新增结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchAddInformationSource(formData) {
+export function fetchAddInformationSource(formData, addResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(addInformationSourceRequest());
 
@@ -134,10 +136,10 @@ export function fetchAddInformationSource(formData) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = "/informationsource/";
+        var url = '/informationsource/';
         var myInit = {
-            method: "POST",
-            mode: "cors",
+            method: 'POST',
+            mode: 'cors',
             headers: {
                 'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
@@ -164,7 +166,8 @@ export function fetchAddInformationSource(formData) {
                         json => {
                             dispatch(addInformationSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationSource());
+                            handleGet();
+                            addResult();
                         }
                     )
                     .catch((error) => {
@@ -192,9 +195,9 @@ function deleteInformationSourceFailure(error) {
     return {
         type: DELETE_INFORMATION_SOURCE_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -202,8 +205,9 @@ function deleteInformationSourceFailure(error) {
 /**
  * 
  * @param {*} id 要删除的资讯源id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationSource(id) {
+export function fetchDeleteInformationSource(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationSourceRequest());
 
@@ -211,9 +215,9 @@ export function fetchDeleteInformationSource(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationsource/${id}`
+        var url =`/informationsource/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -241,7 +245,7 @@ export function fetchDeleteInformationSource(id) {
                         json => {
                             dispatch(deleteInformationSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationSource());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -269,9 +273,9 @@ function updateInformationSourceFailure(error) {
     return {
         type: UPDATE_INFORMATION_SOURCE_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败,请检查资讯url是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败,请检查资讯url是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -280,8 +284,10 @@ function updateInformationSourceFailure(error) {
  * 
  * @param {*} id 要更新的资讯源id
  * @param {*} formData 要更新的资讯源数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateInformationSource(id, formData) {
+export function fetchUpdateInformationSource(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateInformationSourceRequest());
 
@@ -291,7 +297,7 @@ export function fetchUpdateInformationSource(id, formData) {
 
         var url = `/informationsource/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -320,7 +326,8 @@ export function fetchUpdateInformationSource(id, formData) {
                         json => {
                             dispatch(updateInformationSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationSource());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

@@ -23,11 +23,11 @@ export default class SearchComponent extends Component {
   
     render() {
         return (
-            <Search size="default"
-                placeholder="请输入关键字搜索"
+            <Search size='default'
+                placeholder='请输入关键字搜索'
                 onSearch={ this.onhandleSearch }
                 enterButton
-                style={ {width:"400px"} }
+                style={ {width:'400px'} }
                 value={ this.props.text }
                 onChange={ this.handleChange } />
         )

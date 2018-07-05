@@ -53,13 +53,13 @@ class HomeContainer extends Component {
     this.mounted = true;
     const { auth } = this.props;
     for (let key in auth) {
-      if (key === "passport") {
+      if (key === 'passport') {
         var passport = auth[key];   // 用户登录状态
       }
     }
 
     if (!passport) {   // 未登录
-      this.props.history.push("/login");    // 跳转至登录页
+      this.props.history.push('/login');    // 跳转至登录页
     } else {
       this.handleGetMeta();
     }
@@ -123,12 +123,12 @@ class HomeContainer extends Component {
               <Route path='/crawlersource' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <CrawlerSourceContainer />
                 }
@@ -137,12 +137,12 @@ class HomeContainer extends Component {
               <Route path='/crawlercategory' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <CrawlerCategoryContainer />
                 }
@@ -151,12 +151,12 @@ class HomeContainer extends Component {
               <Route path='/crawlermanagement' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <CrawlerManagementContainer />
                 }
@@ -165,12 +165,12 @@ class HomeContainer extends Component {
               <Route path='/crawleruseragent' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <CrawlerUserAgentContainer />
                 }
@@ -179,12 +179,12 @@ class HomeContainer extends Component {
               <Route path='/crawlerdynamicip' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <CrawlerDynamicIpContainer />
                 }
@@ -193,12 +193,12 @@ class HomeContainer extends Component {
               <Route path='/crawlerset' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <CrawlerSetContainer />
                 }
@@ -207,12 +207,12 @@ class HomeContainer extends Component {
               <Route path='/informationsource' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationSourceContainer />
                 }
@@ -221,12 +221,12 @@ class HomeContainer extends Component {
               <Route path='/informationrepetitionpond' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationRepetitionPondContainer />
                 }
@@ -235,12 +235,12 @@ class HomeContainer extends Component {
               <Route path='/informationrepetitionresult' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationRepetitionResultContainer />
                 }
@@ -249,12 +249,12 @@ class HomeContainer extends Component {
               <Route path='/informationillegalitypond' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationIllegalityPondContainer />
                 }
@@ -263,12 +263,12 @@ class HomeContainer extends Component {
               <Route path='/informationillegalityresult' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationIllegalityResultContainer />
                 }
@@ -277,12 +277,12 @@ class HomeContainer extends Component {
               <Route path='/informationillegalityset' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationIllegalitySetContainer />
                 }
@@ -291,12 +291,12 @@ class HomeContainer extends Component {
               <Route path='/informationweightsource' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationWeightSourceContainer />
                 }
@@ -305,12 +305,12 @@ class HomeContainer extends Component {
               <Route path='/informationweightsort' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationWeightSortContainer />
                 }
@@ -319,12 +319,12 @@ class HomeContainer extends Component {
               <Route path='/informationweightfiltrate' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationWeightFiltrateContainer />
                 }
@@ -333,12 +333,12 @@ class HomeContainer extends Component {
               <Route path='/informationweightset' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationWeightSetContainer />
                 }
@@ -347,12 +347,12 @@ class HomeContainer extends Component {
               <Route path='/informationoutputlist' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationOutputListContainer />
                 }
@@ -361,12 +361,12 @@ class HomeContainer extends Component {
               <Route path='/informationoutputarticle' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationOutputArticleContainer />
                 }
@@ -375,12 +375,12 @@ class HomeContainer extends Component {
               <Route path='/informationcomment' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <InformationCommentContainer />
                 }
@@ -389,12 +389,12 @@ class HomeContainer extends Component {
               <Route path='/user' exact render={ () => {
                 const { auth } = this.props;
                 for (let key in auth) {
-                  if (key === "passport") {
+                  if (key === 'passport') {
                     var passport = auth[key];   // 用户登录状态
                   }
                 }     
                 if (!passport) {   // 未登录
-                  return <Redirect to="/login" />
+                  return <Redirect to='/login' />
                 } else {
                   return <UserContainer />
                 }

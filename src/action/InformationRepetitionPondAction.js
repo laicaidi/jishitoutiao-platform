@@ -61,11 +61,11 @@ export function fetchGetAllInformationRepetitionPond(keyword, pageNum, bkey, cke
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationrepetitionpond/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationrepetitionpond/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -115,14 +115,18 @@ function cleanInformationRepetitionPondFailure(error) {
     return {
         type: CLEAN_INFORMATION_REPETITION_POND_FAILURE,
         status: {
-            "success": false,
-            "message": "清空失败，无记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '清空失败，无记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
 }
-export function fetchCleanInformationRepetitionPond() {
+/**
+ * 清空滤重池
+ * @param {*} handleGet 获取所有数据回调方法
+ */
+export function fetchCleanInformationRepetitionPond(handleGet) {
     return function(dispatch, getState) {
         dispatch(cleanInformationRepetitionPondRequest());
 
@@ -130,9 +134,9 @@ export function fetchCleanInformationRepetitionPond() {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationrepetitionpond/`
+        var url =`/informationrepetitionpond/`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -160,7 +164,7 @@ export function fetchCleanInformationRepetitionPond() {
                         json => {
                             dispatch(cleanInformationRepetitionPondSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationRepetitionPond());
+                            handleGet();
                         }
                     )
                     .catch((error) => {

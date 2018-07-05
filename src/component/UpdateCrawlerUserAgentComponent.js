@@ -35,18 +35,18 @@ export const UpdateCrawlerUserAgentComponent = Form.create()(
             return (
                 <Modal
                     visible={ visible }
-                    title="修改user_agent"
-                    okText="提交"
-                    cancelText="取消"
+                    title='修改user_agent'
+                    okText='提交'
+                    cancelText='取消'
                     onCancel={ onCancel }
                     onOk={ onUpdate }
                     style={ {top: 30, bottom: 30} }     // 距离顶部和底部的距离都为30
-                    bodyStyle={ {height: bodyHeight - 170, overflow: "auto" } }     // 高度固定，内容区域初始化滚动条
+                    bodyStyle={ {height: bodyHeight - 170, overflow: 'auto' } }     // 高度固定，内容区域初始化滚动条
                     destroyOnClose={ true }     // 关闭时销毁 Modal 里的子元素，每次打开均重新加载(滚动条回顶部)
                     confirmLoading={ confirmLoading }
                     >
-                    <Form layout="vertical">
-                        <FormItem label="user_agent_id">
+                    <Form layout='vertical'>
+                        <FormItem label='user_agent_id'>
                             { getFieldDecorator('user_agent_id', {
                                 initialValue: userAgentIdInit,
                                 rules: [{required: true}]
@@ -55,7 +55,7 @@ export const UpdateCrawlerUserAgentComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        <FormItem label="Accept">
+                        <FormItem label='Accept'>
                             { getFieldDecorator('accept', {
                                 initialValue: acceptInit
                             })(
@@ -63,7 +63,7 @@ export const UpdateCrawlerUserAgentComponent = Form.create()(
                             ) }
                         </FormItem>
         
-                        <FormItem label="Accept-Encoding">
+                        <FormItem label='Accept-Encoding'>
                             { getFieldDecorator('accept_encoding', {
                                 initialValue: acceptEncodingInit
                             })(
@@ -71,7 +71,7 @@ export const UpdateCrawlerUserAgentComponent = Form.create()(
                             ) }
                         </FormItem>
                         
-                        <FormItem label="Accept-Language">
+                        <FormItem label='Accept-Language'>
                             { getFieldDecorator('accept_language', {
                                 initialValue: acceptLanguageInit
                             })(
@@ -79,7 +79,7 @@ export const UpdateCrawlerUserAgentComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        <FormItem label="Connection">
+                        <FormItem label='Connection'>
                             { getFieldDecorator('connection', {
                                 initialValue: connectionInit
                             })(
@@ -87,7 +87,7 @@ export const UpdateCrawlerUserAgentComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        <FormItem label="Host">
+                        <FormItem label='Host'>
                             { getFieldDecorator('host', {
                                 initialValue: hostInit
                             })(
@@ -95,7 +95,7 @@ export const UpdateCrawlerUserAgentComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        <FormItem label="User-Agent">
+                        <FormItem label='User-Agent'>
                             { getFieldDecorator('user_agent', {
                                 initialValue: userAgentInit,
                                 rules: [{
@@ -107,7 +107,7 @@ export const UpdateCrawlerUserAgentComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        <FormItem label="备注">
+                        <FormItem label='备注'>
                             { getFieldDecorator('remark', {
                                 initialValue: remarkInit
                             })(

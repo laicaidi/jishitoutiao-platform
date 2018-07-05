@@ -56,7 +56,7 @@ class CrawlerDynamicIpContainer extends Component {
 
             for (let field in payloadObj) {
                 // 判断columns节点，挂载的是表格标题所需的数据
-                if (field === "columns") {
+                if (field === 'columns') {
                     let pushed = false;
                     for (let i = 0; i < payloadObj[field].length; i++) {
                         // 因antd字段名为dataIndex，所以将后台返回的data_index赋值给dataIndex
@@ -130,15 +130,15 @@ class CrawlerDynamicIpContainer extends Component {
                                 return (
                                     <span>
                                         <a onClick={ showUpdateModal }>修改</a>
-                                        <Divider type="vertical" />
+                                        <Divider type='vertical' />
                                         <a onClick={ showCopyAddModal }>复制</a>
-                                        <Divider type="vertical" />
+                                        <Divider type='vertical' />
                                         <Popconfirm 
-                                                placement="topRight" 
+                                                placement='topRight' 
                                                 title={ msgText } 
                                                 onConfirm={ deleteConfirm }
-                                                okText="确定"
-                                                cancelText="取消">
+                                                okText='确定'
+                                                cancelText='取消'>
                                             <a>删除</a>
                                         </Popconfirm>
                                     </span>
@@ -211,7 +211,7 @@ class CrawlerDynamicIpContainer extends Component {
         if (keyword !== undefined && keyword !== null) {        // 1.1从搜索框唤起
             dispatch(changeCrawlerDynamicIpFiltrate(keyword, this.props.protocol));
         } else {        // 1.2如果未定义或为null，证明非搜索框激活
-            keyword = "";
+            keyword = '';
             if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
                 keyword = this.props.keyword;
             }
@@ -224,13 +224,13 @@ class CrawlerDynamicIpContainer extends Component {
    
         // 3.处理protocol
         if (protocol === undefined || protocol === null) {
-            protocol = ""; 
+            protocol = ''; 
             if (this.props.bkey !== undefined && this.props.bkey !== null) {
                 protocol = this.props.bkey;
             }
         }
-        if (protocol === "all") {
-            protocol = "";
+        if (protocol === 'all') {
+            protocol = '';
         }
 
         // 4.通过props中的值发起请求
@@ -253,9 +253,7 @@ class CrawlerDynamicIpContainer extends Component {
                 formData[key] = values[key];
             }
             // 提交新增请求
-            dispatch(fetchAddCrawlerDynamicIp(formData));
-
-            setTimeout(this.addResult, 200);
+            dispatch(fetchAddCrawlerDynamicIp(formData, this.addResult, this.handleGet));
         });
     }
     
@@ -282,7 +280,7 @@ class CrawlerDynamicIpContainer extends Component {
     handleDelete(dynamicId) {
         const { dispatch } = this.props;
         // 提交删除请求
-        dispatch(fetchDeleteCrawlerDynamicIp(dynamicId));
+        dispatch(fetchDeleteCrawlerDynamicIp(dynamicId, this.handleGet));
     }
 
     // 更新动态ip
@@ -305,9 +303,7 @@ class CrawlerDynamicIpContainer extends Component {
                 }
             }
             // 提交更新请求
-            dispatch(fetchUpdateCrawlerDynamicIp(dynamicId, formData));
-
-            setTimeout(this.updateResult, 200);
+            dispatch(fetchUpdateCrawlerDynamicIp(dynamicId, formData, this.updateResult, this.handleGet));
         });
     }
 
@@ -351,18 +347,18 @@ class CrawlerDynamicIpContainer extends Component {
     render() {
         // 将类型数据封装成下拉列表需要的数组
         const protocolOptions = [];
-        protocolOptions.push(<Option key="all">全部</Option>);
-        protocolOptions.push(<Option key="HTTP">HTTP</Option>);
-        protocolOptions.push(<Option key="HTTPS">HTTPS</Option>);
+        protocolOptions.push(<Option key='all'>全部</Option>);
+        protocolOptions.push(<Option key='HTTP'>HTTP</Option>);
+        protocolOptions.push(<Option key='HTTPS'>HTTPS</Option>);
 
         return ( 
             <Content style={ {margin: '24px 16px', padding: 24, background: '#fff', minHeight: 615} }>
                 <div>
-                    <span>类型: </span><Select showSearch style={ {width: 150} } defaultValue="all" optionFilterProp="children" onChange={ this.handleProtocolChange }>{ protocolOptions }</Select>
+                    <span>类型: </span><Select showSearch style={ {width: 150} } defaultValue='all' optionFilterProp='children' onChange={ this.handleProtocolChange }>{ protocolOptions }</Select>
                 </div>
                 <div style={ {marginTop: 24} }>
                     <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
-                    <Button type="primary" style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增动态ip</Button>
+                    <Button type='primary' style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增动态ip</Button>
                 </div>
                 <TableComponent rowKey='dynamic_id' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
                 <AddCrawlerDynamicIpComponent 

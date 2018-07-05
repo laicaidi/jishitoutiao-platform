@@ -57,11 +57,11 @@ export function fetchGetAllInformationWeightSet(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接请求url
-        var url = "/informationweightset/";        // 请求url
-        var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
+        var url = '/informationweightset/';        // 请求url
+        var params = `?keyword=${keyword}&page_num=${pageNum}`;       // 参数
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -111,9 +111,9 @@ function addInformationWeightSetFailure(error) {
     return {
         type: ADD_INFORMATION_WEIGHT_SET_FAILURE,
         status: {
-            "success": false,
-            "message": "新增失败,请检查键是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '新增失败,请检查键是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -121,8 +121,10 @@ function addInformationWeightSetFailure(error) {
 /**
  * 
  * @param {*} formData 新增的数据
+ * @param {*} addResult 新增结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchAddInformationWeightSet(formData) {
+export function fetchAddInformationWeightSet(formData, addResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(addInformationWeightSetRequest());
 
@@ -130,9 +132,9 @@ export function fetchAddInformationWeightSet(formData) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = "/informationweightset/";
+        var url = '/informationweightset/';
         var myInit = {
-            method: "POST",
+            method: 'POST',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -161,7 +163,8 @@ export function fetchAddInformationWeightSet(formData) {
                         json => {
                             dispatch(addInformationWeightSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightSet());
+                            handleGet();
+                            addResult();
                         }
                     )
                     .catch((error) => {
@@ -189,9 +192,9 @@ function deleteInformationWeightSetFailure(error) {
     return {
         type: DELETE_INFORMATION_WEIGHT_SET_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -199,8 +202,9 @@ function deleteInformationWeightSetFailure(error) {
 /**
  * 
  * @param {*} id 要删除的权重设置id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationWeightSet(id) {
+export function fetchDeleteInformationWeightSet(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationWeightSetRequest());
 
@@ -208,9 +212,9 @@ export function fetchDeleteInformationWeightSet(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationweightset/${id}`
+        var url =`/informationweightset/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -238,7 +242,7 @@ export function fetchDeleteInformationWeightSet(id) {
                         json => {
                             dispatch(deleteInformationWeightSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightSet());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -266,9 +270,9 @@ function updateInformationWeightSetFailure(error) {
     return {
         type: UPDATE_INFORMATION_WEIGHT_SET_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败,请检查键是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败,请检查键是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -277,8 +281,10 @@ function updateInformationWeightSetFailure(error) {
  * 
  * @param {*} id 要更新的权重设置id
  * @param {*} formData 更新的数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateInformationWeightSet(id, formData) {
+export function fetchUpdateInformationWeightSet(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateInformationWeightSetRequest());
 
@@ -288,7 +294,7 @@ export function fetchUpdateInformationWeightSet(id, formData) {
 
         var url = `/informationweightset/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -317,7 +323,8 @@ export function fetchUpdateInformationWeightSet(id, formData) {
                         json => {
                             dispatch(updateInformationWeightSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightSet());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

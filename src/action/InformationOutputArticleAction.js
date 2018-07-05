@@ -61,11 +61,11 @@ export function fetchGetAllInformationOutputArticle(keyword, pageNum, bkey, ckey
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationoutputarticle/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationoutputarticle/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -115,9 +115,9 @@ function deleteInformationOutputArticleFailure(error) {
     return {
         type: DELETE_INFORMATION_OUTPUT_ARTICLE_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -125,8 +125,9 @@ function deleteInformationOutputArticleFailure(error) {
 /**
  * 
  * @param {*} id 要删除的资讯内容数据id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationOutputArticle(id) {
+export function fetchDeleteInformationOutputArticle(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationOutputArticleRequest());
 
@@ -134,9 +135,9 @@ export function fetchDeleteInformationOutputArticle(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationoutputarticle/${id}`
+        var url =`/informationoutputarticle/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -164,7 +165,7 @@ export function fetchDeleteInformationOutputArticle(id) {
                         json => {
                             dispatch(deleteInformationOutputArticleSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationOutputArticle());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -192,9 +193,9 @@ function updateInformationOutputArticleFailure(error) {
     return {
         type: UPDATE_INFORMATION_OUTPUT_ARTICLE_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -203,8 +204,10 @@ function updateInformationOutputArticleFailure(error) {
  * 
  * @param {*} id 要更新的资讯内容数据id
  * @param {*} formData 要更新的资讯内容数据数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateInformationOutputArticle(id, formData) {
+export function fetchUpdateInformationOutputArticle(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateInformationOutputArticleRequest());
 
@@ -214,7 +217,7 @@ export function fetchUpdateInformationOutputArticle(id, formData) {
 
         var url = `/informationoutputarticle/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -243,7 +246,8 @@ export function fetchUpdateInformationOutputArticle(id, formData) {
                         json => {
                             dispatch(updateInformationOutputArticleSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationOutputArticle());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

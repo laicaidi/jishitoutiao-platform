@@ -61,11 +61,11 @@ export function fetchGetAllUser(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/user/"
-        var params = "?keyword=" + keyword + "&bkey="  + pageNum;
+        var url = '/user/';
+        var params = `?keyword=${keyword}&bkey=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -108,18 +108,18 @@ function userLoginRequest() {
 function userLoginSuccess(json) {
     return {
         type: USER_LOGIN_SUCCESS,
-        auth: json.auth ? json.auth : "",
+        auth: json.auth ? json.auth : '',
         status: json.status
     }
 }
 function userLoginFailure(error) {
     return {
         type: USER_LOGIN_FAILURE,
-        auth: "",     // 将登录证明清空
+        auth: '',     // 将登录证明清空
         status: {
-            "success": false,
-            "message": "登录失败，请检查用户名密码是否错误",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '登录失败，请检查用户名密码是否错误',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -132,9 +132,9 @@ export function fetchUserLogin(formData) {
     return function(dispatch, getState) {
         dispatch(userLoginRequest());
 
-        var url = "/user/login";
+        var url = '/user/login';
         var myInit = {
-            method: "POST",
+            method: 'POST',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
@@ -196,9 +196,9 @@ function deleteUserFailure(error) {
     return {
         type: DELETE_USER_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -206,8 +206,9 @@ function deleteUserFailure(error) {
 /**
  * 
  * @param {*} id 要删除的用户id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteUser(id) {
+export function fetchDeleteUser(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteUserRequest());
 
@@ -215,9 +216,9 @@ export function fetchDeleteUser(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/user/${id}`
+        var url =`/user/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -245,7 +246,7 @@ export function fetchDeleteUser(id) {
                         json => {
                             dispatch(deleteUserSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllUser());
+                            handleGet();
                         }
                     )
                     .catch((error) => {

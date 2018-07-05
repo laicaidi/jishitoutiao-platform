@@ -61,11 +61,11 @@ export function fetchGetAllInformationOutputList(keyword, pageNum, bkey, ckey) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationoutputlist/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationoutputlist/'
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -115,9 +115,9 @@ function deleteInformationOutputListFailure(error) {
     return {
         type: DELETE_INFORMATION_OUTPUT_LIST_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -125,8 +125,9 @@ function deleteInformationOutputListFailure(error) {
 /**
  * 
  * @param {*} id 要删除的列表输出数据id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationOutputList(id) {
+export function fetchDeleteInformationOutputList(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationOutputListRequest());
 
@@ -134,9 +135,9 @@ export function fetchDeleteInformationOutputList(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationoutputlist/${id}`
+        var url =`/informationoutputlist/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -164,7 +165,7 @@ export function fetchDeleteInformationOutputList(id) {
                         json => {
                             dispatch(deleteInformationOutputListSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationOutputList());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -192,9 +193,9 @@ function updateInformationOutputListFailure(error) {
     return {
         type: UPDATE_INFORMATION_OUTPUT_LIST_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -203,8 +204,10 @@ function updateInformationOutputListFailure(error) {
  * 
  * @param {*} id 要更新的列表输出数据id
  * @param {*} formData 要更新的列表输出数据数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateInformationOutputList(id, formData) {
+export function fetchUpdateInformationOutputList(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateInformationOutputListRequest());
 
@@ -214,7 +217,7 @@ export function fetchUpdateInformationOutputList(id, formData) {
 
         var url = `/informationoutputlist/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -243,7 +246,8 @@ export function fetchUpdateInformationOutputList(id, formData) {
                         json => {
                             dispatch(updateInformationOutputListSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationOutputList());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

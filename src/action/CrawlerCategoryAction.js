@@ -58,11 +58,11 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/crawlercategory/"
-        var params = "?keyword=" + keyword + "&page_num=" + pageNum;
+        var url = '/crawlercategory/';
+        var params = `?keyword=${keyword}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -112,9 +112,9 @@ function addCrawlerCategoryFailure(error) {
     return {
         type: ADD_CRAWLER_CATEGORY_FAILURE,
         status: {
-            "success": false,
-            "message": "新增失败,请检查类别key或类别名称是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '新增失败,请检查类别key或类别名称是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -122,8 +122,10 @@ function addCrawlerCategoryFailure(error) {
 /**
  * 
  * @param {*} formData 要增加的分类数据
+ * @param {*} addResult 新增结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchAddCrawlerCategory(formData) {
+export function fetchAddCrawlerCategory(formData, addResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(addCrawlerCategoryRequest());
 
@@ -131,10 +133,10 @@ export function fetchAddCrawlerCategory(formData) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = "/crawlercategory/";
+        var url = '/crawlercategory/';
         var myInit = {
-            method: "POST",
-            mode: "cors",
+            method: 'POST',
+            mode: 'cors',
             headers: {
                 'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
@@ -161,7 +163,8 @@ export function fetchAddCrawlerCategory(formData) {
                         json => {
                             dispatch(addCrawlerCategorySuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerCategory());
+                            handleGet();
+                            addResult();
                         }
                     )
                     .catch((error) => {
@@ -189,9 +192,9 @@ function deleteCrawlerCategoryFailure(error) {
     return {
         type: DELETE_CRAWLER_CATEGORY_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -199,8 +202,9 @@ function deleteCrawlerCategoryFailure(error) {
 /**
  * 
  * @param {*} cid 要删除的分类id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteCrawlerCategory(cid) {
+export function fetchDeleteCrawlerCategory(cid, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerCategoryRequest());
 
@@ -208,9 +212,9 @@ export function fetchDeleteCrawlerCategory(cid) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlercategory/${cid}`
+        var url =`/crawlercategory/${cid}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -238,7 +242,7 @@ export function fetchDeleteCrawlerCategory(cid) {
                         json => {
                             dispatch(deleteCrawlerCategorySuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerCategory());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -266,9 +270,9 @@ function updateCrawlerCategoryFailure(error) {
     return {
         type: UPDATE_CRAWLER_CATEGORY_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败,请检查类别key或类别名称是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败,请检查类别key或类别名称是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -277,8 +281,10 @@ function updateCrawlerCategoryFailure(error) {
  * 
  * @param {*} cid 要更新的分类id
  * @param {*} formData 要更新的分类数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateCrawlerCategory(cid, formData) {
+export function fetchUpdateCrawlerCategory(cid, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerCategoryRequest());
 
@@ -288,7 +294,7 @@ export function fetchUpdateCrawlerCategory(cid, formData) {
 
         var url = `/crawlercategory/${cid}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -317,8 +323,8 @@ export function fetchUpdateCrawlerCategory(cid, formData) {
                         json => {
                             dispatch(updateCrawlerCategorySuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerCategory());
-
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

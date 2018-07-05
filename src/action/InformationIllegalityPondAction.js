@@ -61,11 +61,11 @@ export function fetchGetAllInformationIllegalityPond(keyword, pageNum, bkey, cke
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationillegalitypond/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationillegalitypond/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -115,14 +115,18 @@ function cleanInformationIllegalityPondFailure(error) {
     return {
         type: CLEAN_INFORMATION_ILLEGALITY_POND_FAILURE,
         status: {
-            "success": false,
-            "message": "清空失败，无记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '清空失败，无记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
 }
-export function fetchCleanInformationIllegalityPond() {
+/**
+ * 清空滤非法池
+ * @param {*} handleGet 获取所有数据回调方法
+ */
+export function fetchCleanInformationIllegalityPond(handleGet) {
     return function(dispatch, getState) {
         dispatch(cleanInformationIllegalityPondRequest());
 
@@ -130,9 +134,9 @@ export function fetchCleanInformationIllegalityPond() {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationillegalitypond/`
+        var url =`/informationillegalitypond/`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -160,7 +164,7 @@ export function fetchCleanInformationIllegalityPond() {
                         json => {
                             dispatch(cleanInformationIllegalityPondSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationIllegalityPond());
+                            handleGet();
                         }
                     )
                     .catch((error) => {

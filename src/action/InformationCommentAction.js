@@ -59,11 +59,11 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationcomment/"
-        var params = "?keyword=" + keyword + "&bkey="  + pageNum;
+        var url = '/informationcomment/';
+        var params = `?keyword=${keyword}&bkey=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -113,9 +113,9 @@ function deleteInformationCommentFailure(error) {
     return {
         type: DELETE_INFORMATION_COMMENT_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -123,8 +123,9 @@ function deleteInformationCommentFailure(error) {
 /**
  * 
  * @param {*} id 要删除的资讯评论id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationComment(id) {
+export function fetchDeleteInformationComment(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationCommentRequest());
 
@@ -132,9 +133,9 @@ export function fetchDeleteInformationComment(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationcomment/${id}`
+        var url =`/informationcomment/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -162,7 +163,7 @@ export function fetchDeleteInformationComment(id) {
                         json => {
                             dispatch(deleteInformationCommentSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationComment());
+                            handleGet();
                         }
                     )
                     .catch((error) => {

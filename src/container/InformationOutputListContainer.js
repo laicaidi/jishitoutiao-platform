@@ -63,7 +63,7 @@ class InformationOutputListContainer extends Component {
 
             for (let field in payloadObj) {
                 // 判断columns节点，挂载的是表格标题所需的数据
-                if (field === "columns") {
+                if (field === 'columns') {
                     let pushed = false;
                     for (let i = 0; i < payloadObj[field].length; i++) {
                         // 因antd字段名为dataIndex，所以将后台返回的data_index赋值给dataIndex
@@ -131,13 +131,13 @@ class InformationOutputListContainer extends Component {
                                 return (
                                     <span>
                                         <a onClick={ showUpdateModal }>修改</a>
-                                        <Divider type="vertical" />
+                                        <Divider type='vertical' />
                                         <Popconfirm 
-                                                placement="topRight" 
+                                                placement='topRight' 
                                                 title={ msgText } 
                                                 onConfirm={ deleteConfirm }
-                                                okText="确定"
-                                                cancelText="取消">
+                                                okText='确定'
+                                                cancelText='取消'>
                                             <a>删除</a>
                                         </Popconfirm>
                                     </span>
@@ -183,7 +183,7 @@ class InformationOutputListContainer extends Component {
             // 更新props中的内容
             dispatch(changeInformationOutputListFiltrate(keyword, this.props.bkey, this.props.ckey));
         } else {        // 1.2如果未定义或为null，证明非搜索框激活
-            keyword = "";
+            keyword = '';
             if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
                 keyword = this.props.keyword;
             }
@@ -196,24 +196,24 @@ class InformationOutputListContainer extends Component {
    
         // 3.处理bkey
         if (bkey === undefined || bkey === null) {
-            bkey = ""; 
+            bkey = ''; 
             if (this.props.bkey !== undefined && this.props.bkey !== null) {
                 bkey = this.props.bkey;
             }
         }
-        if (bkey === "all") {
-            bkey = "";
+        if (bkey === 'all') {
+            bkey = '';
         }
 
         // 4.处理ckey
         if (ckey === undefined || ckey === null) {
-            ckey = "";
+            ckey = '';
             if (this.props.ckey !== undefined && this.props.ckey !== null) {
                 ckey = this.props.ckey;
             }
         }
-        if (ckey === "all") {
-            ckey = "";
+        if (ckey === 'all') {
+            ckey = '';
         }
 
         // 5.通过props中的值发起请求
@@ -224,20 +224,20 @@ class InformationOutputListContainer extends Component {
     handleDelete(informationOutputListId) {
         const { dispatch } = this.props;
         // 提交删除请求
-        dispatch(fetchDeleteInformationOutputList(informationOutputListId));
+        dispatch(fetchDeleteInformationOutputList(informationOutputListId, this.handleGet));
     }
 
     // ----------更新爬虫得分 = 爬虫权重系数 * 爬虫权重分----------
     handleCrawlerWeightFactorChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取爬虫权重分
-        let crawlerWeightScore = form.getFieldValue("crawler_weight_score");
+        let crawlerWeightScore = form.getFieldValue('crawler_weight_score');
         this.handleUpdateCrawlerScore(value, crawlerWeightScore)
     }
     handleCrawlerWeightScoreChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取爬虫权重系数
-        let crawlerWeightFactor = form.getFieldValue("crawler_weight_factor");
+        let crawlerWeightFactor = form.getFieldValue('crawler_weight_factor');
         this.handleUpdateCrawlerScore(crawlerWeightFactor, value);
     }
     handleUpdateCrawlerScore(crawlerWeightFactor, crawlerWeightScore) {
@@ -247,10 +247,10 @@ class InformationOutputListContainer extends Component {
             crawler_score: crawlerScore,
         });
         // 同时更新总得分
-        let readScore = form.getFieldValue("read_score");
-        let commentScore = form.getFieldValue("comment_score");
-        let likeScore = form.getFieldValue("like_score");
-        let wordScore = form.getFieldValue("word_score");
+        let readScore = form.getFieldValue('read_score');
+        let commentScore = form.getFieldValue('comment_score');
+        let likeScore = form.getFieldValue('like_score');
+        let wordScore = form.getFieldValue('word_score');
         this.handleUpdateInformationScore(crawlerScore, readScore, commentScore, likeScore, wordScore);
     }
 
@@ -258,13 +258,13 @@ class InformationOutputListContainer extends Component {
     handleReadWeightFactorChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取阅读数
-        let readCount = form.getFieldValue("read_count");
+        let readCount = form.getFieldValue('read_count');
         this.handleUpdateReadScore(value, readCount)
     }
     handleReadCountChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取阅读权重系数
-        let readWeightFactor = form.getFieldValue("read_weight_factor");
+        let readWeightFactor = form.getFieldValue('read_weight_factor');
         this.handleUpdateReadScore(readWeightFactor, value);
     }
     handleUpdateReadScore(readWeightFactor, readCount) {
@@ -274,10 +274,10 @@ class InformationOutputListContainer extends Component {
             read_score: readScore,
         });
         // 同时更新总得分
-        let crawlerScore = form.getFieldValue("crawler_score");
-        let commentScore = form.getFieldValue("comment_score");
-        let likeScore = form.getFieldValue("like_score");
-        let wordScore = form.getFieldValue("word_score");
+        let crawlerScore = form.getFieldValue('crawler_score');
+        let commentScore = form.getFieldValue('comment_score');
+        let likeScore = form.getFieldValue('like_score');
+        let wordScore = form.getFieldValue('word_score');
         this.handleUpdateInformationScore(crawlerScore, readScore, commentScore, likeScore, wordScore);
     }
 
@@ -285,13 +285,13 @@ class InformationOutputListContainer extends Component {
     handleCommentWeightFactorChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取评论数
-        let commentCount = form.getFieldValue("comment_count");
+        let commentCount = form.getFieldValue('comment_count');
         this.handleUpdateCommentScore(value, commentCount)
     }
     handleCommentCountChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取评论权重系数
-        let commentWeightFactor = form.getFieldValue("comment_weight_factor");
+        let commentWeightFactor = form.getFieldValue('comment_weight_factor');
         this.handleUpdateCommentScore(commentWeightFactor, value);
     }
     handleUpdateCommentScore(commentWeightFactor, commentCount) {
@@ -301,10 +301,10 @@ class InformationOutputListContainer extends Component {
             comment_score: commentScore,
         });
         // 同时更新总得分
-        let crawlerScore = form.getFieldValue("crawler_score");
-        let readScore = form.getFieldValue("read_score");
-        let likeScore = form.getFieldValue("like_score");
-        let wordScore = form.getFieldValue("word_score");
+        let crawlerScore = form.getFieldValue('crawler_score');
+        let readScore = form.getFieldValue('read_score');
+        let likeScore = form.getFieldValue('like_score');
+        let wordScore = form.getFieldValue('word_score');
         this.handleUpdateInformationScore(crawlerScore, readScore, commentScore, likeScore, wordScore);
     }
 
@@ -312,13 +312,13 @@ class InformationOutputListContainer extends Component {
     handleLikeWeightFactorChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取点赞数
-        let likeCount = form.getFieldValue("like_count");
+        let likeCount = form.getFieldValue('like_count');
         this.handleUpdateLikeScore(value, likeCount)
     }
     handleLikeCountChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取点赞权重系数
-        let likeWeightFactor = form.getFieldValue("like_weight_factor");
+        let likeWeightFactor = form.getFieldValue('like_weight_factor');
         this.handleUpdateLikeScore(likeWeightFactor, value);
     }
     handleUpdateLikeScore(likeWeightFactor, likeCount) {
@@ -328,10 +328,10 @@ class InformationOutputListContainer extends Component {
             like_score: likeScore,
         });
         // 同时更新总得分
-        let crawlerScore = form.getFieldValue("crawler_score");
-        let readScore = form.getFieldValue("read_score");
-        let commentScore = form.getFieldValue("comment_score");
-        let wordScore = form.getFieldValue("word_score");
+        let crawlerScore = form.getFieldValue('crawler_score');
+        let readScore = form.getFieldValue('read_score');
+        let commentScore = form.getFieldValue('comment_score');
+        let wordScore = form.getFieldValue('word_score');
         this.handleUpdateInformationScore(crawlerScore, readScore, commentScore, likeScore, wordScore);
     }
 
@@ -339,13 +339,13 @@ class InformationOutputListContainer extends Component {
     handleWordWeightFactorChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取点赞数
-        let wordCount = form.getFieldValue("word_count");
+        let wordCount = form.getFieldValue('word_count');
         this.handleUpdateWordScore(value, wordCount)
     }
     handleWordCountChange(value) {
         const form = this.updateFormRef.props.form;
         // 读取点赞权重系数
-        let wordWeightFactor = form.getFieldValue("word_weight_factor");
+        let wordWeightFactor = form.getFieldValue('word_weight_factor');
         this.handleUpdateWordScore(wordWeightFactor, value);
     }
     handleUpdateWordScore(wordWeightFactor, wordCount) {
@@ -355,10 +355,10 @@ class InformationOutputListContainer extends Component {
             word_score: wordScore,
         });
         // 同时更新总得分
-        let crawlerScore = form.getFieldValue("crawler_score");
-        let readScore = form.getFieldValue("read_score");
-        let commentScore = form.getFieldValue("comment_score");
-        let likeScore = form.getFieldValue("like_score");
+        let crawlerScore = form.getFieldValue('crawler_score');
+        let readScore = form.getFieldValue('read_score');
+        let commentScore = form.getFieldValue('comment_score');
+        let likeScore = form.getFieldValue('like_score');
         this.handleUpdateInformationScore(crawlerScore, readScore, commentScore, likeScore, wordScore);
     }
 
@@ -385,16 +385,14 @@ class InformationOutputListContainer extends Component {
                 // cid作为url参数，其他字段通过PUT请求的body数据进行请求
                 if (key === 'output_list_id') {
                     var outputListId = values[key];
-                } else if (key === "created_time") {       // 将毫秒数转化为年月日+时分秒格式的字符串，如:1970-01-18 07:12:39
+                } else if (key === 'created_time') {       // 将毫秒数转化为年月日+时分秒格式的字符串，如:1970-01-18 07:12:39
                     formData[key]   = this.getMyDate(values[key]);
                 } else {
                     formData[key] = values[key];
                 }
             }
             // 提交更新请求
-            dispatch(fetchUpdateInformationOutputList(outputListId, formData));
-
-            setTimeout(this.updateResult, 200);
+            dispatch(fetchUpdateInformationOutputList(outputListId, formData, this.updateResult, this.handleGet));
         });
     }
 
@@ -477,10 +475,10 @@ class InformationOutputListContainer extends Component {
         const { redisData } = this.props;
         if (redisData !== undefined && redisData !== null) {
             for (let key in redisData) {
-                if (key === "string:information_output_list:status") {
+                if (key === 'string:information_output_list:status') {
                     var status = redisData[key];
                 }
-                if (key === "string:information_output_list:batch") {
+                if (key === 'string:information_output_list:batch') {
                     var batch = redisData[key];
                 }
             }
@@ -493,13 +491,13 @@ class InformationOutputListContainer extends Component {
 
         // 将列表输出数据源数据封装成下拉列表需要的数组
         const sourceOptions = [];
-        sourceOptions.push(<Option key="all">全部</Option>);      // 先增加一个全部选项
+        sourceOptions.push(<Option key='all'>全部</Option>);      // 先增加一个全部选项
         for (let arrIndex in sourceOptionObj) {        // 取出对象
             for (var keyIndex in sourceOptionObj[arrIndex]) {       // 取出字段
-                if (keyIndex === "bkey") {
+                if (keyIndex === 'bkey') {
                     var bkey = sourceOptionObj[arrIndex][keyIndex];
                 }
-                if (keyIndex === "bname") {
+                if (keyIndex === 'bname') {
                     var bname = sourceOptionObj[arrIndex][keyIndex];
                 }
             }
@@ -512,10 +510,10 @@ class InformationOutputListContainer extends Component {
         for (let arrIndex in categoryListObj) {
             let categoryTabObj = {};
             for (var ckeyIndex in categoryListObj[arrIndex]) {
-                if (ckeyIndex === "ckey") {
+                if (ckeyIndex === 'ckey') {
                     categoryTabObj.key = categoryListObj[arrIndex][ckeyIndex];
                 }
-                if (ckeyIndex === "cname") {
+                if (ckeyIndex === 'cname') {
                     categoryTabObj.tab = categoryListObj[arrIndex][ckeyIndex];
                 }
             }
@@ -523,19 +521,19 @@ class InformationOutputListContainer extends Component {
         }
         let categoryTabObj = {};
          // 在首位增加全部类别，作为默认
-        categoryTabObj.key = "all";
-        categoryTabObj.tab = "全部类别";
+        categoryTabObj.key = 'all';
+        categoryTabObj.tab = '全部类别';
         categoryTabs.unshift(categoryTabObj);
 
         return ( 
             <Content style={ {margin: '24px 16px', padding: '6px 24px', background: '#fff', minHeight: 615} }>
                 <Tabs
                     onChange={ this.handleCategoryChange }
-                    defaultActiveKey="all"
+                    defaultActiveKey='all'
                     >
                     { categoryTabs.map(pane => <TabPane tab={ pane.tab } key={ pane.key } >
                         <div style={ {marginTop: 8} }>
-                            <span>源: </span><Select showSearch style={ {width: 150} } value={ this.props.bkey } optionFilterProp="children" onChange={ this.handleSortChange }>{ sourceOptions }</Select>
+                            <span>源: </span><Select showSearch style={ {width: 150} } value={ this.props.bkey } optionFilterProp='children' onChange={ this.handleSortChange }>{ sourceOptions }</Select>
                             <span style={ {float: 'right'} }>批次号: { batch } </span>
                         </div>
                         <div style={ {marginTop: 24} }>

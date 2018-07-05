@@ -16,19 +16,19 @@ export default class TableComponent extends Component {
 
         if (tableObj !== undefined && tableObj !== null) {
             for (let key in tableObj) {
-                if (key === "columns") {        // 对象columns节点，存储标题数据
+                if (key === 'columns') {        // 对象columns节点，存储标题数据
                     columnsArr = tableObj[key];
                 }  
-                if (key === "list") {       // 对象list节点，存储内容数据
+                if (key === 'list') {       // 对象list节点，存储内容数据
                     dataSourceArr = tableObj[key];
                 }  
-                if (key === "total_record") {       // 总记录数，封装到page对象中
+                if (key === 'total_record') {       // 总记录数，封装到page对象中
                     pageObj['total'] = tableObj[key];
                 }  
-                if (key === "page_size") {      // 每页显示数量，同样封装到page对象中
+                if (key === 'page_size') {      // 每页显示数量，同样封装到page对象中
                     pageObj['pageSize'] = tableObj[key];
                 }    
-                if (key === "page_num") {       // 当前选中的页码
+                if (key === 'page_num') {       // 当前选中的页码
                     pageObj['defaultCurrent'] = tableObj[key];
                 }
             }

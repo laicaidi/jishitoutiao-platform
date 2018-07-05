@@ -21,7 +21,7 @@ export default class PaginationComponent extends Component {
         var current = 1;        // 当前显示页码
 
         for (let key in pageObj) {
-            if (key === "pageSize") {
+            if (key === 'pageSize') {
                 len = pageObj[key];     // 从props中获每页显示数量取值
             }
             if (key === 'defaultCurrent') {

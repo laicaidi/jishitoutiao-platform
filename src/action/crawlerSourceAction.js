@@ -67,11 +67,11 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
         // 这并不是 redux middleware 所必须的，但这对于我们而言很方便。
 
         // 拼接请求url
-        var url = "/crawlersource/";        // 请求url
-        var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
+        var url = '/crawlersource/';        // 请求url
+        var params = `?keyword=${keyword}&page_num=${pageNum}`;       // 参数
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -126,9 +126,9 @@ function addCrawlerSourceFailure(error) {
     return {
         type: ADD_CRAWLER_SOURCE_FAILURE,
         status: {
-            "success": false,
-            "message": "新增失败,请检查源key或源名称是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '新增失败,请检查源key或源名称是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -136,8 +136,10 @@ function addCrawlerSourceFailure(error) {
 /**
  * 
  * @param {*} formData 新增的数据
+ * @param {*} addResult 新增后回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchAddCrawlerSource(formData) {
+export function fetchAddCrawlerSource(formData, addResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(addCrawlerSourceRequest());
 
@@ -145,9 +147,9 @@ export function fetchAddCrawlerSource(formData) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = "/crawlersource/";
+        var url = '/crawlersource/';
         var myInit = {
-            method: "POST",
+            method: 'POST',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -176,7 +178,8 @@ export function fetchAddCrawlerSource(formData) {
                         json => {
                             dispatch(addCrawlerSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerSource());
+                            handleGet();
+                            addResult();
                         }
                     )
                     .catch((error) => {
@@ -204,9 +207,9 @@ function deleteCrawlerSourceFailure(error) {
     return {
         type: DELETE_CRAWLER_SOURCE_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -214,8 +217,9 @@ function deleteCrawlerSourceFailure(error) {
 /**
  * 
  * @param {*} bid 要删除的爬虫源id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteCrawlerSource(bid) {
+export function fetchDeleteCrawlerSource(bid, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerSourceRequest());
 
@@ -223,9 +227,9 @@ export function fetchDeleteCrawlerSource(bid) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlersource/${bid}`
+        var url =`/crawlersource/${bid}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -253,7 +257,7 @@ export function fetchDeleteCrawlerSource(bid) {
                         json => {
                             dispatch(deleteCrawlerSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerSource());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -281,9 +285,9 @@ function updateCrawlerSourceFailure(error) {
     return {
         type: UPDATE_CRAWLER_SOURCE_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败,请检查源key或源name是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败,请检查源key或源name是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -292,8 +296,10 @@ function updateCrawlerSourceFailure(error) {
  * 
  * @param {*} bid 要更新的爬虫源id
  * @param {*} formData 更新的数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateCrawlerSource(bid, formData) {
+export function fetchUpdateCrawlerSource(bid, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerSourceRequest());
 
@@ -303,7 +309,7 @@ export function fetchUpdateCrawlerSource(bid, formData) {
 
         var url = `/crawlersource/${bid}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -332,7 +338,8 @@ export function fetchUpdateCrawlerSource(bid, formData) {
                         json => {
                             dispatch(updateCrawlerSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerSource());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

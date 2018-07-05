@@ -38,11 +38,11 @@ export default class UploadComponent extends Component {
     }
 
     handleChange = ({ fileList }) => {
-        console.log("UploadComponent handleChange: " + fileList);
+        console.log('UploadComponent handleChange: ' + fileList);
         for (let key in fileList) {
-            console.log("fileList[" + key + "]: " + fileList[key]);
+            console.log('fileList[' + key + ']: ' + fileList[key]);
             for (let index in fileList[key]) {
-                console.log("fileList[" + key + "][" + index + "]: " + fileList[key][index]);
+                console.log('fileList[' + key + '][' + index + ']: ' + fileList[key][index]);
             }
         }
         this.setState({ fileList });
@@ -54,14 +54,14 @@ export default class UploadComponent extends Component {
         const uploadButton = (
             <div>
                 <Icon type='plus'/>
-                <div className="upload-text">上传</div>
+                <div className='upload-text'>上传</div>
             </div>
         );
         return (
-            <div className="clearfix">
+            <div className='clearfix'>
                 <Upload
-                    action="//jsonplaceholder.typicode.com/posts/"
-                    listType="picture-card"
+                    action='//jsonplaceholder.typicode.com/posts/'
+                    listType='picture-card'
                     fileList={ fileList }
                     onPreview={ this.handlePreview }
                     onChange={ this.handleChange }
@@ -70,7 +70,7 @@ export default class UploadComponent extends Component {
                     {fileList.length >= 1 ? null : uploadButton}
                 </Upload>
                 <Modal visible={ previewVisible } footer={ null } onCancel={ this.handleCancel }>
-                    <img alt="pic" style={ {width: '100%'} } src={ previewImage } />
+                    <img alt='pic' style={ {width: '100%'} } src={ previewImage } />
                 </Modal>
             </div>
         )

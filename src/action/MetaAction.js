@@ -30,9 +30,9 @@ function getMetaFailure(error) {
     return {
         type: GET_META_FAILURE,
         status: {
-            "success": false,
-            "message": "获取数据失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss'),
+            'success': false,
+            'message': '获取数据失败',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss'),
         },
         error
     }
@@ -47,10 +47,10 @@ export function fetchGetMeta() {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接请求url
-        var url = "/meta/";        // 请求url
+        var url = '/meta/';        // 请求url
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',

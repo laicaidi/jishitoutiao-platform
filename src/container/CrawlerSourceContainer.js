@@ -132,15 +132,15 @@ class CrawlerSourceContainer extends Component {
                 return (
                   <span>
                     <a onClick={ showUpdateModel }>修改</a>
-                    <Divider type="vertical" />
+                    <Divider type='vertical' />
                     <a onClick={ showCopyAddModel }>复制</a>
-                    <Divider type="vertical" />
+                    <Divider type='vertical' />
                     <Popconfirm 
-                          placement="topRight" 
+                          placement='topRight' 
                           title={ msgText }
                           onConfirm={ deleteConfirm } 
-                          okText="确定"
-                          cancelText="取消">
+                          okText='确定'
+                          cancelText='取消'>
                         <a>删除</a>
                     </Popconfirm>
                   </span>
@@ -198,13 +198,13 @@ class CrawlerSourceContainer extends Component {
   // --------------------------数据(增删改查)回调方法-------------------
   // 获取爬虫源数据
   handleGet(keyword, pageNum) {
-    const { dispatch } = this.props;
+    const { dispatch } = this.props; 
 
     // 1.处理搜索关键字参数
     if (keyword !== null && keyword !== undefined) {    // 1.1从搜索框唤起
       dispatch(changeCrawlerSourceFiltrate(keyword));
     } else {    // 1.2如果未定义或为null，证明非搜索框激活
-      keyword = "";
+      keyword = '';
       if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
           keyword = this.props.keyword;
       }
@@ -235,9 +235,7 @@ class CrawlerSourceContainer extends Component {
         formData[key] = values[key];
       }
       // 提交新增请求
-      dispatch(fetchAddCrawlerSource(formData));
-
-      setTimeout(this.addResult, 200);
+      dispatch(fetchAddCrawlerSource(formData, this.addResult, this.handleGet));
     });
   }
 
@@ -264,7 +262,7 @@ class CrawlerSourceContainer extends Component {
   handleDelete(id) {
     const { dispatch } = this.props;
     // 提交删除请求
-    dispatch(fetchDeleteCrawlerSource(id));
+    dispatch(fetchDeleteCrawlerSource(id, this.handleGet));
   }
 
   // 更新爬虫源
@@ -287,9 +285,7 @@ class CrawlerSourceContainer extends Component {
         }
       }
       // 提交更新请求
-      dispatch(fetchUpdateCrawlerSource(bid, formData));
-
-      setTimeout(this.updateResult, 200);
+      dispatch(fetchUpdateCrawlerSource(bid, formData, this.updateResult, this.handleGet));
     });
   }
 
@@ -324,7 +320,7 @@ class CrawlerSourceContainer extends Component {
     return (
         <Content style={ {margin: '24px 16px', padding: 24, background: '#fff', minHeight: 615} }>
             <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
-            <Button type="primary" style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增源</Button>
+            <Button type='primary' style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增源</Button>
             <TableComponent rowKey='bid' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
             <AddCrawlerSourceComponent
                 wrappedComponentRef={ this.wrappedAddFormRef }

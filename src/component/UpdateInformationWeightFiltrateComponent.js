@@ -31,67 +31,67 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
             if (initData !== undefined && initData !== null) {
                 for (let key in initData) {
                     // 获取该条数据，填充至对应控件
-                    if (key === "information_id") {
+                    if (key === 'information_id') {
                         var informationIdInit = initData[key];
-                    } else if (key === "crawler_id") {
+                    } else if (key === 'crawler_id') {
                         var crawlerIdInit = initData[key];
-                    } else if (key === "crawler_name") {
+                    } else if (key === 'crawler_name') {
                         var crawlerNameInit = initData[key];
-                    } else if (key === "crawler_weight_factor") {
+                    } else if (key === 'crawler_weight_factor') {
                         var crawlerWeightFactorInit = initData[key];
-                    } else if (key === "crawler_weight_score") {
+                    } else if (key === 'crawler_weight_score') {
                         var crawlerWeightScoreInit = initData[key];
-                    } else if (key === "crawler_score") {
+                    } else if (key === 'crawler_score') {
                         var crawlerScoreInit = initData[key];
-                    } else if (key === "bid") {
+                    } else if (key === 'bid') {
                         var bidInit = initData[key];
-                    } else if (key === "bname") {
+                    } else if (key === 'bname') {
                         var bnameInit = initData[key];
-                    } else if (key === "cid") {
+                    } else if (key === 'cid') {
                         var cidInit = initData[key];
-                    } else if (key === "cname") {
+                    } else if (key === 'cname') {
                         var cnameInit = initData[key];
-                    } else if (key === "title") {
+                    } else if (key === 'title') {
                         var titleInit = initData[key];
-                    } else if (key === "read_weight") {
+                    } else if (key === 'read_weight') {
                         var readWeightInit = initData[key];
-                    } else if (key === "read_weight_factor") {
+                    } else if (key === 'read_weight_factor') {
                         var readWeightFactorInit = initData[key];
-                    } else if (key === "read_count") {
+                    } else if (key === 'read_count') {
                         var readCountInit = initData[key];
-                    } else if (key === "read_score") {
+                    } else if (key === 'read_score') {
                         var readScoreInit = initData[key];
-                    } else if (key === "comment_weight") {
+                    } else if (key === 'comment_weight') {
                         var commentWeightInit = initData[key];
-                    } else if (key === "comment_weight_factor") {
+                    } else if (key === 'comment_weight_factor') {
                         var commentWeightFactorInit = initData[key];
-                    } else if (key === "comment_count") {
+                    } else if (key === 'comment_count') {
                         var commentCountInit = initData[key];
-                    } else if (key === "comment_score") {
+                    } else if (key === 'comment_score') {
                         var commentScoreInit = initData[key];
-                    } else if (key === "like_weight") {
+                    } else if (key === 'like_weight') {
                         var likeWeightInit = initData[key];
-                    } else if (key === "like_weight_factor") {
+                    } else if (key === 'like_weight_factor') {
                         var likeWeightFactorInit = initData[key];
-                    } else if (key === "like_count") {
+                    } else if (key === 'like_count') {
                         var likeCountInit = initData[key];
-                    } else if (key === "like_score") {
+                    } else if (key === 'like_score') {
                         var likeScoreInit = initData[key];
-                    } else if (key === "word_weight") {
+                    } else if (key === 'word_weight') {
                         var wordWeightInit = initData[key];
-                    } else if (key === "word_weight_factor") {
+                    } else if (key === 'word_weight_factor') {
                         var wordWeightFactorInit = initData[key];
-                    } else if (key === "word_count") {
+                    } else if (key === 'word_count') {
                         var wordCountInit = initData[key];
-                    } else if (key === "word_score") {
+                    } else if (key === 'word_score') {
                         var wordScoreInit = initData[key];
-                    } else if (key === "url") {
+                    } else if (key === 'url') {
                         var urlInit = initData[key];
-                    } else if (key === "created_time") {
+                    } else if (key === 'created_time') {
                         var createdTimeInit = initData[key];
-                    } else if (key === "information_score") {
+                    } else if (key === 'information_score') {
                         var informationScoreInit = initData[key];
-                    } else if (key === "weight_filtrate_id") {
+                    } else if (key === 'weight_filtrate_id') {
                         var weightFiltrateIdInit = initData[key];
                     }
                 }
@@ -103,35 +103,35 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
             return (
                 <Modal
                     visible={ visible }
-                    title="修改得分数据"
-                    okText="提交"
-                    cancelText="取消"
+                    title='修改得分数据'
+                    okText='提交'
+                    cancelText='取消'
                     onCancel={ onCancel }
                     onOk={ onUpdate }
                     style={ {top: 30, bottom: 30} }     // 距离顶部和底部的距离都为30
-                    bodyStyle={ {height: bodyHeight - 170, overflow: "auto" } }     // 高度固定，内容区域初始化滚动条
+                    bodyStyle={ {height: bodyHeight - 170, overflow: 'auto' } }     // 高度固定，内容区域初始化滚动条
                     destroyOnClose={ true }     // 关闭时销毁 Modal 里的子元素，每次打开均重新加载(滚动条回顶部)
                     confirmLoading={ confirmLoading }
                     >
-                    <Form layout="vertical">
-                        <FormItem label="资讯id">
+                    <Form layout='vertical'>
+                        <FormItem label='资讯id'>
                             { getFieldDecorator('information_id', {
                                 initialValue: informationIdInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入资讯id"
+                                    message: '请输入资讯id'
                                 }]
                             })(
                                 <Input disabled={ true } />
                             ) }
                         </FormItem>
 
-                        <FormItem label="源">
+                        <FormItem label='源'>
                             { getFieldDecorator('bid', {
                                 initialValue: bidInit,
                                 rules: [{
                                     required: true,
-                                    message: "请选择源"
+                                    message: '请选择源'
                                 }]
                             })(
                                 <Select
@@ -143,12 +143,12 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem>
 
-                        <FormItem label="类别">
+                        <FormItem label='类别'>
                             { getFieldDecorator('cid', {
                                 initialValue: cidInit,
                                 rules: [{
                                     required: true,
-                                    message: "请选择类别"
+                                    message: '请选择类别'
                                 }]
                             })(
                                 <Select
@@ -160,12 +160,12 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem>
 
-                        <FormItem label="爬虫名">
+                        <FormItem label='爬虫名'>
                             { getFieldDecorator('crawler_id', {
                                 initialValue: crawlerIdInit,
                                 rules: [{
                                     required: true,
-                                    message: "请选择爬虫"
+                                    message: '请选择爬虫'
                                 }]
                             })(
                                 <Select 
@@ -177,79 +177,79 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem>
 
-                        <FormItem label="爬虫权重系数">
+                        <FormItem label='爬虫权重系数'>
                             { getFieldDecorator('crawler_weight_factor', {
                                 initialValue: crawlerWeightFactorInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入爬虫权重系数"
+                                    message: '请输入爬虫权重系数'
                                 }]
                             })(
                                 <InputNumber min={ 0 } onChange={ onCrawlerWeightFactorChange } />
                             ) }
                         </FormItem>
 
-                        <FormItem label="爬虫权重分">
+                        <FormItem label='爬虫权重分'>
                             { getFieldDecorator('crawler_weight_score', {
                                 initialValue: crawlerWeightScoreInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入爬虫权重分"
+                                    message: '请输入爬虫权重分'
                                 }]
                             })(
                                 <InputNumber min={ 0 } onChange={ onCrawlerWeightScoreChange } />
                             ) }
                         </FormItem>
 
-                        <FormItem label="爬虫得分">
+                        <FormItem label='爬虫得分'>
                             { getFieldDecorator('crawler_score', {
                                 initialValue: crawlerScoreInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入爬虫得分"
+                                    message: '请输入爬虫得分'
                                 }]
                             })(
                                 <InputNumber min={ 0 } step={ 1 } disabled/>
                             ) }
                         </FormItem>                   
 
-                        <FormItem label="标题">
+                        <FormItem label='标题'>
                             { getFieldDecorator('title', {
                                 initialValue: titleInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入标题"
+                                    message: '请输入标题'
                                 }]
                             })(
                                 <Input />
                             ) }
                         </FormItem>
 
-                        <FormItem label="阅读权重">
+                        <FormItem label='阅读权重'>
                             { getFieldDecorator('read_weight', {
                                 initialValue: readWeightInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入阅读权重"
+                                    message: '请输入阅读权重'
                                 }]
                             })(
                                 <Input />
                             ) }
                         </FormItem>
 
-                        <FormItem label="阅读权重系数">
+                        <FormItem label='阅读权重系数'>
                             { getFieldDecorator('read_weight_factor', {
                                 initialValue: readWeightFactorInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入阅读权重系数"
+                                    message: '请输入阅读权重系数'
                                 }]
                             })(
                                 <InputNumber min={ 0 } onChange={ onReadWeightFactorChange }/>
                             ) }
                         </FormItem>
 
-                        <FormItem label="阅读数">
+                        <FormItem label='阅读数'>
                             { getFieldDecorator('read_count', {
                                 initialValue: readCountInit
                             })(
@@ -257,7 +257,7 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem>
 
-                        <FormItem label="阅读得分">
+                        <FormItem label='阅读得分'>
                             { getFieldDecorator('read_score', {
                                 initialValue: readScoreInit
                             })(
@@ -265,31 +265,31 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem> 
 
-                        <FormItem label="评论权重">
+                        <FormItem label='评论权重'>
                             { getFieldDecorator('comment_weight', {
                                 initialValue: commentWeightInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入评论权重"
+                                    message: '请输入评论权重'
                                 }]
                             })(
                                 <Input />
                             ) }
                         </FormItem>
 
-                        <FormItem label="评论权重系数">
+                        <FormItem label='评论权重系数'>
                             { getFieldDecorator('comment_weight_factor', {
                                 initialValue: commentWeightFactorInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入评论权重系数"
+                                    message: '请输入评论权重系数'
                                 }]
                             })(
                                 <InputNumber min={ 0 } onChange={ onCommentWeightFactorChange } />
                             ) }
                         </FormItem>
 
-                        <FormItem label="评论数">
+                        <FormItem label='评论数'>
                             { getFieldDecorator('comment_count', {
                                 initialValue: commentCountInit
                             })(
@@ -297,7 +297,7 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem>
 
-                        <FormItem label="评论得分">
+                        <FormItem label='评论得分'>
                             { getFieldDecorator('comment_score', {
                                 initialValue: commentScoreInit
                             })(
@@ -305,31 +305,31 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem> 
 
-                        <FormItem label="点赞权重">
+                        <FormItem label='点赞权重'>
                             { getFieldDecorator('like_weight', {
                                 initialValue: likeWeightInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入点赞权重"
+                                    message: '请输入点赞权重'
                                 }]
                             })(
                                 <Input />
                             ) }
                         </FormItem>
 
-                        <FormItem label="点赞权重系数">
+                        <FormItem label='点赞权重系数'>
                             { getFieldDecorator('like_weight_factor', {
                                 initialValue: likeWeightFactorInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入点赞权重系数"
+                                    message: '请输入点赞权重系数'
                                 }]
                             })(
                                 <InputNumber min={ 0 } onChange={ onLikeWeightFactorChange } />
                             ) }
                         </FormItem>
 
-                        <FormItem label="点赞数">
+                        <FormItem label='点赞数'>
                             { getFieldDecorator('like_count', {
                                 initialValue: likeCountInit
                             })(
@@ -337,7 +337,7 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem>
 
-                        <FormItem label="点赞得分">
+                        <FormItem label='点赞得分'>
                             { getFieldDecorator('like_score', {
                                 initialValue: likeScoreInit
                             })(
@@ -345,60 +345,60 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem>
 
-                        <FormItem label="文字权重">
+                        <FormItem label='文字权重'>
                             { getFieldDecorator('word_weight', {
                                 initialValue: wordWeightInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入文字权重"
+                                    message: '请输入文字权重'
                                 }]
                             })(
                                 <Input />
                             ) }
                         </FormItem>
 
-                        <FormItem label="文字权重系数">
+                        <FormItem label='文字权重系数'>
                             { getFieldDecorator('word_weight_factor', {
                                 initialValue: wordWeightFactorInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入文字权重系数"
+                                    message: '请输入文字权重系数'
                                 }]
                             })(
                                 <InputNumber min={ 0 } onChange={ onWordWeightFactorChange } />
                             ) }
                         </FormItem>
 
-                        <FormItem label="文章字数">
+                        <FormItem label='文章字数'>
                             { getFieldDecorator('word_count', {
                                 initialValue: wordCountInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入文章字数"
+                                    message: '请输入文章字数'
                                 }]
                             })(
                                 <InputNumber min={ 0 } step={ 1 } onChange={ onWordCountChange } />
                             ) }
                         </FormItem>
 
-                        <FormItem label="文字得分">
+                        <FormItem label='文字得分'>
                             { getFieldDecorator('word_score', {
                                 initialValue: wordScoreInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入文字得分"
+                                    message: '请输入文字得分'
                                 }]
                             })(
                                 <InputNumber min={ 0 } step={ 1 } disabled/>
                             ) }
                         </FormItem>
 
-                        <FormItem label="资讯URL">
+                        <FormItem label='资讯URL'>
                             { getFieldDecorator('url', {
                                 initialValue: urlInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入url",
+                                    message: '请输入url',
                                     pattern: '(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]'
                                 }]
                             })(
@@ -406,41 +406,41 @@ export const UpdateInformationWeightFiltrateComponent = Form.create()(
                             ) }
                         </FormItem>
 
-                        <FormItem label="资讯创建时间">
+                        <FormItem label='资讯创建时间'>
                             { getFieldDecorator('created_time', {
                                 initialValue: moment(createdTimeInit),
                                 rules: [{
                                     required: true,
-                                    message: "请编辑资讯创建时间",
+                                    message: '请编辑资讯创建时间',
                                 }]
                             })(
                                 <DatePicker
                                     disabledDate={ disabledDate }
                                     showTime
-                                    format="YYYY-MM-DD HH:mm:ss"
-                                    placeholder="请选择资讯创建时间"
+                                    format='YYYY-MM-DD HH:mm:ss'
+                                    placeholder='请选择资讯创建时间'
                                     />
                             ) }
                         </FormItem>
 
-                        <FormItem label="资讯总得分">
+                        <FormItem label='资讯总得分'>
                             { getFieldDecorator('information_score', {
                                 initialValue: informationScoreInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入资讯总得分"
+                                    message: '请输入资讯总得分'
                                 }]
                             })(
                                 <InputNumber min={ 0 } step={ 1 } disabled/>
                             ) }
                         </FormItem>
 
-                        <FormItem label="筛选数据id">
+                        <FormItem label='筛选数据id'>
                             { getFieldDecorator('weight_filtrate_id', {
                                 initialValue: weightFiltrateIdInit,
                                 rules: [{
                                     required: true,
-                                    message: "请输入筛选数据id"
+                                    message: '请输入筛选数据id'
                                 }]
                             })(
                                 <Input disabled={ true } />

@@ -95,26 +95,26 @@ const LoginContainer =  Form.create()(
     render() {
       const { getFieldDecorator } = this.props.form;
       return (
-        <div className="loginPageWrap">
-                <div className="box">
+        <div className='loginPageWrap'>
+                <div className='box'>
                     <p>即时头条管理系统</p>
-                    <div className="loginWrap">
+                    <div className='loginWrap'>
                         <Form onSubmit={this.handleSubmit}>
                             <FormItem>
                                 {getFieldDecorator('username', {
                                     rules: [{ required: true, message: '请输入用户名' }],
                                 })(
-                                    <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名" />
+                                    <Input prefix={<Icon type='user' style={{ fontSize: 13 }} />} placeholder='用户名' />
                                 )}
                             </FormItem>
                             <FormItem>
                                 {getFieldDecorator('password', {
                                     rules: [{ required: true, message: '请输入密码' }],
                                 })(
-                                    <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="密码" />
+                                    <Input prefix={<Icon type='lock' style={{ fontSize: 13 }} />} type='password' placeholder='密码' />
                                 )}
                             </FormItem>
-                            <Button type="primary" htmlType="submit" className="loginBtn">登录</Button>
+                            <Button type='primary' htmlType='submit' className='loginBtn'>登录</Button>
                         </Form>
                     </div>
                 </div>

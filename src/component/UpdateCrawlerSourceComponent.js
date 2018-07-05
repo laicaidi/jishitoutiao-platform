@@ -33,18 +33,18 @@ export const UpdateCrawlerSourceComponent = Form.create()(
             return (
                 <Modal
                     visible={ visible }
-                    title="修改源"
-                    okText="提交"
-                    cancelText="取消"
+                    title='修改源'
+                    okText='提交'
+                    cancelText='取消'
                     onCancel={ onCancel }
                     onOk={ onUpdate }
                     style={ {top: 30, bottom: 30} }     // 距离顶部和底部的距离都为30
-                    bodyStyle={ {height: bodyHeight - 170, overflow: "auto" } }     // 高度固定，内容区域初始化滚动条
+                    bodyStyle={ {height: bodyHeight - 170, overflow: 'auto' } }     // 高度固定，内容区域初始化滚动条
                     destroyOnClose={ true }     // 关闭时销毁 Modal 里的子元素，每次打开均重新加载(滚动条回顶部)
                     confirmLoading={ confirmLoading }
                     >
-                    <Form layout="vertical">
-                        <FormItem label="源id">
+                    <Form layout='vertical'>
+                        <FormItem label='源id'>
                             { getFieldDecorator('bid', {
                                 initialValue: bidInit,
                                 rules: [{required: true}]
@@ -53,7 +53,7 @@ export const UpdateCrawlerSourceComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        <FormItem label="源key">
+                        <FormItem label='源key'>
                             { getFieldDecorator('bkey', {
                                 initialValue: bkeyInit,
                                 rules: [{required: true, 
@@ -64,7 +64,7 @@ export const UpdateCrawlerSourceComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        <FormItem label="源名称">
+                        <FormItem label='源名称'>
                             { getFieldDecorator('bname', {
                                 initialValue: bnameInit,
                                 rules: [{required: true, message: '请输入源名称'}]
@@ -73,7 +73,7 @@ export const UpdateCrawlerSourceComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        <FormItem label="源网站首页">
+                        <FormItem label='源网站首页'>
                             { getFieldDecorator('homepage',{
                                 initialValue: homepageInit,
                                 rules: [{
@@ -85,7 +85,7 @@ export const UpdateCrawlerSourceComponent = Form.create()(
                             ) }
                         </FormItem>
     
-                        {/* <FormItem label="品牌logo">
+                        {/* <FormItem label='品牌logo'>
                             { getFieldDecorator('logo', {
                                 initialValue: logoInit
                             })(
@@ -93,7 +93,7 @@ export const UpdateCrawlerSourceComponent = Form.create()(
                             ) }
                         </FormItem> */}
     
-                        <FormItem label="介绍">
+                        <FormItem label='介绍'>
                             { getFieldDecorator('remark', {
                                 initialValue: remarkInit
                             })(

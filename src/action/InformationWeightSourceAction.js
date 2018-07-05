@@ -61,11 +61,11 @@ export function fetchGetAllInformationWeightSource(keyword, pageNum, bkey, ckey)
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationweightsource/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationweightsource/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -115,9 +115,9 @@ function deleteInformationWeightSourceFailure(error) {
     return {
         type: DELETE_INFORMATION_WEIGHT_SOURCE_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -125,8 +125,9 @@ function deleteInformationWeightSourceFailure(error) {
 /**
  * 
  * @param {*} id 要删除的权重源id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationWeightSource(id) {
+export function fetchDeleteInformationWeightSource(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationWeightSourceRequest());
 
@@ -134,9 +135,9 @@ export function fetchDeleteInformationWeightSource(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationweightsource/${id}`
+        var url =`/informationweightsource/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -164,7 +165,7 @@ export function fetchDeleteInformationWeightSource(id) {
                         json => {
                             dispatch(deleteInformationWeightSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightSource());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -192,9 +193,9 @@ function updateInformationWeightSourceFailure(error) {
     return {
         type: UPDATE_INFORMATION_WEIGHT_SOURCE_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -203,8 +204,10 @@ function updateInformationWeightSourceFailure(error) {
  * 
  * @param {*} id 要更新的权重源id
  * @param {*} formData 要更新的权重源数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateInformationWeightSource(id, formData) {
+export function fetchUpdateInformationWeightSource(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateInformationWeightSourceRequest());
 
@@ -214,7 +217,7 @@ export function fetchUpdateInformationWeightSource(id, formData) {
 
         var url = `/informationweightsource/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -243,7 +246,8 @@ export function fetchUpdateInformationWeightSource(id, formData) {
                         json => {
                             dispatch(updateInformationWeightSourceSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightSource());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

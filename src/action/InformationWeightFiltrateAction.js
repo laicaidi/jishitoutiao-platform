@@ -61,11 +61,11 @@ export function fetchGetAllInformationWeightFiltrate(keyword, pageNum, bkey, cke
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationweightfiltrate/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationweightfiltrate/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -117,9 +117,9 @@ function deleteInformationWeightFiltrateFailure(error) {
     return {
         type: DELETE_INFORMATION_WEIGHT_FILTRATE_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -127,8 +127,9 @@ function deleteInformationWeightFiltrateFailure(error) {
 /**
  * 
  * @param {*} id 要删除的得分筛选数据id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationWeightFiltrate(id) {
+export function fetchDeleteInformationWeightFiltrate(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationWeightFiltrateRequest());
 
@@ -136,9 +137,9 @@ export function fetchDeleteInformationWeightFiltrate(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationweightfiltrate/${id}`
+        var url =`/informationweightfiltrate/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -166,7 +167,7 @@ export function fetchDeleteInformationWeightFiltrate(id) {
                         json => {
                             dispatch(deleteInformationWeightFiltrateSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightFiltrate());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -194,9 +195,9 @@ function updateInformationWeightFiltrateFailure(error) {
     return {
         type: UPDATE_INFORMATION_WEIGHT_FILTRATE_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -205,8 +206,10 @@ function updateInformationWeightFiltrateFailure(error) {
  * 
  * @param {*} id 要更新的得分筛选数据id
  * @param {*} formData 要更新的得分筛选数据数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateInformationWeightFiltrate(id, formData) {
+export function fetchUpdateInformationWeightFiltrate(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateInformationWeightFiltrateRequest());
 
@@ -216,7 +219,7 @@ export function fetchUpdateInformationWeightFiltrate(id, formData) {
 
         var url = `/informationweightfiltrate/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -245,7 +248,8 @@ export function fetchUpdateInformationWeightFiltrate(id, formData) {
                         json => {
                             dispatch(updateInformationWeightFiltrateSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightFiltrate());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

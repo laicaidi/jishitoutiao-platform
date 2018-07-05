@@ -57,11 +57,11 @@ export function fetchGetAllCrawlerSet(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接请求url
-        var url = "/crawlerset/";        // 请求url
-        var params = "?keyword=" + keyword + "&page_num=" + pageNum;       // 参数
+        var url = '/crawlerset/';        // 请求url
+        var params = `?keyword=${keyword}&page_num=${pageNum}`;       // 参数
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -111,9 +111,9 @@ function addCrawlerSetFailure(error) {
     return {
         type: ADD_CRAWLER_SET_FAILURE,
         status: {
-            "success": false,
-            "message": "新增失败,请检查键是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '新增失败,请检查键是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -121,8 +121,10 @@ function addCrawlerSetFailure(error) {
 /**
  * 
  * @param {*} formData 新增的数据
+ * @param {*} addResult 新增结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchAddCrawlerSet(formData) {
+export function fetchAddCrawlerSet(formData, addResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(addCrawlerSetRequest());
 
@@ -130,9 +132,9 @@ export function fetchAddCrawlerSet(formData) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = "/crawlerset/";
+        var url = '/crawlerset/';
         var myInit = {
-            method: "POST",
+            method: 'POST',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -161,7 +163,8 @@ export function fetchAddCrawlerSet(formData) {
                         json => {
                             dispatch(addCrawlerSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerSet());
+                            handleGet();
+                            addResult();
                         }
                     )
                     .catch((error) => {
@@ -189,9 +192,9 @@ function deleteCrawlerSetFailure(error) {
     return {
         type: DELETE_CRAWLER_SET_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -199,8 +202,9 @@ function deleteCrawlerSetFailure(error) {
 /**
  * 
  * @param {*} id 要删除的爬虫设置id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteCrawlerSet(id) {
+export function fetchDeleteCrawlerSet(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerSetRequest());
 
@@ -208,9 +212,9 @@ export function fetchDeleteCrawlerSet(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlerset/${id}`
+        var url =`/crawlerset/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -238,7 +242,7 @@ export function fetchDeleteCrawlerSet(id) {
                         json => {
                             dispatch(deleteCrawlerSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerSet());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -266,9 +270,9 @@ function updateCrawlerSetFailure(error) {
     return {
         type: UPDATE_CRAWLER_SET_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败,请检查键是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败,请检查键是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -277,8 +281,10 @@ function updateCrawlerSetFailure(error) {
  * 
  * @param {*} id 要更新的爬虫设置id
  * @param {*} formData 更新的数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateCrawlerSet(id, formData) {
+export function fetchUpdateCrawlerSet(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerSetRequest());
 
@@ -288,7 +294,7 @@ export function fetchUpdateCrawlerSet(id, formData) {
 
         var url = `/crawlerset/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -317,7 +323,8 @@ export function fetchUpdateCrawlerSet(id, formData) {
                         json => {
                             dispatch(updateCrawlerSetSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerSet());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

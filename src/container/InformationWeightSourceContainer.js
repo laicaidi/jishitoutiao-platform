@@ -53,7 +53,7 @@ class InformationWeightSourceContainer extends Component {
 
             for (let field in payloadObj) {
                 // 判断columns节点，挂载的是表格标题所需的数据
-                if (field === "columns") {
+                if (field === 'columns') {
                     let pushed = false;
                     for (let i = 0; i < payloadObj[field].length; i++) {
                         // 因antd字段名为dataIndex，所以将后台返回的data_index赋值给dataIndex
@@ -119,13 +119,13 @@ class InformationWeightSourceContainer extends Component {
                                 return (
                                     <span>
                                         <a onClick={ showUpdateModal }>修改</a>
-                                        <Divider type="vertical" />
+                                        <Divider type='vertical' />
                                         <Popconfirm 
-                                                placement="topRight" 
+                                                placement='topRight' 
                                                 title={ msgText } 
                                                 onConfirm={ deleteConfirm }
-                                                okText="确定"
-                                                cancelText="取消">
+                                                okText='确定'
+                                                cancelText='取消'>
                                             <a>删除</a>
                                         </Popconfirm>
                                     </span>
@@ -171,7 +171,7 @@ class InformationWeightSourceContainer extends Component {
             // 更新props中的内容
             dispatch(changeInformationWeightSourceFiltrate(keyword, this.props.bkey, this.props.ckey));
         } else {        // 1.2如果未定义或为null，证明非搜索框激活
-            keyword = "";
+            keyword = '';
             if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
                 keyword = this.props.keyword;
             }
@@ -184,24 +184,24 @@ class InformationWeightSourceContainer extends Component {
    
         // 3.处理bkey
         if (bkey === undefined || bkey === null) {
-            bkey = ""; 
+            bkey = ''; 
             if (this.props.bkey !== undefined && this.props.bkey !== null) {
                 bkey = this.props.bkey;
             }
         }
-        if (bkey === "all") {
-            bkey = "";
+        if (bkey === 'all') {
+            bkey = '';
         }
 
         // 4.处理ckey
         if (ckey === undefined || ckey === null) {
-            ckey = "";
+            ckey = '';
             if (this.props.ckey !== undefined && this.props.ckey !== null) {
                 ckey = this.props.ckey;
             }
         }
-        if (ckey === "all") {
-            ckey = "";
+        if (ckey === 'all') {
+            ckey = '';
         }
 
         // 5.通过props中的值发起请求
@@ -212,7 +212,7 @@ class InformationWeightSourceContainer extends Component {
     handleDelete(informationWeightSourceId) {
         const { dispatch } = this.props;
         // 提交删除请求
-        dispatch(fetchDeleteInformationWeightSource(informationWeightSourceId));
+        dispatch(fetchDeleteInformationWeightSource(informationWeightSourceId, this.handleGet));
     }
 
     // 更新权重源
@@ -230,16 +230,14 @@ class InformationWeightSourceContainer extends Component {
                 // cid作为url参数，其他字段通过PUT请求的body数据进行请求
                 if (key === 'weight_source_id') {
                     var weightSourceId = values[key];
-                } else if (key === "created_time") {       // 将毫秒数转化为年月日+时分秒格式的字符串，如:1970-01-18 07:12:39
+                } else if (key === 'created_time') {       // 将毫秒数转化为年月日+时分秒格式的字符串，如:1970-01-18 07:12:39
                     formData[key]   = this.getMyDate(values[key]);
                 } else {
                     formData[key] = values[key];
                 }
             }
             // 提交更新请求
-            dispatch(fetchUpdateInformationWeightSource(weightSourceId, formData));
-
-            setTimeout(this.updateResult, 200);
+            dispatch(fetchUpdateInformationWeightSource(weightSourceId, formData, this.updateResult, this.handleGet));
         });
     }
 
@@ -322,10 +320,10 @@ class InformationWeightSourceContainer extends Component {
         const { redisData } = this.props;
         if (redisData !== undefined && redisData !== null) {
             for (let key in redisData) {
-                if (key === "string:information_weight_source:status") {
+                if (key === 'string:information_weight_source:status') {
                     var status = redisData[key];
                 }
-                if (key === "string:information_weight_source:batch") {
+                if (key === 'string:information_weight_source:batch') {
                     var batch = redisData[key];
                 }
             }
@@ -338,13 +336,13 @@ class InformationWeightSourceContainer extends Component {
 
         // 将权重源源数据封装成下拉列表需要的数组
         const sourceOptions = [];
-        sourceOptions.push(<Option key="all">全部</Option>);      // 先增加一个全部选项
+        sourceOptions.push(<Option key='all'>全部</Option>);      // 先增加一个全部选项
         for (let arrIndex in sourceOptionObj) {        // 取出对象
             for (var keyIndex in sourceOptionObj[arrIndex]) {       // 取出字段
-                if (keyIndex === "bkey") {
+                if (keyIndex === 'bkey') {
                     var bkey = sourceOptionObj[arrIndex][keyIndex];
                 }
-                if (keyIndex === "bname") {
+                if (keyIndex === 'bname') {
                     var bname = sourceOptionObj[arrIndex][keyIndex];
                 }
             }
@@ -357,10 +355,10 @@ class InformationWeightSourceContainer extends Component {
         for (let arrIndex in categoryListObj) {
             let categoryTabObj = {};
             for (var ckeyIndex in categoryListObj[arrIndex]) {
-                if (ckeyIndex === "ckey") {
+                if (ckeyIndex === 'ckey') {
                     categoryTabObj.key = categoryListObj[arrIndex][ckeyIndex];
                 }
-                if (ckeyIndex === "cname") {
+                if (ckeyIndex === 'cname') {
                     categoryTabObj.tab = categoryListObj[arrIndex][ckeyIndex];
                 }
             }
@@ -368,19 +366,19 @@ class InformationWeightSourceContainer extends Component {
         }
         let categoryTabObj = {};
          // 在首位增加全部类别，作为默认
-        categoryTabObj.key = "all";
-        categoryTabObj.tab = "全部类别";
+        categoryTabObj.key = 'all';
+        categoryTabObj.tab = '全部类别';
         categoryTabs.unshift(categoryTabObj);
 
         return ( 
             <Content style={ {margin: '24px 16px', padding: '6px 24px', background: '#fff', minHeight: 615} }>
                 <Tabs
                     onChange={ this.handleCategoryChange }
-                    defaultActiveKey="all"
+                    defaultActiveKey='all'
                     >
                     { categoryTabs.map(pane => <TabPane tab={ pane.tab } key={ pane.key } >
                         <div style={ {marginTop: 8} }>
-                            <span>源: </span><Select showSearch style={ {width: 150} } value={ this.props.bkey } optionFilterProp="children" onChange={ this.handleSourceChange }>{ sourceOptions }</Select>
+                            <span>源: </span><Select showSearch style={ {width: 150} } value={ this.props.bkey } optionFilterProp='children' onChange={ this.handleSourceChange }>{ sourceOptions }</Select>
                             <span style={ {float: 'right'} }>批次号: { batch } </span>
                         </div>
                         <div style={ {marginTop: 24} }>

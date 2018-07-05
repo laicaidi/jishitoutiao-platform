@@ -61,11 +61,11 @@ export function fetchGetAllInformationWeightSort(keyword, pageNum, bkey, ckey) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationweightsort/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationweightsort/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -117,9 +117,9 @@ function deleteInformationWeightSortFailure(error) {
     return {
         type: DELETE_INFORMATION_WEIGHT_SORT_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -127,8 +127,9 @@ function deleteInformationWeightSortFailure(error) {
 /**
  * 
  * @param {*} id 要删除的得分数据id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationWeightSort(id) {
+export function fetchDeleteInformationWeightSort(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationWeightSortRequest());
 
@@ -136,9 +137,9 @@ export function fetchDeleteInformationWeightSort(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationweightsort/${id}`
+        var url =`/informationweightsort/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -166,7 +167,7 @@ export function fetchDeleteInformationWeightSort(id) {
                         json => {
                             dispatch(deleteInformationWeightSortSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightSort());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -194,9 +195,9 @@ function updateInformationWeightSortFailure(error) {
     return {
         type: UPDATE_INFORMATION_WEIGHT_SORT_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -205,8 +206,10 @@ function updateInformationWeightSortFailure(error) {
  * 
  * @param {*} id 要更新的得分数据id
  * @param {*} formData 要更新的得分数据数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateInformationWeightSort(id, formData) {
+export function fetchUpdateInformationWeightSort(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateInformationWeightSortRequest());
 
@@ -216,7 +219,7 @@ export function fetchUpdateInformationWeightSort(id, formData) {
 
         var url = `/informationweightsort/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -229,7 +232,7 @@ export function fetchUpdateInformationWeightSort(id, formData) {
             },
             body: JSON.stringify(formData)      // 更新数据
         }
-        console.log("--------------fetchUpdateInformationWeightSort id: " + id);
+        console.log('--------------fetchUpdateInformationWeightSort id: ' + id);
 
         return fetch(url, myInit)
                     .then(
@@ -246,7 +249,8 @@ export function fetchUpdateInformationWeightSort(id, formData) {
                         json => {
                             dispatch(updateInformationWeightSortSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationWeightSort());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

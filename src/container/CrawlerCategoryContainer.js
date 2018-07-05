@@ -55,7 +55,7 @@ class CrawlerCategoryContainer extends Component {
 
             for (let field in payloadObj) {
                 // 判断columns节点，挂载的是表格标题所需的数据
-                if (field === "columns") {
+                if (field === 'columns') {
                     let pushed = false;
                     for (let i = 0; i < payloadObj[field].length; i++) {
                         // 因antd字段名为dataIndex，所以将后台返回的data_index赋值给dataIndex
@@ -129,15 +129,15 @@ class CrawlerCategoryContainer extends Component {
                                 return (
                                     <span>
                                         <a onClick={ showUpdateModal }>修改</a>
-                                        <Divider type="vertical" />
+                                        <Divider type='vertical' />
                                         <a onClick={ showCopyAddModal }>复制</a>
-                                        <Divider type="vertical" />
+                                        <Divider type='vertical' />
                                         <Popconfirm 
-                                                placement="topRight" 
+                                                placement='topRight' 
                                                 title={ msgText } 
                                                 onConfirm={ deleteConfirm }
-                                                okText="确定"
-                                                cancelText="取消">
+                                                okText='确定'
+                                                cancelText='取消'>
                                             <a>删除</a>
                                         </Popconfirm>
                                     </span>
@@ -201,7 +201,7 @@ class CrawlerCategoryContainer extends Component {
         if (keyword !== undefined && keyword !== null) {        // 1.1从搜索框唤起
             dispatch(changeCrawlerCategoryFiltrate(keyword));     
         } else {        // 1.2如果未定义或为null，证明非搜索框激活
-           keyword = "";
+           keyword = '';
             if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
                 keyword = this.props.keyword;
             } 
@@ -232,9 +232,7 @@ class CrawlerCategoryContainer extends Component {
                 formData[key] = values[key];
             }
             // 提交新增请求
-            dispatch(fetchAddCrawlerCategory(formData));
-
-            setTimeout(this.addResult, 200);
+            dispatch(fetchAddCrawlerCategory(formData, this.addResult, this.handleGet));
         });
     }
 
@@ -261,7 +259,7 @@ class CrawlerCategoryContainer extends Component {
     handleDelete(id) {
         const { dispatch } = this.props;
         // 提交删除请求
-        dispatch(fetchDeleteCrawlerCategory(id));
+        dispatch(fetchDeleteCrawlerCategory(id, this.handleGet));
     }
 
     // 更新类别
@@ -284,9 +282,7 @@ class CrawlerCategoryContainer extends Component {
                 }
             }
             // 提交更新请求
-            dispatch(fetchUpdateCrawlerCategory(cid, formData));
-
-            setTimeout(this.updateResult, 200);
+            dispatch(fetchUpdateCrawlerCategory(cid, formData, this.updateResult, this.handleGet));
         });
     }
 
@@ -321,7 +317,7 @@ class CrawlerCategoryContainer extends Component {
         return ( 
             <Content style={ {margin: '24px 16px', padding: 24, background: '#fff', minHeight: 615} }>
                 <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
-                <Button type="primary" style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增类别</Button>
+                <Button type='primary' style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增类别</Button>
                 <TableComponent rowKey='cid' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
                 <AddCrawlerCategoryComponent 
                     wrappedComponentRef={ this.wrappedAddFormRef }

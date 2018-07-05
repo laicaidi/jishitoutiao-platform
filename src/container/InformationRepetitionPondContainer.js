@@ -42,7 +42,7 @@ class InformationRepetitionPondContainer extends Component {
 
             for (let field in payloadObj) {
                 // 判断columns节点，挂载的是表格标题所需的数据
-                if (field === "columns") {
+                if (field === 'columns') {
                     let pushed = false;
                     for (let i = 0; i < payloadObj[field].length; i++) {
                         // 因antd字段名为dataIndex，所以将后台返回的data_index赋值给dataIndex
@@ -90,7 +90,7 @@ class InformationRepetitionPondContainer extends Component {
             // 更新props中的内容
             dispatch(changeInformationRepetitionPondFiltrate(keyword, this.props.bkey, this.props.ckey));
         } else {        // 1.2如果未定义或为null，证明非搜索框激活
-            keyword = "";
+            keyword = '';
             if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
                 keyword = this.props.keyword;
             }
@@ -103,24 +103,24 @@ class InformationRepetitionPondContainer extends Component {
    
         // 3.处理bkey
         if (bkey === undefined || bkey === null) {
-            bkey = ""; 
+            bkey = ''; 
             if (this.props.bkey !== undefined && this.props.bkey !== null) {
                 bkey = this.props.bkey;
             }
         }
-        if (bkey === "all") {
-            bkey = "";
+        if (bkey === 'all') {
+            bkey = '';
         }
 
         // 4.处理ckey
         if (ckey === undefined || ckey === null) {
-            ckey = "";
+            ckey = '';
             if (this.props.ckey !== undefined && this.props.ckey !== null) {
                 ckey = this.props.ckey;
             }
         }
-        if (ckey === "all") {
-            ckey = "";
+        if (ckey === 'all') {
+            ckey = '';
         }
 
         // 5.通过props中的值发起请求
@@ -141,7 +141,7 @@ class InformationRepetitionPondContainer extends Component {
     handleClean() {
         const { dispatch } = this.props;
         // 提交清空请求
-        dispatch(fetchCleanInformationRepetitionPond());
+        dispatch(fetchCleanInformationRepetitionPond(this.handleGet));
     }
 
     // 源下拉列表更改时的回调
@@ -177,7 +177,7 @@ class InformationRepetitionPondContainer extends Component {
         const { redisData } = this.props;
         if (redisData !== undefined && redisData !== null) {
             for (let key in redisData) {
-                if (key === "string:information_repetition_pond:batch") {
+                if (key === 'string:information_repetition_pond:batch') {
                     var batch = redisData[key];
                 }
             }
@@ -190,13 +190,13 @@ class InformationRepetitionPondContainer extends Component {
 
         // 将滤重池源数据封装成下拉列表需要的数组
         const sourceOptions = [];
-        sourceOptions.push(<Option key="all">全部</Option>);      // 先增加一个全部选项
+        sourceOptions.push(<Option key='all'>全部</Option>);      // 先增加一个全部选项
         for (let arrIndex in sourceOptionObj) {        // 取出对象
             for (var keyIndex in sourceOptionObj[arrIndex]) {       // 取出字段
-                if (keyIndex === "bkey") {
+                if (keyIndex === 'bkey') {
                     var bkey = sourceOptionObj[arrIndex][keyIndex];
                 }
-                if (keyIndex === "bname") {
+                if (keyIndex === 'bname') {
                     var bname = sourceOptionObj[arrIndex][keyIndex];
                 }
             }
@@ -209,10 +209,10 @@ class InformationRepetitionPondContainer extends Component {
         for (let arrIndex in categoryListObj) {
             let categoryTabObj = {};
             for (var ckeyIndex in categoryListObj[arrIndex]) {
-                if (ckeyIndex === "ckey") {
+                if (ckeyIndex === 'ckey') {
                     categoryTabObj.key = categoryListObj[arrIndex][ckeyIndex];
                 }
-                if (ckeyIndex === "cname") {
+                if (ckeyIndex === 'cname') {
                     categoryTabObj.tab = categoryListObj[arrIndex][ckeyIndex];
                 }
             }
@@ -220,34 +220,34 @@ class InformationRepetitionPondContainer extends Component {
         }
         let categoryTabObj = {};
          // 在首位增加全部类别，作为默认
-        categoryTabObj.key = "all";
-        categoryTabObj.tab = "全部类别";
+        categoryTabObj.key = 'all';
+        categoryTabObj.tab = '全部类别';
         categoryTabs.unshift(categoryTabObj);
 
         return ( 
             <Content style={ {margin: '24px 16px', padding: '6px 24px', background: '#fff', minHeight: 615} }>
                 <Tabs
                     onChange={ this.handleCategoryChange }
-                    defaultActiveKey="all"
+                    defaultActiveKey='all'
                     >
                     { categoryTabs.map(pane => <TabPane tab={ pane.tab } key={ pane.key } >
                         <div style={ {marginTop: 8} }>
-                            <span>源: </span><Select showSearch style={ {width: 150} } value={ this.props.bkey } optionFilterProp="children" onChange={ this.handleSourceChange }>{ sourceOptions }</Select>
+                            <span>源: </span><Select showSearch style={ {width: 150} } value={ this.props.bkey } optionFilterProp='children' onChange={ this.handleSourceChange }>{ sourceOptions }</Select>
                             <span style={ {float: 'right'} }>批次号: { batch } </span>
                         </div>
                         <div style={ {marginTop: 24} }>
                             <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
-                            <Button type="primary" style={ {float: 'right'} } onClick={ this.handleShowCleanModal }>清空滤重池表</Button>
+                            <Button type='primary' style={ {float: 'right'} } onClick={ this.handleShowCleanModal }>清空滤重池表</Button>
                         </div>
                         <TableComponent rowKey='repetition_pond_id' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } /> 
                     </TabPane>) }
                 </Tabs>
-                <Modal title="清空滤重池"
+                <Modal title='清空滤重池'
                     visible={ this.state.cleanModalVisible }
-                    okText="确认"
+                    okText='确认'
                     onOk={ this.handleClean }
                     confirmLoading={ this.props.isCleaning }
-                    cancelText="取消"
+                    cancelText='取消'
                     onCancel={ this.handleCleanModalCancel }
                     >
                     <p>确定清空滤重池表？清空后不可恢复，是否确认？</p>

@@ -61,11 +61,11 @@ export function fetchGetAllInformationIllegalityResult(keyword, pageNum, bkey, c
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/informationillegalityresult/"
-        var params = "?keyword=" + keyword + "&bkey=" + bkey + "&ckey=" + ckey + "&page_num=" + pageNum;
+        var url = '/informationillegalityresult/';
+        var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -115,9 +115,9 @@ function deleteInformationIllegalityResultFailure(error) {
     return {
         type: DELETE_INFORMATION_ILLEGALITY_RESULT_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -125,8 +125,9 @@ function deleteInformationIllegalityResultFailure(error) {
 /**
  * 
  * @param {*} id 要删除的滤非法结果id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteInformationIllegalityResult(id) {
+export function fetchDeleteInformationIllegalityResult(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteInformationIllegalityResultRequest());
 
@@ -134,9 +135,9 @@ export function fetchDeleteInformationIllegalityResult(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationillegalityresult/${id}`
+        var url =`/informationillegalityresult/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -164,7 +165,7 @@ export function fetchDeleteInformationIllegalityResult(id) {
                         json => {
                             dispatch(deleteInformationIllegalityResultSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationIllegalityResult());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -192,9 +193,9 @@ function updateInformationIllegalityResultFailure(error) {
     return {
         type: UPDATE_INFORMATION_ILLEGALITY_RESULT_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -203,8 +204,10 @@ function updateInformationIllegalityResultFailure(error) {
  * 
  * @param {*} id 要更新的滤非法结果id
  * @param {*} formData 要更新的滤非法结果数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateInformationIllegalityResult(id, formData) {
+export function fetchUpdateInformationIllegalityResult(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateInformationIllegalityResultRequest());
 
@@ -214,7 +217,7 @@ export function fetchUpdateInformationIllegalityResult(id, formData) {
 
         var url = `/informationillegalityresult/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -243,7 +246,8 @@ export function fetchUpdateInformationIllegalityResult(id, formData) {
                         json => {
                             dispatch(updateInformationIllegalityResultSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllInformationIllegalityResult());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

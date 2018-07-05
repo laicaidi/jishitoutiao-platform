@@ -59,11 +59,11 @@ export function fetchGetAllCrawlerDynamicIp(keyword, pageNum, protocol) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = "/crawlerdynamicip/"
-        var params = "?keyword=" + keyword + "&protocol=" + protocol + "&page_num=" + pageNum;
+        var url = '/crawlerdynamicip/';
+        var params = `?keyword=${keyword}&protocol=${protocol}&page_num=${pageNum}`;
 
         var myInit = {
-            method: "GET",
+            method: 'GET',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -113,9 +113,9 @@ function addCrawlerDynamicIpFailure(error) {
     return {
         type: ADD_CRAWLER_DYNAMIC_IP_FAILURE,
         status: {
-            "success": false,
-            "message": "新增失败,请检查IP地址是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '新增失败,请检查IP地址是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -123,8 +123,10 @@ function addCrawlerDynamicIpFailure(error) {
 /**
  * 
  * @param {*} formData 要增加的动态ip数据
+ * @param {*} addResult 新增结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchAddCrawlerDynamicIp(formData) {
+export function fetchAddCrawlerDynamicIp(formData, addResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(addCrawlerDynamicIpRequest());
 
@@ -132,10 +134,10 @@ export function fetchAddCrawlerDynamicIp(formData) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = "/crawlerdynamicip/";
+        var url = '/crawlerdynamicip/';
         var myInit = {
-            method: "POST",
-            mode: "cors",
+            method: 'POST',
+            mode: 'cors',
             headers: {
                 'Authorization': token ? token : '',
                 'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
@@ -162,7 +164,8 @@ export function fetchAddCrawlerDynamicIp(formData) {
                         json => {
                             dispatch(addCrawlerDynamicIpSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerDynamicIp());
+                            handleGet();
+                            addResult();
                         }
                     )
                     .catch((error) => {
@@ -190,9 +193,9 @@ function deleteCrawlerDynamicIpFailure(error) {
     return {
         type: DELETE_CRAWLER_DYNAMIC_IP_FAILURE,
         status: {
-            "success": false,
-            "message": "删除失败，无此记录",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '删除失败，无此记录',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -200,8 +203,9 @@ function deleteCrawlerDynamicIpFailure(error) {
 /**
  * 
  * @param {*} id 要删除的动态ip_id
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchDeleteCrawlerDynamicIp(id) {
+export function fetchDeleteCrawlerDynamicIp(id, handleGet) {
     return function(dispatch, getState) {
         dispatch(deleteCrawlerDynamicIpRequest());
 
@@ -209,9 +213,9 @@ export function fetchDeleteCrawlerDynamicIp(id) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlerdynamicip/${id}`
+        var url =`/crawlerdynamicip/${id}`;
         var myInit = {
-            method: "DELETE",
+            method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -239,7 +243,7 @@ export function fetchDeleteCrawlerDynamicIp(id) {
                         json => {
                             dispatch(deleteCrawlerDynamicIpSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerDynamicIp());
+                            handleGet();
                         }
                     )
                     .catch((error) => {
@@ -267,9 +271,9 @@ function updateCrawlerDynamicIpFailure(error) {
     return {
         type: UPDATE_CRAWLER_DYNAMIC_IP_FAILURE,
         status: {
-            "success": false,
-            "message": "更新失败,请检查IP地址是否重复",
-            "time": moment().format('YYYY-MM-DD HH:mm:ss')
+            'success': false,
+            'message': '更新失败,请检查IP地址是否重复',
+            'time': moment().format('YYYY-MM-DD HH:mm:ss')
         },
         error
     }
@@ -278,8 +282,10 @@ function updateCrawlerDynamicIpFailure(error) {
  * 
  * @param {*} id 要更新的动态ip_id
  * @param {*} formData 要更新的动态ip数据
+ * @param {*} updateResult 更新结果回调方法
+ * @param {*} handleGet 获取所有数据回调方法
  */
-export function fetchUpdateCrawlerDynamicIp(id, formData) {
+export function fetchUpdateCrawlerDynamicIp(id, formData, updateResult, handleGet) {
     return function(dispatch, getState) {
         dispatch(updateCrawlerDynamicIpRequest());
 
@@ -289,7 +295,7 @@ export function fetchUpdateCrawlerDynamicIp(id, formData) {
 
         var url = `/crawlerdynamicip/${id}`;
         var myInit = {
-            method: "PUT",
+            method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
@@ -318,7 +324,8 @@ export function fetchUpdateCrawlerDynamicIp(id, formData) {
                         json => {
                             dispatch(updateCrawlerDynamicIpSuccess(json));
                             messageAfterFetch(json.status.success, json.status.message);
-                            dispatch(fetchGetAllCrawlerDynamicIp());
+                            handleGet();
+                            updateResult();
                         }
                     )
                     .catch((error) => {

@@ -125,15 +125,15 @@ class CrawlerUserAgentContainer extends Component {
                 return (
                   <span>
                     <a onClick={ showUpdateModel }>修改</a>
-                    <Divider type="vertical" />
+                    <Divider type='vertical' />
                     <a onClick={ showCopyAddModel }>复制</a>
-                    <Divider type="vertical" />
+                    <Divider type='vertical' />
                     <Popconfirm 
-                          placement="topRight" 
+                          placement='topRight' 
                           title={ msgText }
                           onConfirm={ deleteConfirm } 
-                          okText="确定"
-                          cancelText="取消">
+                          okText='确定'
+                          cancelText='取消'>
                         <a>删除</a>
                     </Popconfirm>
                   </span>
@@ -197,7 +197,7 @@ class CrawlerUserAgentContainer extends Component {
     if (keyword !== undefined && keyword !== null) {    // 1.1从搜索框唤起
       dispatch(changeCrawlerUserAgentFiltrate(keyword));
     } else {    // 1.2如果未定义或为null，证明非搜索框激活
-      keyword = "";
+      keyword = '';
       if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
           keyword = this.props.keyword;
       }
@@ -228,9 +228,7 @@ class CrawlerUserAgentContainer extends Component {
         formData[key] = values[key];
       }
       // 提交新增请求
-      dispatch(fetchAddCrawlerUserAgent(formData));
-
-      setTimeout(this.addResult, 200);
+      dispatch(fetchAddCrawlerUserAgent(formData, this.addResult, this.handleGet));
     });
   }
 
@@ -257,7 +255,7 @@ class CrawlerUserAgentContainer extends Component {
   handleDelete(id) {
     const { dispatch } = this.props;
     // 提交删除请求
-    dispatch(fetchDeleteCrawlerUserAgent(id));
+    dispatch(fetchDeleteCrawlerUserAgent(id, this.handleGet));
   }
 
   // 更新user_agent
@@ -280,9 +278,7 @@ class CrawlerUserAgentContainer extends Component {
         }
       }
       // 提交更新请求
-      dispatch(fetchUpdateCrawlerUserAgent(userAgentId, formData));
-
-      setTimeout(this.updateResult, 200);
+      dispatch(fetchUpdateCrawlerUserAgent(userAgentId, formData, this.updateResult, this.handleGet));
     });
   }
 
@@ -317,7 +313,7 @@ class CrawlerUserAgentContainer extends Component {
     return (
         <Content style={ {margin: '24px 16px', padding: 24, background: '#fff', minHeight: 615} }>
             <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
-            <Button type="primary" style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增user_agent</Button>
+            <Button type='primary' style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增user_agent</Button>
             <TableComponent rowKey='user_agent_id' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
             <AddCrawlerUserAgentComponent
                 wrappedComponentRef={ this.wrappedAddFormRef }

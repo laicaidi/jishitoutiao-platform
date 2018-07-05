@@ -59,7 +59,7 @@ class CrawlerManagementContainer extends Component {
 
             for (let field in payloadObj) {
                 // 判断columns节点，挂载的是表格标题所需的数据
-                if (field === "columns") {
+                if (field === 'columns') {
                     let pushed = false;
                     for (let i = 0; i < payloadObj[field].length; i++) {
                         // 因antd字段名为dataIndex，所以将后台返回的data_index赋值给dataIndex
@@ -133,15 +133,15 @@ class CrawlerManagementContainer extends Component {
                                 return (
                                     <span>
                                         <a onClick={ showUpdateModal }>修改</a>
-                                        <Divider type="vertical" />
+                                        <Divider type='vertical' />
                                         <a onClick={ showCopyAddModal }>复制</a>
-                                        <Divider type="vertical" />
+                                        <Divider type='vertical' />
                                         <Popconfirm 
-                                                placement="topRight" 
+                                                placement='topRight' 
                                                 title={ msgText } 
                                                 onConfirm={ deleteConfirm }
-                                                okText="确定"
-                                                cancelText="取消">
+                                                okText='确定'
+                                                cancelText='取消'>
                                             <a>删除</a>
                                         </Popconfirm>
                                     </span>
@@ -214,7 +214,7 @@ class CrawlerManagementContainer extends Component {
         if (keyword !== undefined && keyword != null) {     // 1.1从搜索框唤起
             dispatch(changeCrawlerManagementFiltrate(keyword, this.props.bkey, this.props.ckey, this.props.crawlerStatus, this.props.crawlerSwitch));
         } else {        // 1.2如果未定义或为null，证明非搜索框激活
-            keyword = "";
+            keyword = '';
             if (this.props.keyword !== undefined && this.props.keyword !== null) {   // 1.3且prop中有，则证明是其他组件激活，从prop中取值
                 keyword = this.props.keyword;
             }
@@ -227,46 +227,46 @@ class CrawlerManagementContainer extends Component {
    
         // 3.处理bkey
         if (bkey === undefined || bkey === null) {
-            bkey = ""; 
+            bkey = ''; 
             if (this.props.bkey !== undefined && this.props.bkey !== null) {
                 bkey = this.props.bkey;
             }
         }
-        if (bkey === "all") {
-            bkey = "";
+        if (bkey === 'all') {
+            bkey = '';
         }
 
         // 4.处理ckey
         if (ckey === undefined || ckey === null) {
-            ckey = "";
+            ckey = '';
             if (this.props.ckey !== undefined && this.props.ckey !== null) {
                 ckey = this.props.ckey;
             }
         }
-        if (ckey === "all") {
-            ckey = "";
+        if (ckey === 'all') {
+            ckey = '';
         }
 
         // 5.处理crawlerStatus
         if (crawlerStatus === undefined || crawlerStatus === null) {
-            crawlerStatus = "";
+            crawlerStatus = '';
             if (this.props.crawlerStatus !== undefined && this.props.crawlerStatus !== null) {
                 crawlerStatus = this.props.crawlerStatus;
             }
         }
-        if (crawlerStatus === "all") {
-            crawlerStatus = "";
+        if (crawlerStatus === 'all') {
+            crawlerStatus = '';
         }
 
         // 6.处理crawlerSwitch
         if (crawlerSwitch === undefined || crawlerSwitch === null) {
-            crawlerSwitch = "";
+            crawlerSwitch = '';
             if (this.props.crawlerSwitch !== undefined && this.props.crawlerSwitch !== null) {
                 crawlerSwitch = this.props.crawlerSwitch;
             }
         }
-        if (crawlerSwitch === "all") {
-            crawlerSwitch = "";
+        if (crawlerSwitch === 'all') {
+            crawlerSwitch = '';
         }
 
         // 7.通过props中的值发起请求
@@ -289,9 +289,7 @@ class CrawlerManagementContainer extends Component {
                 formData[key] = values[key];
             }
             // 提交新增请求
-            dispatch(fetchAddCrawlerManagement(formData));
-
-            setTimeout(this.addResult, 200);
+            dispatch(fetchAddCrawlerManagement(formData, this.addResult, this.handleGet));
         });
     }
 
@@ -318,7 +316,7 @@ class CrawlerManagementContainer extends Component {
     handleDelete(crawlerId) {
         const { dispatch } = this.props;
         // 提交删除请求
-        dispatch(fetchDeleteCrawlerManagement(crawlerId));
+        dispatch(fetchDeleteCrawlerManagement(crawlerId, this.handleGet));
     }
 
     // 更新爬虫
@@ -341,9 +339,7 @@ class CrawlerManagementContainer extends Component {
                 }
             }
             // 提交更新请求
-            dispatch(fetchUpdateCrawlerManagement(crawlerId, formData));
-
-            setTimeout(this.updateResult, 200);
+            dispatch(fetchUpdateCrawlerManagement(crawlerId, formData, this.updateResult, this.handleGet));
         });
     }
 
@@ -422,13 +418,13 @@ class CrawlerManagementContainer extends Component {
 
         // 将爬虫源数据封装成下拉列表需要的数组
         const sourceOptions = [];
-        sourceOptions.push(<Option key="all">全部</Option>);      // 先增加一个全部选项
+        sourceOptions.push(<Option key='all'>全部</Option>);      // 先增加一个全部选项
         for (let arrIndex in sourceOptionObj) {        // 取出对象
             for (var keyIndex in sourceOptionObj[arrIndex]) {       // 取出字段
-                if (keyIndex === "bkey") {
+                if (keyIndex === 'bkey') {
                     var bkey = sourceOptionObj[arrIndex][keyIndex];
                 }
-                if (keyIndex === "bname") {
+                if (keyIndex === 'bname') {
                     var bname = sourceOptionObj[arrIndex][keyIndex];
                 }
             }
@@ -437,13 +433,13 @@ class CrawlerManagementContainer extends Component {
 
         // 将类别数据封装成下拉列表需要的数组
         const categoryOptions = [];
-        categoryOptions.push(<Option key="all">全部</Option>);
+        categoryOptions.push(<Option key='all'>全部</Option>);
         for (let arrIndex in categoryListObj) {
             for (var ckeyIndex in categoryListObj[arrIndex]) {
-                if (ckeyIndex === "ckey") {
+                if (ckeyIndex === 'ckey') {
                     var ckey = categoryListObj[arrIndex][ckeyIndex];
                 }
-                if (ckeyIndex === "cname") {
+                if (ckeyIndex === 'cname') {
                     var cname = categoryListObj[arrIndex][ckeyIndex];
                 }
             }
@@ -452,27 +448,27 @@ class CrawlerManagementContainer extends Component {
 
         // 将爬虫状态数据封装成下拉列表需要的数组
         const statusOptions = [];
-        statusOptions.push(<Option key="all">全部</Option>);
-        statusOptions.push(<Option key="NORMAL">正常</Option>);
-        statusOptions.push(<Option key="ABNORMAL">异常</Option>);
+        statusOptions.push(<Option key='all'>全部</Option>);
+        statusOptions.push(<Option key='NORMAL'>正常</Option>);
+        statusOptions.push(<Option key='ABNORMAL'>异常</Option>);
 
         // 将爬虫开关数据封装成下拉列表需要的数组
         const switchOptions = [];
-        switchOptions.push(<Option key="all">全部</Option>);
-        switchOptions.push(<Option key="ON">开启</Option>);
-        switchOptions.push(<Option key="OFF">关闭</Option>);
+        switchOptions.push(<Option key='all'>全部</Option>);
+        switchOptions.push(<Option key='ON'>开启</Option>);
+        switchOptions.push(<Option key='OFF'>关闭</Option>);
 
         return ( 
             <Content style={ {margin: '24px 16px', padding: 24, background: '#fff', minHeight: 615} }>
                 <div>
-                    <span>源: </span><Select showSearch style={ {width: 150} } defaultValue="all" optionFilterProp="children" onChange={ this.handleSourceChange }>{ sourceOptions }</Select>
-                    <span style={ {marginLeft: 24} }>类别: </span><Select showSearch style={ {width: 150} } defaultValue="all" optionFilterProp="children" onChange={ this.handleCategoryChange }>{ categoryOptions }</Select>
-                    <span style={ {marginLeft: 24} }>爬虫状态: </span><Select showSearch style={ {width: 150} } defaultValue="all" optionFilterProp="children" onChange={ this.handleStatusChange }>{ statusOptions }</Select>
-                    <span style={ {marginLeft: 24} }>爬虫开关: </span><Select showSearch style={ {width: 150} } defaultValue="all" optionFilterProp="children" onChange={ this.handleSwitchChange }>{ switchOptions }</Select>
+                    <span>源: </span><Select showSearch style={ {width: 150} } defaultValue='all' optionFilterProp='children' onChange={ this.handleSourceChange }>{ sourceOptions }</Select>
+                    <span style={ {marginLeft: 24} }>类别: </span><Select showSearch style={ {width: 150} } defaultValue='all' optionFilterProp='children' onChange={ this.handleCategoryChange }>{ categoryOptions }</Select>
+                    <span style={ {marginLeft: 24} }>爬虫状态: </span><Select showSearch style={ {width: 150} } defaultValue='all' optionFilterProp='children' onChange={ this.handleStatusChange }>{ statusOptions }</Select>
+                    <span style={ {marginLeft: 24} }>爬虫开关: </span><Select showSearch style={ {width: 150} } defaultValue='all' optionFilterProp='children' onChange={ this.handleSwitchChange }>{ switchOptions }</Select>
                 </div>
                 <div style={ {marginTop: 24} }>
                     <SearchComponent text={ this.props.keyword } onGet={ this.handleGet } onChange={ this.handleSearchInputChange } />
-                    <Button type="primary" style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增爬虫</Button>
+                    <Button type='primary' style={ {float: 'right'} } onClick={ this.handleShowAddModal }>新增爬虫</Button>
                 </div>
                 <TableComponent rowKey='crawler_id' tableData={ this.props.payload } onGet={ this.handleGet } loading={ this.props.isFetching } />
                 <AddCrawlerManagementComponent 

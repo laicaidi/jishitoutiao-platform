@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -62,7 +65,7 @@ export function fetchGetAllCrawlerManagement(keyword, pageNum, bkey, ckey, crawl
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = '/crawlermanagement/';
+        var url = `${baseUrl}/crawlermanagement/`;
         var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&crawler_status=${crawlerStatus}&crawler_switch=${crawlerSwitch}&page_num=${pageNum}`;
 
         var myInit = {
@@ -137,7 +140,7 @@ export function fetchAddCrawlerManagement(formData, addResult, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = '/crawlermanagement/';
+        var url = `${baseUrl}/crawlermanagement/`;
         var myInit = {
             method: 'POST',
             mode: 'cors',
@@ -216,7 +219,7 @@ export function fetchDeleteCrawlerManagement(id, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlermanagement/${id}`;
+        var url = `${baseUrl}/crawlermanagement/${id}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
@@ -296,7 +299,7 @@ export function fetchUpdateCrawlerManagement(crawlerId, formData, updateResult, 
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = `/crawlermanagement/${crawlerId}`;
+        var url = `${baseUrl}/crawlermanagement/${crawlerId}`;
         var myInit = {
             method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求

@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -61,7 +64,7 @@ export function fetchGetAllInformationWeightSource(keyword, pageNum, bkey, ckey)
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = '/informationweightsource/';
+        var url = `${baseUrl}/informationweightsource/`;
         var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
@@ -135,7 +138,7 @@ export function fetchDeleteInformationWeightSource(id, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationweightsource/${id}`;
+        var url = `${baseUrl}/informationweightsource/${id}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
@@ -215,7 +218,7 @@ export function fetchUpdateInformationWeightSource(id, formData, updateResult, h
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = `/informationweightsource/${id}`;
+        var url = `${baseUrl}/informationweightsource/${id}`;
         var myInit = {
             method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求

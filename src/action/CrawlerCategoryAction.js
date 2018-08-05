@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -58,7 +61,7 @@ export function fetchGetAllCrawlerCategory(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = '/crawlercategory/';
+        var url = `${baseUrl}/crawlercategory/`;
         var params = `?keyword=${keyword}&page_num=${pageNum}`;
 
         var myInit = {
@@ -133,7 +136,7 @@ export function fetchAddCrawlerCategory(formData, addResult, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = '/crawlercategory/';
+        var url = `${baseUrl}/crawlercategory/`;
         var myInit = {
             method: 'POST',
             mode: 'cors',
@@ -212,7 +215,7 @@ export function fetchDeleteCrawlerCategory(cid, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlercategory/${cid}`;
+        var url = `${baseUrl}/crawlercategory/${cid}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
@@ -292,7 +295,7 @@ export function fetchUpdateCrawlerCategory(cid, formData, updateResult, handleGe
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = `/crawlercategory/${cid}`;
+        var url = `${baseUrl}/crawlercategory/${cid}`;
         var myInit = {
             method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求

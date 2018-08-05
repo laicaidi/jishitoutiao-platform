@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -61,7 +64,7 @@ export function fetchGetAllInformationWeightFiltrate(keyword, pageNum, bkey, cke
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = '/informationweightfiltrate/';
+        var url = `${baseUrl}/informationweightfiltrate/`;
         var params = `?keyword=${keyword}&bkey=${bkey}&ckey=${ckey}&page_num=${pageNum}`;
 
         var myInit = {
@@ -137,7 +140,7 @@ export function fetchDeleteInformationWeightFiltrate(id, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationweightfiltrate/${id}`;
+        var url = `${baseUrl}/informationweightfiltrate/${id}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
@@ -217,7 +220,7 @@ export function fetchUpdateInformationWeightFiltrate(id, formData, updateResult,
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = `/informationweightfiltrate/${id}`;
+        var url = `${baseUrl}/informationweightfiltrate/${id}`;
         var myInit = {
             method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求

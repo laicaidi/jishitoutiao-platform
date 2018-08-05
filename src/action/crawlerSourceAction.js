@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -67,7 +70,7 @@ export function fetchGetAllCrawlerSource(keyword, pageNum) {
         // 这并不是 redux middleware 所必须的，但这对于我们而言很方便。
 
         // 拼接请求url
-        var url = '/crawlersource/';        // 请求url
+        var url = `${baseUrl}/crawlersource/`;        // 请求url
         var params = `?keyword=${keyword}&page_num=${pageNum}`;       // 参数
 
         var myInit = {
@@ -147,7 +150,7 @@ export function fetchAddCrawlerSource(formData, addResult, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = '/crawlersource/';
+        var url = `${baseUrl}/crawlersource/`;
         var myInit = {
             method: 'POST',
             mode: 'cors',       // 允许跨域发送请求
@@ -227,7 +230,7 @@ export function fetchDeleteCrawlerSource(bid, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlersource/${bid}`;
+        var url = `${baseUrl}/crawlersource/${bid}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
@@ -307,7 +310,7 @@ export function fetchUpdateCrawlerSource(bid, formData, updateResult, handleGet)
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = `/crawlersource/${bid}`;
+        var url = `${baseUrl}/crawlersource/${bid}`;
         var myInit = {
             method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求

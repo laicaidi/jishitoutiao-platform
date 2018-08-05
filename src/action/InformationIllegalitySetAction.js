@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -57,7 +60,7 @@ export function fetchGetAllInformationIllegalitySet(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接请求url
-        var url = '/informationillegalityset/';        // 请求url
+        var url = `${baseUrl}/informationillegalityset/`;        // 请求url
         var params = `?keyword=${keyword}&page_num=${pageNum}`;       // 参数
 
         var myInit = {
@@ -132,7 +135,7 @@ export function fetchAddInformationIllegalitySet(formData, addResult, handleGet)
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = '/informationillegalityset/';
+        var url = `${baseUrl}/informationillegalityset/`;
         var myInit = {
             method: 'POST',
             mode: 'cors',       // 允许跨域发送请求
@@ -212,7 +215,7 @@ export function fetchDeleteInformationIllegalitySet(id, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationillegalityset/${id}`;
+        var url = `${baseUrl}/informationillegalityset/${id}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
@@ -292,7 +295,7 @@ export function fetchUpdateInformationIllegalitySet(id, formData, updateResult, 
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = `/informationillegalityset/${id}`;
+        var url = `${baseUrl}/informationillegalityset/${id}`;
         var myInit = {
             method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求

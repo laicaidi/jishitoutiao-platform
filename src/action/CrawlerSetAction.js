@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -57,7 +60,7 @@ export function fetchGetAllCrawlerSet(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接请求url
-        var url = '/crawlerset/';        // 请求url
+        var url = `${baseUrl}/crawlerset/`;        // 请求url
         var params = `?keyword=${keyword}&page_num=${pageNum}`;       // 参数
 
         var myInit = {
@@ -132,7 +135,7 @@ export function fetchAddCrawlerSet(formData, addResult, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = '/crawlerset/';
+        var url = `${baseUrl}/crawlerset/`;
         var myInit = {
             method: 'POST',
             mode: 'cors',       // 允许跨域发送请求
@@ -212,7 +215,7 @@ export function fetchDeleteCrawlerSet(id, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/crawlerset/${id}`;
+        var url = `${baseUrl}/crawlerset/${id}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求
@@ -292,7 +295,7 @@ export function fetchUpdateCrawlerSet(id, formData, updateResult, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url = `/crawlerset/${id}`;
+        var url = `${baseUrl}/crawlerset/${id}`;
         var myInit = {
             method: 'PUT',
             mode: 'cors',       // 允许跨域发送请求

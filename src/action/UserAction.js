@@ -3,6 +3,9 @@ import moment from 'moment';
 import { message } from 'antd';
 // action文件
 import { routerActions } from 'react-router-redux';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -61,7 +64,7 @@ export function fetchGetAllUser(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = '/user/';
+        var url = `${baseUrl}/user/`;
         var params = `?keyword=${keyword}&bkey=${pageNum}`;
 
         var myInit = {
@@ -98,7 +101,7 @@ export function fetchGetAllUser(keyword, pageNum) {
 }
 
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';     // 用户登录
-export const USER_LOGIN_SUCCESS = 'USER_LOGIN__SUCCESS';     // 登录成功
+export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';     // 登录成功
 export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';     // 登录失败
 function userLoginRequest() {
     return {
@@ -132,7 +135,8 @@ export function fetchUserLogin(formData) {
     return function(dispatch, getState) {
         dispatch(userLoginRequest());
 
-        var url = '/user/login';
+        var url = `${baseUrl}/user/login`;
+        console.log(`login url: ${url}`);
         var myInit = {
             method: 'POST',
             mode: 'cors',       // 允许跨域发送请求
@@ -216,7 +220,7 @@ export function fetchDeleteUser(id, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/user/${id}`;
+        var url =`${baseUrl}/user/${id}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求

@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 /*
  * action 类型
@@ -47,7 +50,7 @@ export function fetchGetMeta() {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接请求url
-        var url = '/meta/';        // 请求url
+        var url = `${baseUrl}/meta/`;        // 请求url
 
         var myInit = {
             method: 'GET',

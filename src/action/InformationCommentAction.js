@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
 import moment from 'moment';
 import { message } from 'antd';
+import {
+    baseUrl
+} from './BaseUrl';
 
 function consoleAndMessageOnError(text) {
     console.log(text);
@@ -59,7 +62,7 @@ export function fetchGetAllInformationComment(keyword, pageNum) {
         var token = state.userLoginState.auth.access_token;
 
         // 拼接url请求
-        var url = '/informationcomment/';
+        var url = `${baseUrl}/informationcomment/`;
         var params = `?keyword=${keyword}&bkey=${pageNum}`;
 
         var myInit = {
@@ -133,7 +136,7 @@ export function fetchDeleteInformationComment(id, handleGet) {
         // 获取token
         var token = state.userLoginState.auth.access_token;
 
-        var url =`/informationcomment/${id}`;
+        var url = `${baseUrl}/informationcomment/${id}`;
         var myInit = {
             method: 'DELETE',
             mode: 'cors',       // 允许跨域发送请求

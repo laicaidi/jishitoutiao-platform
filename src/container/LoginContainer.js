@@ -111,7 +111,7 @@ const LoginContainer =  Form.create()(
                                 {getFieldDecorator('password', {
                                     rules: [{ required: true, message: '请输入密码' }],
                                 })(
-                                    <Input prefix={<Icon type='lock' style={{ fontSize: 13 }} />} type='password' placeholder='密码' />
+                                    <Input autoComplete='new-password' prefix={<Icon type='lock' style={{ fontSize: 13 }} />} type='password' placeholder='密码' />
                                 )}
                             </FormItem>
                             <Button type='primary' htmlType='submit' className='loginBtn'>登录</Button>

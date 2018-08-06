@@ -1,1 +1,1 @@
-export const baseUrl = 'http://192.168.31.183:8080/jishitoutiao-api';        // 接口base地址
+export const baseUrl = 'http://30.29.32.152:8080/jishitoutiao-api';        // 接口base地址

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';   // 渲染组件时需要
 import Root from './container/Root';
 import ConfigureStore from './store/ConfigureStore';
 import { Provider } from 'react-redux';   // react和redux连接的桥梁，就是这个Provider
-import registerServiceWorker from './registerServiceWorker';
+//import registerServiceWorker from './registerServiceWorker';
 
 let rootElement = document.getElementById('root');
 

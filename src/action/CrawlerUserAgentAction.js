@@ -69,12 +69,6 @@ export function fetchGetAllCrawlerUserAgent(keyword, pageNum) {
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
-                'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
-                'Access-Control-Allow-Origin':'*',
-                'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
-                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
         return fetch(url + params, myInit)
@@ -142,12 +136,6 @@ export function fetchAddCrawlerUserAgent(formData, addResult, handleGet) {
             mode: 'cors',
             headers: {
                 'Authorization': token ? token : '',
-                'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
-                'Access-Control-Allow-Origin':'*',
-                'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
-                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 新增数据
         }
@@ -221,12 +209,6 @@ export function fetchDeleteCrawlerUserAgent(id, handleGet) {
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
-                'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
-                'Access-Control-Allow-Origin':'*',
-                'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
-                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             }
         }
 
@@ -301,12 +283,6 @@ export function fetchUpdateCrawlerUserAgent(id, formData, updateResult, handleGe
             mode: 'cors',       // 允许跨域发送请求
             headers: {
                 'Authorization': token ? token : '',
-                'Accept': 'application/json,text/javascript,application/x-www-form-urlencoded',
-                'Access-Control-Allow-Origin':'*',
-                'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE',
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Access-Control-Allow-Headers': 'x-requested-with,Cache-Control,Pragma,Content-Type,Authorization',     // //允许使用的请求方法
-                'Access-Control-Allow-Credentials': 'true'      // 是否允许请求带有验证信息
             },
             body: JSON.stringify(formData)      // 更新数据
         }

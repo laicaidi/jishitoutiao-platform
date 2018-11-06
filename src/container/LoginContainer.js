@@ -97,7 +97,7 @@ const LoginContainer =  Form.create()(
       return (
         <div className='loginPageWrap'>
                 <div className='box'>
-                    <p>即时头条管理系统</p>
+                    <p className='title'>即时头条管理平台</p>
                     <div className='loginWrap'>
                         <Form onSubmit={this.handleSubmit}>
                             <FormItem>

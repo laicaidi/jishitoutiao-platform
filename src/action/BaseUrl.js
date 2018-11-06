@@ -1,1 +1,5 @@
-export const baseUrl = 'http://30.29.32.152:8080/jishitoutiao-api';        // 接口base地址
+// 测试环境url
+// export const baseUrl = 'http://localhost:8080';
+
+//正式环境url
+export const baseUrl = 'https://www.jishitoutiao.com:4443/jishitoutiao-api';

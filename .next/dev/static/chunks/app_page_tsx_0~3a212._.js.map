@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/leitianxiang/jstt/jishitoutiao-platform/app/page.tsx"],"sourcesContent":["// app/page.tsx\n'use client';\n\nimport { useEffect } from 'react';\n\nexport default function IndexPage() {\n  // 一进网站，直接跳登录页\n  useEffect(() => {\n    window.location.replace('/login');\n  }, []);\n\n  return null;\n}"],"names":["IndexPage","window","location","replace"],"mappings":";;;;AAGA;;AAHA,eAAe;AACf;;AAIe,SAASA;;IACtB,cAAc;IACd,IAAA,2UAAS;+BAAC;YACRC,OAAOC,QAAQ,CAACC,OAAO,CAAC;QAC1B;8BAAG,EAAE;IAEL,OAAO;AACT;GAPwBH;KAAAA"}}]
+}

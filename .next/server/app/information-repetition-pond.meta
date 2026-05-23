@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/information-repetition-pond/layout,_N_T_/information-repetition-pond/page,_N_T_/information-repetition-pond"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/information-repetition-pond/__PAGE__",
+    "/information-repetition-pond",
+    "/_index",
+    "/_head"
+  ]
+}

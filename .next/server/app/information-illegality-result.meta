@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/information-illegality-result/layout,_N_T_/information-illegality-result/page,_N_T_/information-illegality-result"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/information-illegality-result/__PAGE__",
+    "/information-illegality-result",
+    "/_index",
+    "/_head"
+  ]
+}

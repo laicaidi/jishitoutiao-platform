@@ -1,0 +1,195 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "hybrid",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "onMatchHeaders": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/crawler-category",
+      "regex": "^/crawler\\-category(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/crawler\\-category(?:/)?$"
+    },
+    {
+      "page": "/crawler-dynamic-ip",
+      "regex": "^/crawler\\-dynamic\\-ip(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/crawler\\-dynamic\\-ip(?:/)?$"
+    },
+    {
+      "page": "/crawler-management",
+      "regex": "^/crawler\\-management(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/crawler\\-management(?:/)?$"
+    },
+    {
+      "page": "/crawler-set",
+      "regex": "^/crawler\\-set(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/crawler\\-set(?:/)?$"
+    },
+    {
+      "page": "/crawler-source",
+      "regex": "^/crawler\\-source(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/crawler\\-source(?:/)?$"
+    },
+    {
+      "page": "/crawler-user-agent",
+      "regex": "^/crawler\\-user\\-agent(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/crawler\\-user\\-agent(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/information-comment",
+      "regex": "^/information\\-comment(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-comment(?:/)?$"
+    },
+    {
+      "page": "/information-illegality-pond",
+      "regex": "^/information\\-illegality\\-pond(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-illegality\\-pond(?:/)?$"
+    },
+    {
+      "page": "/information-illegality-result",
+      "regex": "^/information\\-illegality\\-result(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-illegality\\-result(?:/)?$"
+    },
+    {
+      "page": "/information-illegality-set",
+      "regex": "^/information\\-illegality\\-set(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-illegality\\-set(?:/)?$"
+    },
+    {
+      "page": "/information-output-article",
+      "regex": "^/information\\-output\\-article(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-output\\-article(?:/)?$"
+    },
+    {
+      "page": "/information-output-list",
+      "regex": "^/information\\-output\\-list(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-output\\-list(?:/)?$"
+    },
+    {
+      "page": "/information-repetition-pond",
+      "regex": "^/information\\-repetition\\-pond(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-repetition\\-pond(?:/)?$"
+    },
+    {
+      "page": "/information-repetition-result",
+      "regex": "^/information\\-repetition\\-result(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-repetition\\-result(?:/)?$"
+    },
+    {
+      "page": "/information-source",
+      "regex": "^/information\\-source(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-source(?:/)?$"
+    },
+    {
+      "page": "/information-weight-filtrate",
+      "regex": "^/information\\-weight\\-filtrate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-weight\\-filtrate(?:/)?$"
+    },
+    {
+      "page": "/information-weight-set",
+      "regex": "^/information\\-weight\\-set(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-weight\\-set(?:/)?$"
+    },
+    {
+      "page": "/information-weight-sort",
+      "regex": "^/information\\-weight\\-sort(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-weight\\-sort(?:/)?$"
+    },
+    {
+      "page": "/information-weight-source",
+      "regex": "^/information\\-weight\\-source(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/information\\-weight\\-source(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/NotFound",
+      "regex": "^/NotFound(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/NotFound(?:/)?$"
+    },
+    {
+      "page": "/user",
+      "regex": "^/user(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/user(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

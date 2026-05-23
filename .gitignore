@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # custom files
 custom/
 
@@ -19,3 +20,38 @@ log/
 # zcompile cached files
 *.zwc
 *.zwc.old
+=======
+# 依赖
+/node_modules
+/.pnp
+.pnp.js
+
+# 打包
+/build
+/dist
+/.dist
+/output
+
+# 环境变量
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 编辑器
+.idea
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+# 系统
+*.log
+*.tmp
+*.temp
+>>>>>>> c4955ca (V2.0静态打包版本)
